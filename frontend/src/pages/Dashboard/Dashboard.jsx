@@ -1,6 +1,12 @@
+import { DashboardHeader } from "../../components/DashboardHeader";
 
 export default function Dashboard() {
     return (
-        <h1 className="text-3xl font-bold underline">dashboard</h1>
+        <>
+            <div className="flex flex-col h-screen">
+                <DashboardHeader />
+                <div className="bg-red"></div>
+            </div>
+        </>
     )
 }
