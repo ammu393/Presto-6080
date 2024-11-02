@@ -23,7 +23,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/dashboard" element={<Dashboard token={token} setToken = { setToken } />} />
+        <Route path="/dashboard" element={<Dashboard token={token} />} />
         <Route path="/login" element={<Login setTokenFn={ setToken } />} />
         <Route path="/register" element={<Register token={token} setTokenFn={ setToken } />} />
 

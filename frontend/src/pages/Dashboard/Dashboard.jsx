@@ -3,7 +3,7 @@ import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
 import axios from "axios";
 
-export default function Dashboard({ token, setToken }) {
+export default function Dashboard({ token }) {
   const [store, setStore] = useState({ presentations: [] });
 
   const fetchPresentations = async () => {
@@ -42,10 +42,12 @@ export default function Dashboard({ token, setToken }) {
         <DashboardHeader token={token} onPresentationsUpdated={refreshPresentations} store={store} setStore={setStore} />
         <div className="bg-[#f0f1f2] h-full p-4">
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            {store.presentations.map((presentation) => (
+            {[...store.presentations].reverse().map((presentation) => (
               <PresentationCard
                 key={presentation.presentationId}
                 title={presentation.title}
+                description={presentation.description}
+                numSlides={presentation.numSlides}
                 presentationId={presentation.presentationId}
               />
             ))}

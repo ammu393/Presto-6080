@@ -10,7 +10,9 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setStore
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleCreatePresentation = async () => {
+  const handleCreatePresentation = async (event) => {
+    event.preventDefault();
+
     if (!presentationName.trim()) {
       alert("Please enter a presentation name."); // replace with actual error box 
       return;
@@ -67,27 +69,29 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setStore
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg p-6 w-1/3">
             <h2 className="text-xl font-bold mb-4">Create New Presentation</h2>
-            <input 
-              type="text" 
-              value={presentationName}
-              onChange={(e) => setPresentationName(e.target.value)}
-              placeholder="Enter Presentation Name"
-              className="w-full p-2 border border-gray-300 rounded mb-4"
-            />
-            <div className="flex justify-end">
-              <button 
-                onClick={handleCreatePresentation}
-                className="bg-blue-500 text-white font-semibold py-2 px-4 rounded mr-2"
-              >
-                  Create
-              </button>
-              <button 
-                onClick={toggleModal}
-                className="bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded"
-              >
-                Cancel
-              </button>
-            </div>
+            <form onSubmit={handleCreatePresentation}>
+              <input 
+                type="text" 
+                value={presentationName}
+                onChange={(e) => setPresentationName(e.target.value)}
+                placeholder="Enter Presentation Name"
+                className="w-full p-2 border border-gray-300 rounded mb-4"
+              />
+              <div className="flex justify-end">
+                <button 
+                  onClick={handleCreatePresentation}
+                  className="bg-blue-500 text-white font-semibold py-2 px-4 rounded mr-2"
+                >
+                    Create
+                </button>
+                <button 
+                  onClick={toggleModal}
+                  className="bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
