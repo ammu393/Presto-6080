@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-export function DashboardHeader({ token }) {
+export function DashboardHeader({ token, onPresentationsUpdated, store, setStore }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [presentationName, setPresentationName] = useState("");
-  const [store, setStore] = useState({ presentations: [] });
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -21,26 +20,22 @@ export function DashboardHeader({ token }) {
     const newPresentation = {
       presentationId: uniqueId,
       title: presentationName,
+      description: "",
+      numSlides: 0,
     };
 
+    const currentPresentations = store.presentations || [];
+    
     const newStore = {
-      presentations: [...store.presentations, newPresentation],
+      store: { presentations: [...currentPresentations, newPresentation] },
     };
 
-    console.log("New Store:", newStore);
     await sendPresentationToBackend(newStore);
-    setStore(newStore);
-    };
+  };
 
   const sendPresentationToBackend = async (newStore) => {
-    const dataToSend = {
-      store: {
-        ...newStore,
-      },
-    };
-
     try {
-      const response = await axios.put('http://localhost:5005/store', dataToSend, {
+      const response = await axios.put('http://localhost:5005/store', newStore, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -50,6 +45,7 @@ export function DashboardHeader({ token }) {
       if (response.status === 200) {
         setPresentationName("");
         toggleModal();
+        onPresentationsUpdated(); 
       } else {
         console.log("Error: ", response.data);
       }
