@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
 import axios from "axios";
@@ -6,7 +6,7 @@ import axios from "axios";
 export default function Dashboard({ token }) {
   const [store, setStore] = useState({ presentations: [] });
 
-  const fetchPresentations = async () => {
+  const fetchPresentations = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:5005/store', {
         headers: {
@@ -24,12 +24,12 @@ export default function Dashboard({ token }) {
     } catch (error) {
       console.error("An error occurred:", error.response ? error.response.data : error.message);
     }
-  };
+  }, [token]);
 
   // UseEffect to fetch presentations on component mount and token change
   useEffect(() => {
     fetchPresentations();
-  }, [token]);
+  }, [fetchPresentations]);
 
   // Function to refresh presentations when a new one is created
   const refreshPresentations = () => {

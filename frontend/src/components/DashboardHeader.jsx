@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-export function DashboardHeader({ token, onPresentationsUpdated, store, setStore }) {
+export function DashboardHeader({ token, onPresentationsUpdated, store }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [presentationName, setPresentationName] = useState("");
 
