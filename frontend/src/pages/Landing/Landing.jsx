@@ -1,5 +1,13 @@
+
+import NavBar from "../../NavBar"
+
+
+// login and register button included in the landing page. 
+
 export default function Landing() {
+
     return (
-        <h1>landing</h1>
+        <NavBar></NavBar>
     )
+
 }
