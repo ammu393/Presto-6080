@@ -1,35 +1,60 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
-export function DashboardHeader() {
+export function DashboardHeader({ token }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [presentationName, setPresentationName] = useState("");
+  const [store, setStore] = useState({ presentations: [] });
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
   const handleCreatePresentation = async () => {
     if (!presentationName.trim()) {
-      alert("Please enter a presentation name.");
+      alert("Please enter a presentation name."); // replace with actual error box 
       return;
     }
 
+    const uniqueId = uuidv4();
+    const newPresentation = {
+      presentationId: uniqueId,
+      title: presentationName,
+    };
+
+    const newStore = {
+      presentations: [...store.presentations, newPresentation],
+    };
+
+    console.log("New Store:", newStore);
+    await sendPresentationToBackend(newStore);
+    setStore(newStore);
+    };
+
+  const sendPresentationToBackend = async (newStore) => {
+    const dataToSend = {
+      store: {
+        ...newStore,
+      },
+    };
+
     try {
-      const uniqueId = uuidv4();
-      const response = await fetch('http://localhost:5005/store', {
-        method: 'PUT',
+      const response = await axios.put('http://localhost:5005/store', dataToSend, {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ name: presentationName })
       });
 
-      if (response.ok) {
+      if (response.status === 200) {
         setPresentationName("");
         toggleModal();
       } else {
+        console.log("Error: ", response.data);
       }
     } catch (error) {
+      console.error(error);
     }
   };
 

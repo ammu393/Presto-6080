@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 //import NavBar from '../../NavBar';
@@ -9,10 +9,13 @@ export default function Register({ token, setTokenFn }) {
   const [password2, setPassword2] = useState('');
   const [name, setName] = useState('');
   const navigate = useNavigate();
-  if (token) {
-	  navigate('/dashboard');
-	  return;
-  }
+
+  useEffect(() => {
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [token, navigate]);
+
   const signup = () => {
 	  console.log(email,password,name)
 	  if (password != password2) {
@@ -22,7 +25,8 @@ export default function Register({ token, setTokenFn }) {
     axios.post('http://localhost:5005/admin/auth/register', {
       email: email,
 	    password: password,
-	    name: name
+	    name: name,
+      presentations: [],
     })
       .then((response) => {
         console.log(response)
