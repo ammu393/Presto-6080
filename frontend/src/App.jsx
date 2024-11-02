@@ -15,15 +15,9 @@ function App() {
   
   useEffect(() => {
     if (localStorage.getItem('token') != null) {
-        setToken(localStorage.getItem('token'));      
+      setToken(localStorage.getItem('token'));      
     }
   },[]);
-
-  const handleNewToken = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
-    Navigate('./dashboard')
-  }
 
   return (
     <BrowserRouter>
