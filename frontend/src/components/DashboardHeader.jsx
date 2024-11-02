@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export function DashboardHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -7,10 +8,29 @@ export function DashboardHeader() {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+  const handleCreatePresentation = async () => {
+    if (!presentationName.trim()) {
+      alert("Please enter a presentation name.");
+      return;
+    }
 
-  const handleCreatePresentation = () => {
-    setPresentationName("");
-    toggleModal();
+    try {
+      const uniqueId = uuidv4();
+      const response = await fetch('http://localhost:5005/store', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: presentationName })
+      });
+
+      if (response.ok) {
+        setPresentationName("");
+        toggleModal();
+      } else {
+      }
+    } catch (error) {
+    }
   };
 
   return (
