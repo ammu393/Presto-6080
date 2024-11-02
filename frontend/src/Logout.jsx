@@ -13,7 +13,7 @@ export default function Logout({ token, setToken}) {
         setToken(null);
         navigate('/');
       })
-      .catch( function(error) {
+      .catch((error) => {
         alert(error.response.data.error);
       });
   }
