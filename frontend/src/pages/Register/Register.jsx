@@ -24,13 +24,13 @@ export default function Register({ token, setTokenFn }) {
 	    password: password,
 	    name: name
     })
-      .then(function (response) {
+      .then((response) => {
         console.log(response)
         localStorage.setItem('token', response.data.token)
         setTokenFn(response.data.token)
         navigate('/dashboard')
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error)
         alert(error.response.data.error)
       })
@@ -50,7 +50,7 @@ export default function Register({ token, setTokenFn }) {
 							  Create an account
               </p>
             </div>
-          <br />
+            <br />
           </div>
           <div className="flex flex-col justify-center items-center">
             <div className="bg-white w-[32rem] h-[35em] rounded shadow-lg">
@@ -116,7 +116,7 @@ export default function Register({ token, setTokenFn }) {
                     className="block py-2 px-2 w-full text-sm text-black border border-[#edeff2] bg-[#f7f8fa] appearance-none focus:outline-[#30b0e3] focus:bg-white focus:ring-0 peer placeholder-transparent"
                     placeholder=" "
                     required
-                    />
+                  />
                   <label
                     className="absolute text-sm px-2 text-gray-500 transition-transform duration-300 transform -translate-y-2 scale-100 top-3 left-0 origin-[0] peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:scale-75 peer-focus:-translate-y-3.5 peer-valid:scale-75 peer-valid:-translate-y-6"
                   >
