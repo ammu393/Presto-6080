@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-
-export function DashboardHeader({ token, onPresentationsUpdated, store }) {
+import Logout from '../Logout';
+export function DashboardHeader({ token, onPresentationsUpdated, store, setToken }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [presentationName, setPresentationName] = useState("");
 
@@ -58,12 +58,13 @@ export function DashboardHeader({ token, onPresentationsUpdated, store }) {
 
   return (
     <header className="flex justify-end bg-[#2f2f33] border-black h-20 p-5">
-      <button 
+        <button 
         onClick={toggleModal} 
         className="bg-transparent hover:bg-zinc-700 text-white font-semibold hover:text-white py-2 px-4 rounded"
       >
         New Presentation
       </button>
+      <Logout token= { token } setToken={ setToken } />
 
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

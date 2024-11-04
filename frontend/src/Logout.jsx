@@ -24,7 +24,7 @@ export default function Logout({ token, setToken }) {
       });
   }
 
-  return <button onClick={logout} className="bg-[#3f4d52] w-[20%] ml-6 text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap"> 
+  return <button onClick={logout} className="bg-transparent hover:bg-zinc-700 text-white font-semibold hover:text-white py-2 px-4 rounded whitespace-nowrap"> 
       Log out
     </button>
 }
