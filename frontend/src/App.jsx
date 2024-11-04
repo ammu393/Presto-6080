@@ -12,21 +12,23 @@ import './index.css';
 
 function App() {
   const [token, setToken] = useState(null);
-  
   useEffect(() => {
     if (localStorage.getItem('token') != null) {
       setToken(localStorage.getItem('token'));      
     }
+    console.log("REFRESH")
   },[]);
+
+  {console.log('outer token' + token)}
+
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/dashboard" element={<Dashboard token={token} />} />
-        <Route path="/login" element={<Login setTokenFn={ setToken } />} />
+        <Route path="/dashboard" element={<Dashboard token={token} setTokenFn= { setToken } />} />
+        <Route path="/login" element={<Login token= { token } setTokenFn={ setToken } />} />
         <Route path="/register" element={<Register token={token} setTokenFn={ setToken } />} />
-
       </Routes>
     </BrowserRouter>
   )
