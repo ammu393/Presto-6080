@@ -14,7 +14,7 @@ export default function Logout({ token, setToken }) {
       headers: { Authorization: `Bearer ${token}` }
     })
   	.then((response) => {
-      console.log(response);
+        console.log(response);
         localStorage.removeItem('token');
         setToken(null);
         navigate('/');
@@ -26,5 +26,5 @@ export default function Logout({ token, setToken }) {
 
   return <button onClick={logout} className="bg-transparent hover:bg-zinc-700 text-white font-semibold hover:text-white py-2 px-4 rounded whitespace-nowrap"> 
       Log out
-    </button>
+  </button>
 }

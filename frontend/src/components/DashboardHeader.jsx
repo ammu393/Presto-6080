@@ -58,7 +58,7 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
 
   return (
     <header className="flex justify-end bg-[#2f2f33] border-black h-20 p-5">
-        <button 
+      <button 
         onClick={toggleModal} 
         className="bg-transparent hover:bg-zinc-700 text-white font-semibold hover:text-white py-2 px-4 rounded"
       >

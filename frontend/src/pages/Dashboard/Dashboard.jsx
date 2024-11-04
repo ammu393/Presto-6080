@@ -2,7 +2,6 @@ import { useEffect, useState, useCallback } from "react";
 import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
 import axios from "axios";
-import Logout from "../../Logout";
 
 export default function Dashboard({ token, setTokenFn }) {
   const [store, setStore] = useState({ presentations: [] });
