@@ -1,12 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 //import NavBar from '../../NavBar';
 
-export default function Login({ setTokenFn }) {
+export default function Login({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      navigate('/dashboard');
+    }
+  }, [token, navigate]);
 
   const login = () => {
     axios.post('http://localhost:5005/admin/auth/login', {
