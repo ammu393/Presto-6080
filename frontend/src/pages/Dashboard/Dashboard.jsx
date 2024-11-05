@@ -33,7 +33,7 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
   }, [fetchPresentations]);
 
   // Function to refresh presentations when a new one is created
- const refreshPresentations = () => {
+  const refreshPresentations = () => {
     fetchPresentations();
   };
 

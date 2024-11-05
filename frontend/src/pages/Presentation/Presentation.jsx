@@ -3,13 +3,17 @@ import PresentationSideBar from '../../components/PresentationSideBar';
 import { useState } from 'react';
 import editIcon from '../../assets/edit.svg';
 import CreateButton from '../../components/CreateButton';
+import Slide from '../../components/Slide';
+
+
 
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
-
-
-  console.log(presentationId);
+  const presentation = store.presentations.find(presentation => presentation.presentationId === presentationId);
+  const slides = presentation.slides
+  const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
+    
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);
   };
@@ -65,8 +69,9 @@ export default function Presentation({ token, store, setStore }) {
               tabIndex={0}
             />
           </div>
-          <div className='flex justify-end absolute top-1/2 right-0 transform -translate-y-1/2 mr-4'>
-          <CreateButton token = { token } store = { store } setStore = { setStore } presentationId = { presentationId } />
+          <Slide displaySlide = {displaySlide} ></Slide>
+          <div className='flex justify-end absolute top-1/2 right-0 transform -translate-y-1/2 mr-2'>
+            <CreateButton setDisplaySlide = { setDisplaySlide } token = { token } store = { store } setStore = { setStore } presentationId = { presentationId } />
           </div>
         </div>
       </div>
