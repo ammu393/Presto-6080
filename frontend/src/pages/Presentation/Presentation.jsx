@@ -69,7 +69,7 @@ export default function Presentation({ token, store, setStore }) {
               tabIndex={0}
             />
           </div>
-          <Slide displaySlide = {displaySlide} ></Slide>
+          {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
           <div className='flex justify-end absolute top-1/2 right-0 transform -translate-y-1/2 mr-2'>
             <CreateButton setDisplaySlide = { setDisplaySlide } token = { token } store = { store } setStore = { setStore } presentationId = { presentationId } />
           </div>
