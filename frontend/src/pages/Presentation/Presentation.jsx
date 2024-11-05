@@ -1,21 +1,60 @@
 import { useParams } from 'react-router-dom';
 import PresentationSideBar from '../../components/PresentationSideBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import editIcon from '../../assets/edit.svg';
+import InputModal from '../../components/InputModal';
+import { putStore } from '../../api';
 
-
-export default function Presentation({ token, store }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+export default function Presentation({ token, store, setStore }) {
   const { presentationId } = useParams();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [presentationInfo, setPresentationInfo] = useState({});
 
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);
   };
 
-  const getTitle = () => {
-    const presentationInfo = store.presentations.filter(p => p.presentationId === presentationId)[0];
-    return presentationInfo.title;
-  }
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleTitleUpdate = async (newTitle) => {
+    const updatedPresentationInfo = { 
+      presentationId: presentationId,
+      title: newTitle,
+      description: presentationInfo.description,
+      slides: presentationInfo.slides,
+    };
+    console.log(presentationInfo)
+    setPresentationInfo(updatedPresentationInfo);
+    console.log(updatedPresentationInfo)
+
+    // Create a new array of presentations with the updated title
+    const updatedPresentations = store.presentations.map(p => {
+      if (p.presentationId === presentationId) {
+        return updatedPresentationInfo; // Return the updated presentation object
+      }
+      return p; // Return the original presentation object if it doesn't match
+    });
+    const newStore = { presentations: updatedPresentations }
+    setStore(newStore);
+    console.log(newStore)
+    await putStore({ store: newStore }, token, toggleModal);
+  };
+
+  useEffect(() => {
+    const getPresentationInfo = () => {
+      const presentation = store.presentations.find(
+        (p) => p.presentationId === presentationId
+      );
+      return presentation || {};
+    };
+
+    console.log(store);
+
+    setPresentationInfo(getPresentationInfo());
+  }, [presentationId, store.presentations]);
 
   return (
     <>
@@ -55,15 +94,26 @@ export default function Presentation({ token, store }) {
             </svg>
           </button>
           <div className="flex flex-row gap-6">
-            <h1 className="text-4xl">{getTitle()}</h1>
+            <h1 className="text-4xl">{presentationInfo.title}</h1>
             <img
               src={editIcon}
               alt="Edit Icon"
               className="w-6 cursor-pointer transition-transform duration-200 hover:scale-110 hover:border"
               tabIndex={0}
+              onClick={toggleModal}
             />
           </div>
         </div>
+        {isModalOpen && (
+          <InputModal 
+            title="Edit Presentation Title"
+            placeholder="Enter New Title"
+            submitText="Submit"
+            isOpen={isModalOpen}
+            onClose={toggleModal}
+            onSubmit={handleTitleUpdate}
+          />
+        )}
       </div>
     </>
   );

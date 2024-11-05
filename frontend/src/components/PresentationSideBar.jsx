@@ -5,6 +5,7 @@ import dashboardIcon from '../assets/dashboard.svg';
 import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmationModal } from './ConfirmationModal';
 import axios from 'axios';
+import { putStore } from '../api';
 
 export default function PresentationSideBar({ token, store, isSidebarOpen, toggleSidebar }) {
   const [isModalOpen, setIsModalOpen] = useState(false); // State for the modal
@@ -36,23 +37,12 @@ export default function PresentationSideBar({ token, store, isSidebarOpen, toggl
       store: { presentations: updatedPresentations } 
     };
 
-    try {
-      const response = await axios.put('http://localhost:5005/store', newStore, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        closeModal();
-        goToDashboard();
-      } else {
-        console.log("Error: ", response.data);
-      }
-    } catch (error) {
-      console.error("Failed to delete presentation:", error);
+    const onSuccess = () => {
+      closeModal();
+      goToDashboard();
     }
+
+    await putStore(newStore, token, onSuccess);
   };
 
 
