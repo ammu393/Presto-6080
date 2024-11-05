@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import Logout from '../Logout';
+import Logout from './Logout';
 export function DashboardHeader({ token, onPresentationsUpdated, store, setToken }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [presentationName, setPresentationName] = useState("");
@@ -24,6 +24,7 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
       title: presentationName,
       description: "",
       numSlides: 0,
+      slides: []
     };
 
     const currentPresentations = store.presentations || [];
