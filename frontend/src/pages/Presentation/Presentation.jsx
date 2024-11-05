@@ -2,12 +2,14 @@ import { useParams } from 'react-router-dom';
 import PresentationSideBar from '../../components/PresentationSideBar';
 import { useState } from 'react';
 import editIcon from '../../assets/edit.svg';
+import CreateButton from '../../components/CreateButton';
 
-
-export default function Presentation({ token, store }) {
+export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
 
+
+  console.log(presentationId);
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);
   };
@@ -62,6 +64,9 @@ export default function Presentation({ token, store }) {
               className="w-6 cursor-pointer transition-transform duration-200 hover:scale-110 hover:border"
               tabIndex={0}
             />
+          </div>
+          <div className='flex justify-end absolute top-1/2 right-0 transform -translate-y-1/2 mr-4'>
+          <CreateButton token = { token } store = { store } setStore = { setStore } presentationId = { presentationId } />
           </div>
         </div>
       </div>
