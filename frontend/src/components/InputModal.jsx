@@ -41,7 +41,7 @@ export default function InputModal({
               type="button"
               onClick={() => {
                 onClose();
-                setInputValue(""); // Clear input on cancel
+                setInputValue("");
               }}
               className="bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded"
             >
