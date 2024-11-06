@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import PresentationSideBar from '../../components/PresentationSideBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import editIcon from '../../assets/edit.svg';
 import CreateButton from '../../components/CreateButton';
 import Slide from '../../components/Slide';
-
-
+import UpArrow from '../../components/UpArrow';
+import DownArrow from '../../components/DownArrow';
 
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,16 +13,39 @@ export default function Presentation({ token, store, setStore }) {
   const presentation = store.presentations.find(presentation => presentation.presentationId === presentationId);
   const slides = presentation.slides
   const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
-    
+  const [isFirstSlide, setIsFirstSlide] = useState(false);
+  const [isLastSlide, setIsLastSlide] = useState(true);
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);
   };
+
+  useEffect(() => {
+    const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
+    setIsFirstSlide(currentIndex === 0);
+    setIsLastSlide(currentIndex === slides.length - 1);
+  }, [displaySlide, slides]);
 
   const getTitle = () => {
     const presentationInfo = store.presentations.filter(p => p.presentationId === presentationId)[0];
     return presentationInfo.title;
   }
+  const moveSlideUp = () => {
+    const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
+    if (currentIndex > 0) {
+      setDisplaySlide(slides[currentIndex - 1]);
+    }
+    console.log(displaySlide)
+  };
+  
+  const moveSlideDown = () => {
+    const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
 
+    if (currentIndex < slides.length - 1) {
+      setDisplaySlide(slides[currentIndex + 1]);
+    }
+    console.log(displaySlide)
+
+  };
   return (
     <>
       <div className="flex h-screen">
@@ -70,9 +93,19 @@ export default function Presentation({ token, store, setStore }) {
             />
           </div>
           {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
-          <div className='flex justify-end absolute top-1/2 right-0 transform -translate-y-1/2 mr-2'>
-            <CreateButton setDisplaySlide = { setDisplaySlide } token = { token } store = { store } setStore = { setStore } presentationId = { presentationId } />
-          </div>
+          <div className='flex flex-col items-end absolute top-1/2 right-0 transform -translate-y-1/2 mr-2'>
+  <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
+  <div className="mt-10 h-8">
+  <div className={isFirstSlide ? 'invisible' : ''}>
+      <UpArrow onClick={moveSlideUp} />
+    </div>
+    <div className={isLastSlide ? 'invisible' : ''}>
+      <DownArrow onClick={moveSlideDown} />
+    </div>
+
+  </div>
+</div>
+
         </div>
       </div>
     </>
