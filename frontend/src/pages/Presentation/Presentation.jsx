@@ -96,12 +96,16 @@ export default function Presentation({ token, store, setStore }) {
           <div className='flex flex-col items-end absolute top-1/2 right-0 transform -translate-y-1/2 mr-2'>
             <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
             <div className="mt-10 h-8">
-              <div className={isFirstSlide ? 'invisible' : ''}>
-                <UpArrow onClick={moveSlideUp} />
-              </div>
-              <div className={isLastSlide ? 'invisible' : ''}>
-                <DownArrow onClick={moveSlideDown} />
-              </div>
+              {slides.length > 0 && (
+                <div className="mt-10 h-8">
+                  <div className={isFirstSlide ? 'invisible' : ''}>
+                    <UpArrow onClick={moveSlideUp} />
+                  </div>
+                  <div className={isLastSlide ? 'invisible' : ''}>
+                    <DownArrow onClick={moveSlideDown} />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
