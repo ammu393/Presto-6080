@@ -49,7 +49,7 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
                   key={presentation.presentationId}
                   title={presentation.title}
                   description={presentation.description}
-                  numSlides={presentation.numSlides}
+                  numSlides={presentation.slides.length}
                   presentationId={presentation.presentationId}
                 />
               ))}

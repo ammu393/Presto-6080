@@ -6,6 +6,8 @@ import CreateButton from '../../components/CreateButton';
 import Slide from '../../components/Slide';
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
+import InputModal from '../../components/InputModal';
+import { putStore } from '../../api';
 
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -15,6 +17,9 @@ export default function Presentation({ token, store, setStore }) {
   const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
   const [isFirstSlide, setIsFirstSlide] = useState(false);
   const [isLastSlide, setIsLastSlide] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [presentationInfo, setPresentationInfo] = useState({});
+
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);
   };
@@ -39,6 +44,46 @@ export default function Presentation({ token, store, setStore }) {
   
   const moveSlideDown = () => {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleTitleUpdate = async (newTitle) => {
+    const updatedPresentationInfo = { 
+      presentationId: presentationId,
+      title: newTitle,
+      description: presentationInfo.description,
+      slides: presentationInfo.slides,
+    };
+    console.log(presentationInfo)
+    setPresentationInfo(updatedPresentationInfo);
+    console.log(updatedPresentationInfo)
+
+    // Create a new array of presentations with the updated title
+    const updatedPresentations = store.presentations.map(p => {
+      if (p.presentationId === presentationId) {
+        return updatedPresentationInfo; // Return the updated presentation object
+      }
+      return p; // Return the original presentation object if it doesn't match
+    });
+    const newStore = { presentations: updatedPresentations }
+    setStore(newStore);
+    console.log(newStore)
+    await putStore({ store: newStore }, token, toggleModal);
+  };
+
+  useEffect(() => {
+    const getPresentationInfo = () => {
+      const presentation = store.presentations.find(
+        (p) => p.presentationId === presentationId
+      );
+      return presentation || {};
+    };
+
+    console.log(store);
+
+    setPresentationInfo(getPresentationInfo());
+  }, [presentationId, store.presentations]);
 
     if (currentIndex < slides.length - 1) {
       setDisplaySlide(slides[currentIndex + 1]);
@@ -84,12 +129,13 @@ export default function Presentation({ token, store, setStore }) {
             </svg>
           </button>
           <div className="flex flex-row gap-6">
-            <h1 className="text-4xl">{getTitle()}</h1>
+            <h1 className="text-4xl">{presentationInfo.title}</h1>
             <img
               src={editIcon}
               alt="Edit Icon"
               className="w-6 cursor-pointer transition-transform duration-200 hover:scale-110 hover:border"
               tabIndex={0}
+              onClick={toggleModal}
             />
           </div>
           {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
@@ -110,7 +156,18 @@ export default function Presentation({ token, store, setStore }) {
             </div>
           </div>
         </div>
+        {isModalOpen && (
+          <InputModal 
+            title="Edit Presentation Title"
+            placeholder="Enter New Title"
+            submitText="Submit"
+            isOpen={isModalOpen}
+            onClose={toggleModal}
+            onSubmit={handleTitleUpdate}
+          />
+        )}
       </div>
     </>
   );
+
 }
