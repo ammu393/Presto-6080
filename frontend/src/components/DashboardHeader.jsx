@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
 import Logout from '../components/Logout';
 import InputModal from './InputModal';
 import { putStore } from '../api';
@@ -54,14 +53,14 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
       <Logout token= { token } setToken={ setToken } />
 
       {isModalOpen && (
-          <InputModal 
-            title="Create New Presentation"
-            placeholder="Enter Presentation Name"
-            submitText="Create"
-            isOpen={isModalOpen}
-            onClose={toggleModal}
-            onSubmit={handleCreatePresentation}
-          />
+        <InputModal 
+          title="Create New Presentation"
+          placeholder="Enter Presentation Name"
+          submitText="Create"
+          isOpen={isModalOpen}
+          onClose={toggleModal}
+          onSubmit={handleCreatePresentation}
+        />
       )}
     </header>
   );

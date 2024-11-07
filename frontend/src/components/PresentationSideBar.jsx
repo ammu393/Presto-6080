@@ -4,7 +4,6 @@ import trashIcon from '../assets/trash.svg';
 import dashboardIcon from '../assets/dashboard.svg';
 import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmationModal } from './ConfirmationModal';
-import axios from 'axios';
 import { putStore } from '../api';
 
 export default function PresentationSideBar({ token, store, isSidebarOpen, toggleSidebar }) {
