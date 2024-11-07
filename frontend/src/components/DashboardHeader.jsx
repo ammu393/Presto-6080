@@ -19,9 +19,9 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
     const uniqueId = uuidv4();
     const newPresentation = {
       presentationId: uniqueId,
+      thumbnail: "",
       title: presentationName,
       description: "",
-      numSlides: 0,
       slides: []
     };
 

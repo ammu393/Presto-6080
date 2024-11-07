@@ -6,6 +6,8 @@ import CreateButton from '../../components/CreateButton';
 import Slide from '../../components/Slide';
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
+import InputModal from '../../components/InputModal';
+import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
 
 
@@ -13,7 +15,8 @@ export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
   const presentation = store.presentations.find(presentation => presentation.presentationId === presentationId);
-  const slides = presentation.slides
+  const [slides, setSlides] = useState(presentation.slides);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
   const [isFirstSlide, setIsFirstSlide] = useState(false);
   const [isLastSlide, setIsLastSlide] = useState(true);
@@ -25,6 +28,18 @@ export default function Presentation({ token, store, setStore }) {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
     setIsFirstSlide(currentIndex === 0);
     setIsLastSlide(currentIndex === slides.length - 1);
+
+    // const getPresentationInfo = () => {
+    //   const presentation = store.presentations.find(
+    //     (p) => p.presentationId === presentationId
+    //   );
+    //   return presentation || {};
+    // };
+
+    // setPresentationInfo(getPresentationInfo());
+
+
+
   }, [displaySlide, slides]);
 
   const getTitle = () => {
@@ -48,6 +63,24 @@ export default function Presentation({ token, store, setStore }) {
     console.log(displaySlide)
 
   };
+
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleTitleUpdate = async (newTitle) => {
+    const updatedPresentations = store.presentations.map(p => 
+      p.presentationId === presentationId ? { ...p, title: newTitle } : p
+    );
+  
+    const newStore = { presentations: updatedPresentations };
+    
+    setStore(newStore);
+    await putStore({ store: newStore }, token, toggleModal);
+  };
+
+  console.log(presentation);
   return (
     <>
       <div className="flex h-screen">
@@ -67,7 +100,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} presentation={presentation} />
 
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
@@ -85,6 +118,7 @@ export default function Presentation({ token, store, setStore }) {
               />
             </svg>
           </button>
+
           <div className="flex flex-row gap-6">
             <h1 className="text-4xl">{getTitle()}</h1>
             <img
@@ -92,8 +126,10 @@ export default function Presentation({ token, store, setStore }) {
               alt="Edit Icon"
               className="w-6 cursor-pointer transition-transform duration-200 hover:scale-110 hover:border"
               tabIndex={0}
+              onClick={toggleModal}
             />
           </div>
+
           <div className="aspect-Slide">
             {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
             <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>  
@@ -116,6 +152,17 @@ export default function Presentation({ token, store, setStore }) {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <InputModal 
+          title="Edit Presentation Title"
+          placeholder="Enter New Title"
+          submitText="Submit"
+          isOpen={isModalOpen}
+          onClose={toggleModal}
+          onSubmit={handleTitleUpdate}
+        />
+      )}
     </>
   );
 }

@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { PresentationSideBarItem } from './PresentationSideBarItem';
 import trashIcon from '../assets/trash.svg';
 import dashboardIcon from '../assets/dashboard.svg';
+import editIcon from '../assets/edit.svg';
 import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmationModal } from './ConfirmationModal';
 import { putStore } from '../api';
+import InputModal from './InputModal';
 
-export default function PresentationSideBar({ token, store, isSidebarOpen, toggleSidebar }) {
-  const [isModalOpen, setIsModalOpen] = useState(false); // State for the modal
+export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, presentation }) {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
   const [presentationIdToDelete, setPresentationIdToDelete] = useState(null);
   const { presentationId } = useParams();
   const navigate = useNavigate();
@@ -16,13 +19,13 @@ export default function PresentationSideBar({ token, store, isSidebarOpen, toggl
     navigate("/dashboard");
   }
 
-  const openModal = () => {
+  const openDeleteModal = () => {
     setPresentationIdToDelete(presentationId);
-    setIsModalOpen(true);
+    setIsDeleteModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
   };
 
   const handleDeleteConfirmation = async () => {
@@ -37,13 +40,31 @@ export default function PresentationSideBar({ token, store, isSidebarOpen, toggl
     };
 
     const onSuccess = () => {
-      closeModal();
+      closeDeleteModal();
       goToDashboard();
     }
 
     await putStore(newStore, token, onSuccess);
   };
 
+  const openThumbnailModal = () => {
+    setIsThumbnailModalOpen(true);
+  }
+
+  const closeThumbnailModal = () => {
+    setIsThumbnailModalOpen(false);
+  }
+
+  const handleThumbnailEdit = async (newThumbnail) => {
+    const updatedPresentations = store.presentations.map(p => 
+      p.presentationId === presentationId ? { ...p, thumbnail: newThumbnail } : p
+    );
+    
+    const newStore = { presentations: updatedPresentations }
+
+    setStore(newStore);
+    await putStore({ store: newStore }, token, closeThumbnailModal);
+  }
 
   return (
     <>
@@ -66,14 +87,23 @@ export default function PresentationSideBar({ token, store, isSidebarOpen, toggl
         <div className="h-full px-3 py-4 overflow-y-auto bg-[#222225] dark:bg-gray-800 z-50">
           <ul className="space-y-2 font-medium">
             <PresentationSideBarItem text="Back to Dashboard" icon={dashboardIcon} onClick={goToDashboard} />
-            <PresentationSideBarItem text="Delete Presentation" icon={trashIcon} onClick={openModal} />
+            <PresentationSideBarItem text="Edit Thumbnail" icon={editIcon} onClick={openThumbnailModal} />
+            <PresentationSideBarItem text="Delete Presentation" icon={trashIcon} onClick={openDeleteModal} />
           </ul>
         </div>
       </aside>
       <ConfirmationModal 
-        isOpen={isModalOpen} 
-        onClose={closeModal} 
+        isOpen={isDeleteModalOpen} 
+        onClose={closeDeleteModal} 
         onConfirm={handleDeleteConfirmation} 
+      />
+      <InputModal
+        title="Edit Thumbnail" 
+        placeholder="Enter Image URL"
+        submitText="Save"
+        isOpen={isThumbnailModalOpen}
+        onClose={closeThumbnailModal}
+        onSubmit={handleThumbnailEdit}
       />
     </>
   );
