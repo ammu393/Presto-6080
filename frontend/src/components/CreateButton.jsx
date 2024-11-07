@@ -102,7 +102,7 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
 
     
   return (
-    <a href="#" className="flex items-center p-2 text-white rounded-lg"
+    <a href="#" className="flex items-center p-2 text-white rounded-lg ml-1"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={(event) => {
