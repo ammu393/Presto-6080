@@ -95,26 +95,24 @@ export default function Presentation({ token, store, setStore }) {
             />
           </div>
           <div className="aspect-Slide">
-          {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
-          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>  
-  <div className="h-8">
-    {/* Only display arrows if slides are present */}
-    <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
-
-    {slides.length > 0 && (
-      <div className="mt-5 h-8">
-        <div className={isFirstSlide ? 'invisible' : ''}>
-          <UpArrow onClick={moveSlideUp} />
-        </div>
-        <div className={isLastSlide ? 'invisible' : ''}>
-          <DownArrow onClick={moveSlideDown} />
-        </div>
-        <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} className="mt-5"/>
-
-      </div>
-    )}
-  </div>
-</div>
+            {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
+            <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>  
+              <div className="h-8">
+                {/* Only display arrows if slides are present */}
+                <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
+                {slides.length > 0 && (
+                  <div className="mt-5 h-8">
+                    <div className={isFirstSlide ? 'invisible' : ''}>
+                      <UpArrow onClick={moveSlideUp} />
+                    </div>
+                    <div className={isLastSlide ? 'invisible' : ''}>
+                      <DownArrow onClick={moveSlideDown} />
+                    </div>
+                    <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} className="mt-5"/>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
