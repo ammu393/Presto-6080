@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-import Logout from '../Logout';
+import Logout from '../components/Logout';
 import InputModal from './InputModal';
 import { putStore } from '../api';
 export function DashboardHeader({ token, onPresentationsUpdated, store, setToken }) {
@@ -22,7 +22,8 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
       presentationId: uniqueId,
       title: presentationName,
       description: "",
-      slides: [],
+      numSlides: 0,
+      slides: []
     };
 
     const currentPresentations = store.presentations || [];

@@ -1,6 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
+//import { Slide } from "../../components/Slide";
+
 import axios from "axios";
 
 export default function Dashboard({ token, store, setStore, setTokenFn }) {
@@ -16,6 +18,7 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
       if (response.status === 200) {
         console.log(response);
         setStore(response.data.store);
+        console.log(store)
       } else {
         console.log("Error: ", response.data);
       }

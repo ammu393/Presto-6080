@@ -2,60 +2,50 @@ import { useParams } from 'react-router-dom';
 import PresentationSideBar from '../../components/PresentationSideBar';
 import { useEffect, useState } from 'react';
 import editIcon from '../../assets/edit.svg';
-import InputModal from '../../components/InputModal';
-import { putStore } from '../../api';
+import CreateButton from '../../components/CreateButton';
+import Slide from '../../components/Slide';
+import UpArrow from '../../components/UpArrow';
+import DownArrow from '../../components/DownArrow';
 
 export default function Presentation({ token, store, setStore }) {
-  const { presentationId } = useParams();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [presentationInfo, setPresentationInfo] = useState({});
-
+  const { presentationId } = useParams();
+  const presentation = store.presentations.find(presentation => presentation.presentationId === presentationId);
+  const slides = presentation.slides
+  const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
+  const [isFirstSlide, setIsFirstSlide] = useState(false);
+  const [isLastSlide, setIsLastSlide] = useState(true);
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);
   };
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
-
-  const handleTitleUpdate = async (newTitle) => {
-    const updatedPresentationInfo = { 
-      presentationId: presentationId,
-      title: newTitle,
-      description: presentationInfo.description,
-      slides: presentationInfo.slides,
-    };
-    console.log(presentationInfo)
-    setPresentationInfo(updatedPresentationInfo);
-    console.log(updatedPresentationInfo)
-
-    // Create a new array of presentations with the updated title
-    const updatedPresentations = store.presentations.map(p => {
-      if (p.presentationId === presentationId) {
-        return updatedPresentationInfo; // Return the updated presentation object
-      }
-      return p; // Return the original presentation object if it doesn't match
-    });
-    const newStore = { presentations: updatedPresentations }
-    setStore(newStore);
-    console.log(newStore)
-    await putStore({ store: newStore }, token, toggleModal);
-  };
-
   useEffect(() => {
-    const getPresentationInfo = () => {
-      const presentation = store.presentations.find(
-        (p) => p.presentationId === presentationId
-      );
-      return presentation || {};
-    };
+    const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
+    setIsFirstSlide(currentIndex === 0);
+    setIsLastSlide(currentIndex === slides.length - 1);
+  }, [displaySlide, slides]);
 
-    console.log(store);
+  const getTitle = () => {
+    const presentationInfo = store.presentations.filter(p => p.presentationId === presentationId)[0];
+    return presentationInfo.title;
+  }
+  const moveSlideUp = () => {
+    const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
+    if (currentIndex > 0) {
+      setDisplaySlide(slides[currentIndex - 1]);
+    }
+    console.log(displaySlide)
+  };
+  
+  const moveSlideDown = () => {
+    const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
 
-    setPresentationInfo(getPresentationInfo());
-  }, [presentationId, store.presentations]);
+    if (currentIndex < slides.length - 1) {
+      setDisplaySlide(slides[currentIndex + 1]);
+    }
+    console.log(displaySlide)
 
+  };
   return (
     <>
       <div className="flex h-screen">
@@ -77,7 +67,7 @@ export default function Presentation({ token, store, setStore }) {
 
         <PresentationSideBar token={token} store={store} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
 
-        <div className="flex-1 p-8 bg-gray-100">
+        <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}
             aria-controls="default-sidebar"
@@ -94,26 +84,35 @@ export default function Presentation({ token, store, setStore }) {
             </svg>
           </button>
           <div className="flex flex-row gap-6">
-            <h1 className="text-4xl">{presentationInfo.title}</h1>
+            <h1 className="text-4xl">{getTitle()}</h1>
             <img
               src={editIcon}
               alt="Edit Icon"
               className="w-6 cursor-pointer transition-transform duration-200 hover:scale-110 hover:border"
               tabIndex={0}
-              onClick={toggleModal}
             />
           </div>
+          <div className="aspect-Slide">
+          {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
+          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
+  <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
+  
+  <div className="h-8">
+    {/* Only display arrows if slides are present */}
+    {slides.length > 0 && (
+      <div className="mt-10 h-8">
+        <div className={isFirstSlide ? 'invisible' : ''}>
+          <UpArrow onClick={moveSlideUp} />
         </div>
-        {isModalOpen && (
-          <InputModal 
-            title="Edit Presentation Title"
-            placeholder="Enter New Title"
-            submitText="Submit"
-            isOpen={isModalOpen}
-            onClose={toggleModal}
-            onSubmit={handleTitleUpdate}
-          />
-        )}
+        <div className={isLastSlide ? 'invisible' : ''}>
+          <DownArrow onClick={moveSlideDown} />
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+          </div>
+        </div>
       </div>
     </>
   );
