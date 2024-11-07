@@ -16,9 +16,7 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
       });
 
       if (response.status === 200) {
-        console.log(response);
         setStore(response.data.store);
-        console.log(store)
       } else {
         console.log("Error: ", response.data);
       }
@@ -51,6 +49,7 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
                   description={presentation.description}
                   numSlides={presentation.slides.length}
                   presentationId={presentation.presentationId}
+                  thumbnail={presentation.thumbnail}
                 />
               ))}
             </div>

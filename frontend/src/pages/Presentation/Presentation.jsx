@@ -26,6 +26,18 @@ export default function Presentation({ token, store, setStore }) {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
     setIsFirstSlide(currentIndex === 0);
     setIsLastSlide(currentIndex === slides.length - 1);
+
+    // const getPresentationInfo = () => {
+    //   const presentation = store.presentations.find(
+    //     (p) => p.presentationId === presentationId
+    //   );
+    //   return presentation || {};
+    // };
+
+    // setPresentationInfo(getPresentationInfo());
+
+
+
   }, [displaySlide, slides]);
 
   const getTitle = () => {
@@ -56,39 +68,17 @@ export default function Presentation({ token, store, setStore }) {
   };
 
   const handleTitleUpdate = async (newTitle) => {
-    const updatedPresentationInfo = { 
-      presentationId: presentationId,
-      title: newTitle,
-      description: presentation.description,
-      slides: presentation.slides,
-    };
-    console.log(updatedPresentationInfo)
-
-    // Create a new array of presentations with the updated title
-    const updatedPresentations = store.presentations.map(p => {
-      if (p.presentationId === presentationId) {
-        return updatedPresentationInfo; // Return the updated presentation object
-      }
-      return p; // Return the original presentation object if it doesn't match
-    });
-    const newStore = { presentations: updatedPresentations }
+    const updatedPresentations = store.presentations.map(p => 
+      p.presentationId === presentationId ? { ...p, title: newTitle } : p
+    );
+  
+    const newStore = { presentations: updatedPresentations };
+    
     setStore(newStore);
-    console.log(newStore)
     await putStore({ store: newStore }, token, toggleModal);
   };
 
-  // useEffect(() => {
-  //   const getPresentationInfo = () => {
-  //     const presentation = store.presentations.find(
-  //       (p) => p.presentationId === presentationId
-  //     );
-  //     return presentation || {};
-  //   };
-
-  //   console.log(store);
-
-  // }, [presentationId, store.presentations]);
-
+  console.log(presentation);
   return (
     <>
       <div className="flex h-screen">
@@ -108,7 +98,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} presentation={presentation} />
 
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button

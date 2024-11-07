@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export function PresentationCard({ title, description, numSlides, presentationId }) {
+export function PresentationCard({ title, description, numSlides, presentationId, thumbnail }) {
   const navigate = useNavigate();
   const goToPresentationPage = () => {
     navigate(`/presentations/${presentationId}`);
@@ -14,8 +14,16 @@ export function PresentationCard({ title, description, numSlides, presentationId
       aria-label="Presentation Card"
       onClick={goToPresentationPage}
     >
-      <div className="w-full h-3/4 bg-gray-300 mb-2 flex items-center justify-center">
-        <span className="text-sm text-gray-500">No Thumbnail</span>
+      <div className="w-full h-3/4 bg-gray-300 mb-2 flex items-center justify-center overflow-hidden">
+        {thumbnail ? (
+          <img 
+            src={thumbnail} 
+            alt={`${title} Thumbnail`} 
+            className="object-cover w-full h-full"
+          />
+        ) : (
+          <span className="text-sm text-gray-500">No Thumbnail</span>
+        )}
       </div>
       <h3 className="text-lg font-semibold mb-1">{title}</h3>
       {description && (
@@ -23,5 +31,5 @@ export function PresentationCard({ title, description, numSlides, presentationId
       )}
       <span className="text-xs text-gray-500">Number of Slides: {numSlides}</span>
     </div>
-  )
+  );
 }

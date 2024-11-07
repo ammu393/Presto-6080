@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import axios from 'axios';
 import Logout from '../components/Logout';
 import InputModal from './InputModal';
 import { putStore } from '../api';
@@ -20,9 +19,9 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
     const uniqueId = uuidv4();
     const newPresentation = {
       presentationId: uniqueId,
+      thumbnail: "",
       title: presentationName,
       description: "",
-      numSlides: 0,
       slides: []
     };
 
