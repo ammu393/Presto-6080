@@ -7,6 +7,8 @@ import Slide from '../../components/Slide';
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
 import DeleteButon from '../../components/DeleteButton';
+
+
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
@@ -107,7 +109,7 @@ export default function Presentation({ token, store, setStore }) {
         <div className={isLastSlide ? 'invisible' : ''}>
           <DownArrow onClick={moveSlideDown} />
         </div>
-        <DeleteButon className="mt-5"/>
+        <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} className="mt-5"/>
 
       </div>
     )}
