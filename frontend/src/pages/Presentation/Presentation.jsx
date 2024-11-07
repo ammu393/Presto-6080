@@ -6,12 +6,15 @@ import CreateButton from '../../components/CreateButton';
 import Slide from '../../components/Slide';
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
+import InputModal from '../../components/InputModal';
+import { putStore } from '../../api';
 
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
   const presentation = store.presentations.find(presentation => presentation.presentationId === presentationId);
-  const slides = presentation.slides
+  const [slides, setSlides] = useState(presentation.slides);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
   const [isFirstSlide, setIsFirstSlide] = useState(false);
   const [isLastSlide, setIsLastSlide] = useState(true);
@@ -46,6 +49,46 @@ export default function Presentation({ token, store, setStore }) {
     console.log(displaySlide)
 
   };
+
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleTitleUpdate = async (newTitle) => {
+    const updatedPresentationInfo = { 
+      presentationId: presentationId,
+      title: newTitle,
+      description: presentation.description,
+      slides: presentation.slides,
+    };
+    console.log(updatedPresentationInfo)
+
+    // Create a new array of presentations with the updated title
+    const updatedPresentations = store.presentations.map(p => {
+      if (p.presentationId === presentationId) {
+        return updatedPresentationInfo; // Return the updated presentation object
+      }
+      return p; // Return the original presentation object if it doesn't match
+    });
+    const newStore = { presentations: updatedPresentations }
+    setStore(newStore);
+    console.log(newStore)
+    await putStore({ store: newStore }, token, toggleModal);
+  };
+
+  // useEffect(() => {
+  //   const getPresentationInfo = () => {
+  //     const presentation = store.presentations.find(
+  //       (p) => p.presentationId === presentationId
+  //     );
+  //     return presentation || {};
+  //   };
+
+  //   console.log(store);
+
+  // }, [presentationId, store.presentations]);
+
   return (
     <>
       <div className="flex h-screen">
@@ -83,6 +126,7 @@ export default function Presentation({ token, store, setStore }) {
               />
             </svg>
           </button>
+
           <div className="flex flex-row gap-6">
             <h1 className="text-4xl">{getTitle()}</h1>
             <img
@@ -90,30 +134,43 @@ export default function Presentation({ token, store, setStore }) {
               alt="Edit Icon"
               className="w-6 cursor-pointer transition-transform duration-200 hover:scale-110 hover:border"
               tabIndex={0}
+              onClick={toggleModal}
             />
           </div>
+
           <div className="aspect-Slide">
-          {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
-          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
-  <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
-  
-  <div className="h-8">
-    {/* Only display arrows if slides are present */}
-    {slides.length > 0 && (
-      <div className="mt-10 h-8">
-        <div className={isFirstSlide ? 'invisible' : ''}>
-          <UpArrow onClick={moveSlideUp} />
-        </div>
-        <div className={isLastSlide ? 'invisible' : ''}>
-          <DownArrow onClick={moveSlideDown} />
-        </div>
-      </div>
-    )}
-  </div>
-</div>
+            {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
+
+            <div className="h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1 pb-5">
+              <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
+
+              <div className="h-8">
+                {slides.length > 0 && (
+                  <div className="mt-10 h-8">
+                    <div className={isFirstSlide ? 'invisible' : ''}>
+                      <UpArrow onClick={moveSlideUp} />
+                    </div>
+                    <div className={isLastSlide ? 'invisible' : ''}>
+                      <DownArrow onClick={moveSlideDown} />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <InputModal 
+          title="Edit Presentation Title"
+          placeholder="Enter New Title"
+          submitText="Submit"
+          isOpen={isModalOpen}
+          onClose={toggleModal}
+          onSubmit={handleTitleUpdate}
+        />
+      )}
     </>
   );
 }
