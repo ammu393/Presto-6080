@@ -53,14 +53,14 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
       <Logout token= { token } setToken={ setToken } />
 
       {isModalOpen && (
-          <InputModal 
-            title="Create New Presentation"
-            placeholder="Enter Presentation Name"
-            submitText="Create"
-            isOpen={isModalOpen}
-            onClose={toggleModal}
-            onSubmit={handleCreatePresentation}
-          />
+        <InputModal 
+          title="Create New Presentation"
+          placeholder="Enter Presentation Name"
+          submitText="Create"
+          isOpen={isModalOpen}
+          onClose={toggleModal}
+          onSubmit={handleCreatePresentation}
+        />
       )}
     </header>
   );

@@ -6,7 +6,7 @@ export default function DownArrow( {onClick } ) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <a href="#" className="flex items-center p-2 text-white rounded-lg"
+    <a href="#" className="flex items-center p-2 text-white rounded-lg mb-5"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={(e) => {
