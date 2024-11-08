@@ -12,7 +12,7 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
 
     const newSlide = {
       slideId: uniqueSlideId,
-      // will add other properties later
+      elements: [],
     }; 
 
     setDisplaySlide(newSlide)
