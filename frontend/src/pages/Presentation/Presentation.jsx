@@ -131,8 +131,14 @@ export default function Presentation({ token, store, setStore }) {
           </div>
 
           <div className="aspect-Slide">
-            {displaySlide?.slideId ? <Slide displaySlide={displaySlide} /> : null}
-            <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>  
+            {displaySlide?.slideId && (
+              <Slide 
+                displaySlide={displaySlide} 
+                slides = {slides}
+              />
+            )}
+          </div>            
+          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>  
               <div className="h-8">
                 {/* Only display arrows if slides are present */}
                 <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
@@ -151,7 +157,6 @@ export default function Presentation({ token, store, setStore }) {
             </div>
           </div>
         </div>
-      </div>
 
       {isModalOpen && (
         <InputModal 
