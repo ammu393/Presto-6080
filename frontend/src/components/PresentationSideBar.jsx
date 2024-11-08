@@ -8,7 +8,7 @@ import { ConfirmationModal } from './ConfirmationModal';
 import { putStore } from '../api';
 import InputModal from './InputModal';
 
-export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, presentation }) {
+export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
   const [presentationIdToDelete, setPresentationIdToDelete] = useState(null);

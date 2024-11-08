@@ -1,7 +1,4 @@
-import { useState } from "react";
-
-
-export default function Slide(displaySlide, slides) {
+export default function Slide(displaySlide) {
 
   console.log(displaySlide.displaySlide)
   console.log(displaySlide.slides)
@@ -11,7 +8,7 @@ export default function Slide(displaySlide, slides) {
       <p className="text-gray-800 justify-center">{displaySlide.displaySlide.slideId}</p>
       <div
         className=" absolute bottom-11 left-15 text-[#1f2a38] text-sm w-[10vw] h-[10vw] max-w-[50px] max-h-[50px] flex justify-center items-center text-base" 
-        >
+      >
         {slideNum + 1}
       </div>
     </div>
