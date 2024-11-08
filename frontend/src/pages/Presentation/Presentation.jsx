@@ -31,17 +31,6 @@ export default function Presentation({ token, store, setStore }) {
       setIsLastSlide(currentIndex === slides.length - 1);
     }
 
-    // const getPresentationInfo = () => {
-    //   const presentation = store.presentations.find(
-    //     (p) => p.presentationId === presentationId
-    //   );
-    //   return presentation || {};
-    // };
-
-    // setPresentationInfo(getPresentationInfo());
-
-
-
   }, [displaySlide, slides]);
 
   const getTitle = () => {
@@ -82,6 +71,15 @@ export default function Presentation({ token, store, setStore }) {
     await putStore({ store: newStore }, token, toggleModal);
   };
 
+  const addElementToSlide = (element) => {
+    const updatedSlide = {
+      ...displaySlide, 
+      elements: [...displaySlide.elements, element],
+    };
+  
+    setDisplaySlide(updatedSlide);
+  }
+
   console.log(presentation);
   return (
     <>
@@ -102,7 +100,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} presentation={presentation} />
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} />
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}
