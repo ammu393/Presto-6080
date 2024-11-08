@@ -8,14 +8,14 @@ import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
 import InputModal from '../../components/InputModal';
 import { putStore } from '../../api';
+import PresentationToolSideBar from '../../components/PresentationToolSideBar';
 import DeleteButon from '../../components/DeleteButton';
-
 
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
   const presentation = store.presentations.find(presentation => presentation.presentationId === presentationId);
-  const slides = presentation.slides;
+  const [slides, setSlides] = useState(presentation ? presentation.slides : []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
   const [isFirstSlide, setIsFirstSlide] = useState(false);
@@ -25,9 +25,11 @@ export default function Presentation({ token, store, setStore }) {
   };
 
   useEffect(() => {
-    const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
-    setIsFirstSlide(currentIndex === 0);
-    setIsLastSlide(currentIndex === slides.length - 1);
+    if (presentation && slides.length) {
+      const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
+      setIsFirstSlide(currentIndex === 0);
+      setIsLastSlide(currentIndex === slides.length - 1);
+    }
 
     // const getPresentationInfo = () => {
     //   const presentation = store.presentations.find(
@@ -44,7 +46,7 @@ export default function Presentation({ token, store, setStore }) {
 
   const getTitle = () => {
     const presentationInfo = store.presentations.filter(p => p.presentationId === presentationId)[0];
-    return presentationInfo.title;
+    return presentationInfo ? presentationInfo.title : "";
   }
   const moveSlideUp = () => {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
@@ -101,7 +103,6 @@ export default function Presentation({ token, store, setStore }) {
         </button>
 
         <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} presentation={presentation} />
-
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}

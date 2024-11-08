@@ -7,6 +7,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmationModal } from './ConfirmationModal';
 import { putStore } from '../api';
 import InputModal from './InputModal';
+import PresentationToolSideBar from './PresentationToolSideBar';
 
 export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar }) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -59,7 +60,7 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
     const updatedPresentations = store.presentations.map(p => 
       p.presentationId === presentationId ? { ...p, thumbnail: newThumbnail } : p
     );
-    
+
     const newStore = { presentations: updatedPresentations }
 
     setStore(newStore);
@@ -72,12 +73,12 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
         id="default-sidebar"
         className={`${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } fixed sm:relative top-0 left-0 z-40 w-64 h-screen sm:h-auto transition-transform bg-[#222225] dark:bg-gray-800 sm:translate-x-0`}
+        } flex fixed sm:relative top-0 left-0 z-40 w-68 h-screen sm:h-auto transition-transform bg-[#222225] dark:bg-gray-800 sm:translate-x-0`}
         aria-label="Sidebar"
       >
         <button
           onClick={toggleSidebar}
-          className="absolute top-4 right-4 text-white sm:hidden"
+          className="absolute top-1 right-1 text-white sm:hidden z-50"
         >
           <span className="sr-only">Close sidebar</span>
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -91,6 +92,7 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
             <PresentationSideBarItem text="Delete Presentation" icon={trashIcon} onClick={openDeleteModal} />
           </ul>
         </div>
+        <PresentationToolSideBar />
       </aside>
       <ConfirmationModal 
         isOpen={isDeleteModalOpen} 
