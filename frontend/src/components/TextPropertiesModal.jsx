@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
-export default function TextPropertiesModal({ isOpen, closeTextModal, addElementToSlide, elementId, deleteElementFromSlide, displaySlide }) {
+export default function TextPropertiesModal({ isOpen, closeTextModal, addElementToSlide, deleteElementFromSlide, displaySlide, currentElement }) {
   if (!isOpen) return null;
 
   const [textValue, setTextValue] = useState("");
@@ -9,13 +9,29 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
   const [height, setHeight] = useState(0);
   const [fontSize, setFontSize] = useState(1);
   const [color, setColor] = useState("#000000");
+  const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
+
+  useEffect(() => {
+    if (currentElement) {
+      setTextValue(currentElement.text || "");
+      setWidth(parseFloat(currentElement.width) || 0);
+      setHeight(parseFloat(currentElement.height) || 0);
+      setFontSize(parseFloat(currentElement.fontSize) || 1);
+      setColor(currentElement.color || "#000000");
+      setTop(currentElement.top.replace(/\%/g, "") || 0);
+      setLeft(currentElement.left.replace(/\%/g, "") || 0);
+      
+      console.log(currentElement)
+    }
+  }, [currentElement, displaySlide]);
 
   const handleSubmitText = async (e) => {
     e.preventDefault();
     
     let slideToUpdate = displaySlide;
-    if (elementId) {
-      slideToUpdate = await deleteElementFromSlide(elementId);
+    if (currentElement) {
+      slideToUpdate = await deleteElementFromSlide(currentElement.elementId);
     }
   
     addElementToSlide(
@@ -26,8 +42,8 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
         height: `${height}%`,
         fontSize: `${fontSize}em`,
         color: color,
-        top: 0,
-        left: 0,
+        top: `${top}%`,
+        left: `${left}%`,
       },
       slideToUpdate
     );
@@ -38,31 +54,37 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 w-screen">
       <form onSubmit={handleSubmitText} className="bg-white rounded-lg p-6 w-1/3">
-        <h2 className="text-xl font-bold mb-4">New Text</h2>
+        <h2 className="text-xl font-bold mb-4">{currentElement ? "Edit Text" : "New Text"}</h2>
 
-        <label className="block text-sm font-medium mb-2">Text Area Size (%):</label>
+        <label className="block text-lg font-medium mb-2">Text Area:</label>
         <div className="flex space-x-2 mb-4">
-          <input
-            type="number"
-            placeholder="Width (%)"
-            min="0"
-            max="100"
-            value={width}
-            onChange={(e) => setWidth(e.target.value)}
-            className="border p-2 w-1/2"
-          />
-          <input
-            type="number"
-            placeholder="Height (%)"
-            min="0"
-            max="100"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            className="border p-2 w-1/2"
-          />
+          <label className="flex-1">
+            Width (%):
+            <input
+              type="number"
+              placeholder="Width (%)"
+              min="0"
+              max="100"
+              value={width}
+              onChange={(e) => setWidth(e.target.value)}
+              className="border p-2 w-full"
+            />
+          </label>
+          <label className="flex-1">
+            Height (%):
+            <input
+              type="number"
+              placeholder="Height (%)"
+              min="0"
+              max="100"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              className="border p-2 w-full"
+            />
+          </label>
         </div>
 
-        <label className="block text-sm font-medium mb-2">Text:</label>
+        <label className="block text-lg font-medium mb-2">Text:</label>
         <textarea
           placeholder="Enter your text here"
           value={textValue}
@@ -70,7 +92,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
           className="border p-2 w-full mb-4 resize-none"
         />
 
-        <label className="block text-sm font-medium mb-2">Font Size (in em):</label>
+        <label className="block text-lg font-medium mb-2">Font Size (in em):</label>
         <input
           type="number"
           placeholder="e.g. 1.5"
@@ -81,7 +103,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
           className="border p-2 w-full mb-4"
         />
 
-        <label className="block text-sm font-medium mb-2">Text Color (HEX):</label>
+        <label className="block text-lg font-medium mb-2">Text Color (HEX):</label>
         <input
           type="text"
           placeholder="#000000"
@@ -89,6 +111,34 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
           onChange={(e) => setColor(e.target.value)}
           className="border p-2 w-full mb-4"
         />
+
+        {currentElement && (
+          <>
+            <label className="block text-lg font-medium mb-2">Position:</label>
+            <div className="flex space-x-2 mb-4">
+              <label className="flex-1">
+                Top (%):
+                <input
+                  type="number"
+                  placeholder="Top (%)"
+                  value={top}
+                  onChange={(e) => setTop(parseFloat(e.target.value))}
+                  className="border p-2 w-full"
+                />
+              </label>
+              <label className="flex-1">
+                Left (%):
+                <input
+                  type="number"
+                  placeholder="Left (%)"
+                  value={left}
+                  onChange={(e) => setLeft(parseFloat(e.target.value))}
+                  className="border p-2 w-full"
+                />
+              </label>
+            </div>
+          </>
+        )}
 
         <div className="flex justify-end">
           <button

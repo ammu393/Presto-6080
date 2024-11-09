@@ -3,15 +3,15 @@ import TextPropertiesModal from "./TextPropertiesModal";
 
 export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
-  const [elementId, setElementId] = useState("");
+  const [currentElement, setCurrentElement] = useState({})
 
-  const openTextModal = (id) => {
+  const openTextModal = (element) => {
     setIsTextModalOpen(true);
-    setElementId(id);
+    setCurrentElement(element)
   };
   const closeTextModal = () => {
     setIsTextModalOpen(false);
-    setElementId("");
+    setCurrentElement({})
   }
 
   const slideContent = displaySlide?.elements || [];
@@ -35,8 +35,10 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
                 color: element.color,
                 border: "1px solid #d3d3d3",
                 overflow: "hidden",
+                cursor: "pointer",
               }}
-              onDoubleClick={() => openTextModal(element.elementId)}
+              onDoubleClick={() => openTextModal(element)}
+              tabIndex={0}
             >
               <p>{element.text}</p>
             </div>
@@ -52,8 +54,9 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
         isOpen={isTextModalOpen} 
         closeTextModal={closeTextModal}
         addElementToSlide={addElementToSlide}
-        elementId={elementId}
         deleteElementFromSlide={deleteElementFromSlide}
+        displaySlide={displaySlide}
+        currentElement={currentElement}
       />
     </>
   );
