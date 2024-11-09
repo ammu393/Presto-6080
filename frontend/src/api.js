@@ -20,3 +20,23 @@ export const putStore = async (newStore, token, onSuccess, onError) => {
     if (onError) onError(error);
   }
 };
+
+export const getStore = async (token, onSuccess, onError) => {
+  try {
+    const response = await axios.get('http://localhost:5005/store', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (response.status === 200) {
+      if (onSuccess) onSuccess();
+    } else {
+      console.log("Error: ", response.data);
+    }
+  } catch (error) {
+    console.error("Failed to get store", error);
+    if (onError) onError(error);
+  } 
+}
