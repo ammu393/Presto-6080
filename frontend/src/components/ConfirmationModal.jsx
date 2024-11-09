@@ -1,12 +1,12 @@
-export function ConfirmationModal({ isOpen, onClose, onConfirm }) {
+export function ConfirmationModal({ isOpen, onClose, onConfirm, title, text }) {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg p-6 w-1/3">
-        <h2 className="text-lg font-semibold">Are you sure?</h2>
+        <h2 className="text-lg font-semibold">{title}</h2>
         <div className="mt-4">
-          <p className="text-gray-700">Do you really want to permanently delete this presentation?</p>
+          <p className="text-gray-700">{text}</p>
         </div>
         <div className="mt-6 flex justify-end space-x-4">
           <button

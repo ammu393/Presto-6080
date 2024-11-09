@@ -97,7 +97,9 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
       <ConfirmationModal 
         isOpen={isDeleteModalOpen} 
         onClose={closeDeleteModal} 
-        onConfirm={handleDeleteConfirmation} 
+        onConfirm={handleDeleteConfirmation}
+        title="Are you sure?"
+        text="Do you really want to permanently delete this presentation?"
       />
       <InputModal
         title="Edit Thumbnail" 

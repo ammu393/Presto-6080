@@ -1,8 +1,10 @@
 import { useState } from "react";
 import TextPropertiesModal from "./TextPropertiesModal";
+import { ConfirmationModal } from "./ConfirmationModal";
 
 export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentElement, setCurrentElement] = useState({})
 
   const openTextModal = (element) => {
@@ -14,9 +16,24 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     setCurrentElement({})
   }
 
+  const openDeleteModal = (element) => {
+    setIsDeleteModalOpen(true);
+    setCurrentElement(element);
+  }
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setCurrentElement({});
+  }
+
   const slideContent = displaySlide?.elements || [];
   const slideNum = slides.findIndex(slide => slide.slideId === displaySlide.slideId) + 1;
   console.log(displaySlide)
+
+  const handleDeleteElement = (elementToDelete) => {
+    deleteElementFromSlide(elementToDelete.elementId);
+    closeDeleteModal();
+  };
 
   return (
     <>
@@ -38,6 +55,10 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
                 cursor: "pointer",
               }}
               onDoubleClick={() => openTextModal(element)}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                openDeleteModal(element);
+              }}
               tabIndex={0}
             >
               <p>{element.text}</p>
@@ -57,6 +78,13 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
         deleteElementFromSlide={deleteElementFromSlide}
         displaySlide={displaySlide}
         currentElement={currentElement}
+      />
+      <ConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onClose={closeDeleteModal}
+        onConfirm={() => handleDeleteElement(currentElement)}
+        title="Are you sure?"
+        text="Do you really want to permanently delete this element?"
       />
     </>
   );
