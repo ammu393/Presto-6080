@@ -19,8 +19,8 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
       setHeight(parseFloat(currentElement.height) || 0);
       setFontSize(parseFloat(currentElement.fontSize) || 1);
       setColor(currentElement.color || "#000000");
-      setTop(currentElement.top.replace(/\%/g, "") || 0);
-      setLeft(currentElement.left.replace(/\%/g, "") || 0);
+      setTop(currentElement.top.replace(/%/g, "") || 0);
+      setLeft(currentElement.left.replace(/%/g, "") || 0);
       
       console.log(currentElement)
     }

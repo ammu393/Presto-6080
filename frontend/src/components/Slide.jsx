@@ -37,7 +37,7 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
 
   return (
     <>
-       <div className="bg-white max-w-[70vw] h-[80vh] max-h-[80vh] flex items-center border-4 border-[#cbd5e1] border-dashed justify-center p-4 m-4 sm:m-10 relative">
+      <div className="bg-white max-w-[70vw] h-[80vh] max-h-[80vh] flex items-center border-4 border-[#cbd5e1] border-dashed justify-center p-4 m-4 sm:m-10 relative">
         {slideContent.length > 0 && (
           slideContent.map((element, index) => (
             <div

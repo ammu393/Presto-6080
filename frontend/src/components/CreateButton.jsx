@@ -3,8 +3,8 @@ import plusIconGrey from "../assets/plusIconGrey.svg";
 import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import { getStore, putStore } from "../api";
-export default function CreateButton({ token, setStore, updateSlide }) {
+
+export default function CreateButton({ setDisplaySlide, token, store, presentationId, setStore }) {
   const [isHovered, setIsHovered] = useState(false);
   const createNewSlide = async (event) => {
     event.preventDefault();
@@ -21,10 +21,12 @@ export default function CreateButton({ token, setStore, updateSlide }) {
 
     if (presentationIndex !== -1) {
       const foundPresentation = currentPresentations[presentationIndex];
+      console.log("Found Presentation:", foundPresentation);
 
       // Create a new updated presentation
       const updatedPresentation = {
         ...foundPresentation,
+        numSlides: foundPresentation.numSlides + 1,
         slides: [...(foundPresentation.slides || []), newSlide],
       };
 
