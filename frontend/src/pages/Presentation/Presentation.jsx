@@ -8,7 +8,6 @@ import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
 import InputModal from '../../components/InputModal';
 import { putStore } from '../../api';
-import PresentationToolSideBar from '../../components/PresentationToolSideBar';
 import DeleteButon from '../../components/DeleteButton';
 
 export default function Presentation({ token, store, setStore }) {
@@ -71,16 +70,59 @@ export default function Presentation({ token, store, setStore }) {
     await putStore({ store: newStore }, token, toggleModal);
   };
 
-  const addElementToSlide = (element) => {
+  const addElementToSlide = (element, currentSlide) => {
+    console.log(currentSlide)
+    const updatedSlide = {
+      ...currentSlide, 
+      elements: [...currentSlide.elements, element],
+    };
+    updateSlide(updatedSlide);
+  };
+
+  const deleteElementFromSlide = async (elementId) => {
     const updatedSlide = {
       ...displaySlide, 
-      elements: [...displaySlide.elements, element],
+      elements: displaySlide.elements.filter(e => e.elementId !== elementId),
     };
-  
-    setDisplaySlide(updatedSlide);
+    await updateSlide(updatedSlide);
+    return updatedSlide;
   }
 
-  console.log(presentation);
+  const updateSlide = async (newSlide) => {
+    setDisplaySlide(newSlide);
+  
+    const currentPresentations = store.presentations || [];
+    const presentationIndex = currentPresentations.findIndex(
+      (presentation) => presentation.presentationId === presentationId
+    );
+  
+    if (presentationIndex === -1) {
+      console.error("Presentation not found");
+      return;
+    }
+  
+    const foundPresentation = currentPresentations[presentationIndex];
+    const slidesArray = foundPresentation.slides || [];
+    const slideIndex = slidesArray.findIndex((slide) => slide.slideId === newSlide.slideId);
+  
+    const updatedSlidesArray = slideIndex !== -1
+      ? slidesArray.map((slide, index) => (index === slideIndex ? newSlide : slide))
+      : slidesArray;
+  
+    const updatedPresentation = { ...foundPresentation, slides: updatedSlidesArray };
+  
+    const updatedPresentations = currentPresentations.map((presentation, index) =>
+      index === presentationIndex ? updatedPresentation : presentation
+    );
+  
+    const newStore = { store: { presentations: updatedPresentations } };
+    setSlides(updatedSlidesArray);
+    console.log("This is my new store upon updating", newStore);
+  
+    await putStore(newStore, token);
+  };
+  
+
   return (
     <>
       <div className="flex h-screen">
@@ -100,7 +142,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} />
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide}/>
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}
@@ -134,6 +176,8 @@ export default function Presentation({ token, store, setStore }) {
               <Slide 
                 displaySlide={displaySlide} 
                 slides = {slides}
+                addElementToSlide={addElementToSlide}
+                deleteElementFromSlide={deleteElementFromSlide}
               />
             )}
           </div>            
