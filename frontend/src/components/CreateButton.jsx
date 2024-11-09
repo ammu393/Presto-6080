@@ -15,7 +15,57 @@ export default function CreateButton({ token, setStore, updateSlide }) {
       elements: [],
     }; 
 
-    updateSlide(newSlide);
+    setDisplaySlide(newSlide)
+    const currentPresentations = store.presentations || [];
+    const presentationIndex = currentPresentations.findIndex(presentation => presentation.presentationId === presentationId);
+
+    if (presentationIndex !== -1) {
+      const foundPresentation = currentPresentations[presentationIndex];
+
+      // Create a new updated presentation
+      const updatedPresentation = {
+        ...foundPresentation,
+        slides: [...(foundPresentation.slides || []), newSlide],
+      };
+
+      // Create a new presentations array with the updated presentation
+      const newPresentations = [
+        ...currentPresentations.slice(0, presentationIndex), // All presentations before the found one
+        updatedPresentation, // The updated presentation
+        ...currentPresentations.slice(presentationIndex + 1) // All presentations after the found one
+      ];
+
+      const newStore = {
+        store: { presentations: newPresentations },
+      };
+
+      await updateSlidesAtBackend(newStore);
+
+    } else {
+      console.error("Presentation not found");
+    }
+  };
+
+  const updateSlidesAtBackend = async (newStore) => {
+    try {
+      const response = await axios.put('http://localhost:5005/store', newStore, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        refreshPresentations()
+        console.log("Successfully updated backend");
+
+
+      } else {
+        console.log("Error: ", response.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const fetchPresentations = useCallback(async () => {
