@@ -90,14 +90,14 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
               className="border p-2 w-full mb-4"
             />
 
-            <div class="flex items-center">
+            <div className="flex items-center">
                 <input 
                 type="checkbox" 
                 value="" 
-                class="w-4 h-4 mb-2 mr-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
+                className="w-4 h-4 mb-2 mr-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
                 onChange={(e) => setAutoplay(e.target.checked)} // Use onChange and update state based on checkbox's checked value
                 />
-                <label for="link-checkbox" class="ms-2 mb-2 ml-2 text-sm font-medium italic">Auto-play video?</label>
+                <label className="ms-2 mb-2 ml-2 text-sm font-medium italic">Auto-play video?</label>
             </div>
             {currentElement && (
               <>
