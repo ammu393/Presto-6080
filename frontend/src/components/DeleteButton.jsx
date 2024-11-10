@@ -2,11 +2,44 @@ import deleteGrey from "../assets/delete-grey.svg";
 import deleteRed from "../assets/delete-red.svg";
 import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";
-
-
-export default function DeleteButon({ setDisplaySlide, token, store, setStore, presentationId, displaySlide }) {
+import { ConfirmationModal } from "./ConfirmationModal";
+import { useNavigate } from "react-router-dom";
+import { putStore } from "../api";
+export default function DeleteButon({ setDisplaySlide, token, store, setStore, presentationId, displaySlide, setSlides }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [isDeletePresentationModalOpen, setDeletePresentationModal] = useState(false);
+  const [presentationToDelete, setPresentationToDelete] = useState(null);
+  const navigate = useNavigate();
 
+  const openDeletePresentationModal = () => {
+    setDeletePresentationModal(true)
+  }
+  const closeDeletePresentationModal = () => {
+    setDeletePresentationModal(false)
+  }
+  const handleDeletePresentation = async () => {
+    if (!presentationToDelete) return;
+    console.log("this is the presentation to delete " + presentationToDelete)
+    console.log("this is the presentation to delete " + presentationToDelete.presentationId)
+
+    const updatedPresentations = store.presentations.filter(
+      (presentation) => presentation.presentationId !== presentationToDelete.presentationId
+    );
+
+    const newStore = { 
+      store: { presentations: updatedPresentations } 
+    };
+
+    const onSuccess = () => {
+      closeDeletePresentationModal();
+      navigate("/dashboard");
+    }
+
+    await putStore(newStore, token, onSuccess);
+  };
+  
+  
+  
   const deleteSlide = async (event) => {
     event.preventDefault();
 
@@ -16,7 +49,11 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
     if (presentationIndex !== -1) {
       const foundPresentation = currentPresentations[presentationIndex];
       const slideIndex = foundPresentation.slides.findIndex(slide => slide.slideId === displaySlide.slideId);
-
+      if (foundPresentation.slides.length == 1) {
+        openDeletePresentationModal();
+        setPresentationToDelete(foundPresentation);
+        return;
+      }
       if (slideIndex === -1) {
         console.error("Slide not found");
         return;
@@ -32,6 +69,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
         numSlides: updatedSlides.length,
         slides: updatedSlides,
       };
+      setSlides(updatedSlides);
 
       const newPresentations = [
         ...currentPresentations.slice(0, presentationIndex),
@@ -43,10 +81,10 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
         store: { presentations: newPresentations },
       };
 
-      await updateSlidesAtBackend(newStore);
+      setDisplaySlide(previousSlide || null);
+      updateSlidesAtBackend(newStore);
 
       // Set the previous slide as the new displaySlide
-      setDisplaySlide(previousSlide || null);
     } else {
       console.error("Presentation not found");
     } 
@@ -98,7 +136,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
 
 
   useEffect(() => {
-    fetchPresentations();
+
   }, [fetchPresentations]);
 
   return (
@@ -110,6 +148,13 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       >
         <img src={isHovered ? deleteRed : deleteGrey} className="w-12 h-12 transition duration-50" alt="Add Slide" />
       </a>
+      <ConfirmationModal
+        isOpen={ isDeletePresentationModalOpen }
+        onClose={ closeDeletePresentationModal }
+        onConfirm={ handleDeletePresentation }
+        title="Last Slide!"
+        text="Deleting the last slide will delete the entire presentation. Are you sure you want to proceed?"
+      />
     </div>
   );
 }

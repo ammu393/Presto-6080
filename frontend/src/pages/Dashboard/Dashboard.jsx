@@ -16,7 +16,7 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
       });
 
       if (response.status === 200) {
-        setStore(response.data.store);
+        setStore(response.data.store || { presentations: [] });
       } else {
         console.log("Error: ", response.data);
       }
