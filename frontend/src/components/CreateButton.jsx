@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 
-export default function CreateButton({ setDisplaySlide, token, store, presentationId, setStore }) {
+export default function CreateButton({ setDisplaySlide, token, store, presentationId, setStore, setSlides }) {
   const [isHovered, setIsHovered] = useState(false);
   const createNewSlide = async (event) => {
     event.preventDefault();
@@ -14,6 +14,8 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       slideId: uniqueSlideId,
       elements: [],
     }; 
+    console.log("this is the new slide" + newSlide)
+    console.log("this is the new slide id " + newSlide.slideId)
 
     setDisplaySlide(newSlide)
     const currentPresentations = store.presentations || [];
@@ -21,7 +23,10 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
 
     if (presentationIndex !== -1) {
       const foundPresentation = currentPresentations[presentationIndex];
+      const updatedSlides = [...(foundPresentation.slides || []), newSlide];
+
       console.log("Found Presentation:", foundPresentation);
+      setSlides(updatedSlides);
 
       // Create a new updated presentation
       const updatedPresentation = {

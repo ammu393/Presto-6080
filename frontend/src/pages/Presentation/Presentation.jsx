@@ -184,7 +184,7 @@ export default function Presentation({ token, store, setStore }) {
           <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>  
             <div className="h-8">
               {/* Only display arrows if slides are present */}
-              <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} />
+              <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} setSlides={setSlides} />
               {slides.length > 0 && (
                 <div className="mt-5 h-8">
                   <div className={isFirstSlide ? 'invisible' : ''}>
@@ -193,7 +193,7 @@ export default function Presentation({ token, store, setStore }) {
                   <div className={isLastSlide ? 'invisible' : ''}>
                     <DownArrow onClick={moveSlideDown} />
                   </div>
-                  <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} className="mt-5"/>
+                  <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} className="mt-5"/>
                 </div>
               )}
             </div>
