@@ -2,12 +2,17 @@ import { useState } from "react";
 import textIcon from "../assets/text.svg";
 import PresentationToolBarItem from "./PresentationToolBarItem";
 import TextPropertiesModal from "./TextPropertiesModal";
+import videoIcon from "../assets/video.svg";
+// import VideoPropertiesModal from "./VideoPropertiesModal";
 
 export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
   const openTextModal = () => setIsTextModalOpen(true);
   const closeTextModal = () => setIsTextModalOpen(false);
+  const openVideoModal = () => setIsVideoModalOpen(true);
+  const closeVideoModal = () => setIsVideoModalOpen(false);
 
   return (
     <>
@@ -19,6 +24,7 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
         <div className="h-full px-3 py-4 overflow-y-auto">
           <ul className="space-y-2 font-medium">
             <PresentationToolBarItem icon={textIcon} text="Text" onClick={openTextModal} />
+            <PresentationToolBarItem icon={videoIcon} text="Video" onClick={openVideoModal} />
           </ul>
         </div>
       </aside>
@@ -28,6 +34,12 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
         addElementToSlide={addElementToSlide}
         displaySlide={displaySlide}
       />
+      {/* <VideoPropertiesModal 
+        isOpen={isVideoModalOpen} 
+        closeTextModal={closeVideoModal} 
+        addElementToSlide={addElementToSlide}
+        displaySlide={displaySlide}
+      /> */}
     </>
   );
 }
