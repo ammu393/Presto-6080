@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function TextPropertiesModal({ isOpen, closeTextModal, addElementToSlide, deleteElementFromSlide, displaySlide, currentElement }) {
-  if (!isOpen) return null;
-
   const [textValue, setTextValue] = useState("");
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -11,6 +9,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
   const [color, setColor] = useState("#000000");
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
+  const [fontFamily, setFontFamily] = useState("Arial"); // New font family state
 
   useEffect(() => {
     if (currentElement) {
@@ -21,10 +20,13 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
       setColor(currentElement.color || "#000000");
       setTop(currentElement.top.replace(/%/g, "") || 0);
       setLeft(currentElement.left.replace(/%/g, "") || 0);
+      setFontFamily(currentElement.fontFamily || "Arial"); // Load font family if present
       
-      console.log(currentElement)
+      console.log(currentElement);
     }
   }, [currentElement, displaySlide]);
+
+  if (!isOpen) return null;
 
   const handleSubmitText = async (e) => {
     e.preventDefault();
@@ -37,6 +39,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
     addElementToSlide(
       {
         elementId: uuidv4(),
+        type: "text",
         text: textValue,
         width: `${width}%`,
         height: `${height}%`,
@@ -44,6 +47,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
         color: color,
         top: `${top}%`,
         left: `${left}%`,
+        fontFamily: fontFamily, // Save font family to the element
       },
       slideToUpdate
     );
@@ -111,6 +115,17 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
           onChange={(e) => setColor(e.target.value)}
           className="border p-2 w-full mb-4"
         />
+
+        <label className="block text-lg font-medium mb-2">Font Family:</label>
+        <select
+          value={fontFamily}
+          onChange={(e) => setFontFamily(e.target.value)}
+          className="border p-2 w-full mb-4"
+        >
+          <option value="Arial">Arial</option>
+          <option value="Times New Roman">Times New Roman</option>
+          <option value="Courier New">Courier New</option>
+        </select>
 
         {currentElement && (
           <>
