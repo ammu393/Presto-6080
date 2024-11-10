@@ -6,6 +6,7 @@ import ImagePropertiesModal from "./ImagePropertiesModal";
 
 export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentElement, setCurrentElement] = useState({});
 
@@ -13,8 +14,19 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     setIsTextModalOpen(true);
     setCurrentElement(element);
   };
+  
   const closeTextModal = () => {
     setIsTextModalOpen(false);
+    setCurrentElement({});
+  };
+
+  const openImageModal = (element) => {
+    setIsImageModalOpen(true);
+    setCurrentElement(element);
+  };
+  
+  const closeImageModal = () => {
+    setIsImageModalOpen(false);
     setCurrentElement({});
   };
 
@@ -36,6 +48,16 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     closeDeleteModal();
   };
 
+  const handleDoubleClick = (element) => {
+    console.log("here")
+    if (element.type === "text") {
+      openTextModal(element);
+    } else if (element.type === "image") {
+      console.log("hereeeee")
+      openImageModal(element);
+    }
+  };
+
   return (
     <>
       <div className="bg-white max-w-[70vw] h-[80vh] max-h-[80vh] flex items-center border-4 border-[#cbd5e1] border-dashed justify-center p-4 m-4 sm:m-10 relative">
@@ -43,8 +65,8 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
           <SlideElement
             key={index}
             element={element}
-            onDoubleClick={openTextModal}
-            onContextMenu={openDeleteModal}
+            onDoubleClick={() => handleDoubleClick(element)}
+            onContextMenu={() => openDeleteModal(element)}
           />
         ))}
         <div
@@ -62,7 +84,15 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
         displaySlide={displaySlide}
         currentElement={currentElement}
       />
-      <ImagePropertiesModal />
+
+      {isImageModalOpen && <ImagePropertiesModal
+        isOpen={isImageModalOpen}
+        closeImageModal={closeImageModal}
+        addElementToSlide={addElementToSlide}
+        deleteElementFromSlide={deleteElementFromSlide}
+        displaySlide={displaySlide}
+        currentElement={currentElement}
+      />}
 
       <ConfirmationModal
         isOpen={isDeleteModalOpen}
