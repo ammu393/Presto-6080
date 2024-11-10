@@ -4,8 +4,8 @@ import imageIcon from "../assets/image.svg";
 import PresentationToolBarItem from "./PresentationToolBarItem";
 import TextPropertiesModal from "./TextPropertiesModal";
 import ImagePropertiesModal from "./ImagePropertiesModal";
+import VideoPropertiesModal from "./VideoPropertiesModal";
 import videoIcon from "../assets/video.svg";
-// import VideoPropertiesModal from "./VideoPropertiesModal";
 
 export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
@@ -45,6 +45,12 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
       <ImagePropertiesModal
         isOpen={isImageModalOpen} 
         closeImageModal={closeImageModal} 
+        addElementToSlide={addElementToSlide}
+        displaySlide={displaySlide}
+      />
+      <VideoPropertiesModal
+        isOpen={isVideoModalOpen} 
+        closeVideoModal={closeVideoModal} 
         addElementToSlide={addElementToSlide}
         displaySlide={displaySlide}
       />
