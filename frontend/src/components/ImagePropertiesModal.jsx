@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function ImagePropertiesModal({ isOpen, closeImageModal, addElementToSlide, deleteElementFromSlide, displaySlide, currentElement }) {
-  if (!isOpen) return null;
-
   const [src, setSrc] = useState("");
   const [alt, setAlt] = useState("");
   const [width, setWidth] = useState(0);
@@ -21,6 +19,8 @@ export default function ImagePropertiesModal({ isOpen, closeImageModal, addEleme
       setLeft(parseFloat(currentElement.left.replace(/%/g, "")) || 0);
     }
   }, [currentElement, displaySlide]);
+
+  if (!isOpen) return null;
 
   const handleSubmitImage = async (e) => {
     e.preventDefault();
