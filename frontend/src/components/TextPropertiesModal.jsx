@@ -37,6 +37,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
     addElementToSlide(
       {
         elementId: uuidv4(),
+        type: "text",
         text: textValue,
         width: `${width}%`,
         height: `${height}%`,

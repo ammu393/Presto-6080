@@ -1,13 +1,19 @@
 import { useState } from "react";
 import textIcon from "../assets/text.svg";
+import imageIcon from "../assets/image.svg";
 import PresentationToolBarItem from "./PresentationToolBarItem";
 import TextPropertiesModal from "./TextPropertiesModal";
+import ImagePropertiesModal from "./ImagePropertiesModal";
 
 export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   const openTextModal = () => setIsTextModalOpen(true);
   const closeTextModal = () => setIsTextModalOpen(false);
+
+  const openImageModal = () => setIsImageModalOpen(true);
+  const closeImageModal = () => setIsImageModalOpen(false);
 
   return (
     <>
@@ -19,12 +25,19 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
         <div className="h-full px-3 py-4 overflow-y-auto">
           <ul className="space-y-2 font-medium">
             <PresentationToolBarItem icon={textIcon} text="Text" onClick={openTextModal} />
+            <PresentationToolBarItem icon={imageIcon} text="Image" onClick={openImageModal} />
           </ul>
         </div>
       </aside>
       <TextPropertiesModal 
         isOpen={isTextModalOpen} 
         closeTextModal={closeTextModal} 
+        addElementToSlide={addElementToSlide}
+        displaySlide={displaySlide}
+      />
+      <ImagePropertiesModal
+        isOpen={isImageModalOpen} 
+        closeImageModal={closeImageModal} 
         addElementToSlide={addElementToSlide}
         displaySlide={displaySlide}
       />
