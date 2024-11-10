@@ -26,7 +26,7 @@ export default function SlideElement({ element, onDoubleClick, onContextMenu }) 
 
   return (
     <div
-      onDoubleClick={() => element.type === 'text' && onDoubleClick(element)}
+      onDoubleClick={() => onDoubleClick(element)}
       onContextMenu={(e) => {
         e.preventDefault();
         onContextMenu(element);
