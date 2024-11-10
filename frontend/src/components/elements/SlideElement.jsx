@@ -15,12 +15,12 @@ export default function SlideElement({ element, onDoubleClick, onContextMenu }) 
 
   const renderElement = () => {
     switch (element.type) {
-      case "text":
-        return <TextElement element={element} style={commonStyles} />;
-      case "image":
-        return <ImageElement element={element} style={commonStyles} />;
-      default:
-        return null;
+    case "text":
+      return <TextElement element={element} style={commonStyles} />;
+    case "image":
+      return <ImageElement element={element} style={commonStyles} />;
+    default:
+      return null;
     }
   };
 
