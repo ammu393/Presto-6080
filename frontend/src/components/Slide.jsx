@@ -4,12 +4,13 @@ import { ConfirmationModal } from "./ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
 import ImagePropertiesModal from "./ImagePropertiesModal";
 import CodePropertiesModal from "./CodePropertiesModal";
-//import VideoPropertiesModal from "./videoPropertiesModal";
+import VideoPropertiesModal from "./CodePropertiesModal";
 
 export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide, preview }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentElement, setCurrentElement] = useState({});
   const [slideWidth, setSlideWidth] = useState("70vw");
@@ -50,10 +51,21 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     setCurrentElement(element);
   }
 
-  const closeCodeModal = (element) => {
+  const closeCodeModal = () => {
     setIsCodeModalOpen(false);
     setCurrentElement({});
   }
+
+  const openVideoModal = (element) => {
+    setIsVideoModalOpen(true);
+    setCurrentElement(element);
+  }
+
+  const closeVideoModal = () => {
+    setIsVideoModalOpen(false);
+    setCurrentElement({});
+  }
+
 
   const openDeleteModal = (element) => {
     if (!preview) {
@@ -84,6 +96,9 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     } else if (element.type === 'code') {
       console.log("hereeeee")
       openCodeModal(element);
+    } else if (element.type == 'video') {
+      openVideoModal(element);
+
     }
     if (!preview) {
       if (element.type === "text") {
@@ -148,6 +163,17 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
           deleteElementFromSlide={deleteElementFromSlide}
           displaySlide={displaySlide}
           currentElement={currentElement}
+        />
+      )}
+
+      {isVideoModalOpen && (
+        <VideoPropertiesModal
+        isOpen={isVideoModalOpen}
+        closeVideoModal={closeVideoModal}
+        addElementToSlide={addElementToSlide}
+        deleteElementFromSlide={deleteElementFromSlide}
+        displaySlide={displaySlide}
+        currentElement={currentElement}
         />
       )}
 
