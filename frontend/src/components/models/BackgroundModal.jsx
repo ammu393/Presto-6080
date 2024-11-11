@@ -8,6 +8,7 @@ export default function BackgroundModal({ isOpen, closeBackgroundModal, updateSl
   const [secondColour, setSecondColour] = useState("#000000");
   const [gradientDirection, setGradientDirection] = useState("to right");
   const [imageUrl, setImageUrl] = useState("");
+  const [defaultBackground, setDefaultBackground] = useState(false);
 
   useEffect(() => {
     if (displaySlide.background) {
@@ -91,6 +92,15 @@ export default function BackgroundModal({ isOpen, closeBackgroundModal, updateSl
           </div>
         )}
 
+        <div className="mb-4">
+          <label className="block text-lg font-medium mb-2">Make Default Background?</label>
+          <input
+            type="checkbox"
+            checked={defaultBackground}
+            onChange={(e) => setDefaultBackground(e.target.checked)}
+            className="border p-2 w-8 transform scale-150"
+          />
+        </div>
         <div className="flex justify-end">
           <button
             type="submit"
