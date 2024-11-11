@@ -10,6 +10,7 @@ import Login from "./pages/Login/Login.jsx"
 import Register from "./pages/Register/Register.jsx"
 import './index.css'; 
 import Presentation from "./pages/Presentation/Presentation.jsx";
+import Preview from './pages/Preview/Preview.jsx';
 
 function App() {
   const [token, setToken] = useState(null);
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" element={<Login token= { token } setTokenFn={ setToken } />} />
         <Route path="/register" element={<Register token={token} setTokenFn={ setToken } />} />
         <Route path="/presentations/:presentationId" element={<Presentation token={token} store={store} setStore={setStore} />} />
+        <Route path="/presentations/preview/:presentationId" element={<Preview token={token} />}/>
       </Routes>
     </BrowserRouter>
   )
