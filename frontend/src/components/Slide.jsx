@@ -3,10 +3,12 @@ import TextPropertiesModal from "./TextPropertiesModal";
 import { ConfirmationModal } from "./ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
 import ImagePropertiesModal from "./ImagePropertiesModal";
+import CodePropertiesModal from "./CodePropertiesModal";
 
 export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentElement, setCurrentElement] = useState({});
 
@@ -29,6 +31,16 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     setIsImageModalOpen(false);
     setCurrentElement({});
   };
+
+  const openCodeModal = (element) => {
+    setIsCodeModalOpen(true);
+    setCurrentElement(element);
+  }
+
+  const closeCodeModal = (element) => {
+    setIsCodeModalOpen(false);
+    setCurrentElement({});
+  }
 
   const openDeleteModal = (element) => {
     setIsDeleteModalOpen(true);
@@ -53,8 +65,10 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     if (element.type === "text") {
       openTextModal(element);
     } else if (element.type === "image") {
-      console.log("hereeeee")
       openImageModal(element);
+    } else if (element.type === 'code') {
+      console.log("hereeeee")
+      openCodeModal(element);
     }
   };
 
@@ -91,6 +105,17 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
         <ImagePropertiesModal
           isOpen={isImageModalOpen}
           closeImageModal={closeImageModal}
+          addElementToSlide={addElementToSlide}
+          deleteElementFromSlide={deleteElementFromSlide}
+          displaySlide={displaySlide}
+          currentElement={currentElement}
+        />
+      )}
+
+      {isCodeModalOpen && (
+        <CodePropertiesModal
+          isOpen={isCodeModalOpen}
+          closeCodeModal={closeCodeModal}
           addElementToSlide={addElementToSlide}
           deleteElementFromSlide={deleteElementFromSlide}
           displaySlide={displaySlide}
