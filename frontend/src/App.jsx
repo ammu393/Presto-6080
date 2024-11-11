@@ -35,7 +35,7 @@ function App() {
         <Route path="/login" element={<Login token= { token } setTokenFn={ setToken } />} />
         <Route path="/register" element={<Register token={token} setTokenFn={ setToken } />} />
         <Route path="/presentations/:presentationId/:slideNum" element={<Presentation token={token} store={store} setStore={setStore} />} />
-        <Route path="/presentations/preview/:presentationId" element={<Preview token={token} />}/>
+        <Route path="/presentations/preview/:presentationId/:slideNum" element={<Preview token={token} />}/>
       </Routes>
     </BrowserRouter>
   )

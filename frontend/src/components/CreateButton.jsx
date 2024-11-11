@@ -49,7 +49,6 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
 
       setDisplaySlide(newSlide);
       updateURL(parseInt(foundPresentation.slides.length) + 1);
-
     } else {
       console.error("Presentation not found");
     }

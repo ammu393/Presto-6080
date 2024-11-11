@@ -69,7 +69,7 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
   }
 
   const openPreview = () => {
-    const previewUrl = `/presentations/preview/${presentationId}`;
+    const previewUrl = `/presentations/preview/${presentationId}/0`;
     window.open(previewUrl, '_blank', 'noopener,noreferrer');
   };
 
