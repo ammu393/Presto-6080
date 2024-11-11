@@ -1,16 +1,20 @@
 import { useState } from "react";
 import textIcon from "../assets/text.svg";
 import imageIcon from "../assets/image.svg";
+import codeIcon from "../assets/code_icon.svg"
+
 import PresentationToolBarItem from "./PresentationToolBarItem";
 import TextPropertiesModal from "./TextPropertiesModal";
 import ImagePropertiesModal from "./ImagePropertiesModal";
 import VideoPropertiesModal from "./VideoPropertiesModal";
 import videoIcon from "../assets/video.svg";
+import CodePropertiesModal from "./CodePropertiesModal";
 
 export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
 
   const openTextModal = () => setIsTextModalOpen(true);
   const closeTextModal = () => setIsTextModalOpen(false);
@@ -19,6 +23,10 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
 
   const openImageModal = () => setIsImageModalOpen(true);
   const closeImageModal = () => setIsImageModalOpen(false);
+
+  const openCodeModal = () => setIsCodeModalOpen(true);
+  const closeCodeModal = () => setIsCodeModalOpen(false);
+
 
   return (
     <>
@@ -32,6 +40,7 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
             <PresentationToolBarItem icon={textIcon} text="Text" onClick={openTextModal} />
             <PresentationToolBarItem icon={imageIcon} text="Image" onClick={openImageModal} />
             <PresentationToolBarItem icon={videoIcon} text="Video" onClick={openVideoModal} />
+            <PresentationToolBarItem icon={codeIcon} text="Code" onClick={openCodeModal} />
 
           </ul>
         </div>
@@ -53,6 +62,12 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
         closeVideoModal={closeVideoModal} 
         addElementToSlide={addElementToSlide}
         displaySlide={displaySlide}
+      />
+      <CodePropertiesModal 
+        isOpen={isCodeModalOpen}
+        closeCodeModal = {closeCodeModal}
+        addElementToSlide = {addElementToSlide}
+        displaySlide = {displaySlide}
       />
     </>
   );
