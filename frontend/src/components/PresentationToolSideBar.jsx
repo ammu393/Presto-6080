@@ -6,14 +6,18 @@ import PresentationToolBarItem from "./PresentationToolBarItem";
 import TextPropertiesModal from "./TextPropertiesModal";
 import ImagePropertiesModal from "./ImagePropertiesModal";
 import CodePropertiesModal from "./CodePropertiesModal";
-
+import VideoPropertiesModal from "./VideoPropertiesModal";
+import videoIcon from "../assets/video.svg";
 export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
 
   const openTextModal = () => setIsTextModalOpen(true);
   const closeTextModal = () => setIsTextModalOpen(false);
+  const openVideoModal = () => setIsVideoModalOpen(true);
+  const closeVideoModal = () => setIsVideoModalOpen(false);
 
   const openImageModal = () => setIsImageModalOpen(true);
   const closeImageModal = () => setIsImageModalOpen(false);
@@ -34,6 +38,7 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
             <PresentationToolBarItem icon={textIcon} text="Text" onClick={openTextModal} />
             <PresentationToolBarItem icon={imageIcon} text="Image" onClick={openImageModal} />
             <PresentationToolBarItem icon={codeIcon} text="Code" onClick={openCodeModal} />
+            <PresentationToolBarItem icon={videoIcon} text="Video" onClick={openVideoModal} />
 
           </ul>
         </div>
@@ -56,6 +61,12 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
         closeCodeModal = {closeCodeModal}
         addElementToSlide = {addElementToSlide}
         displaySlide = {displaySlide}
+      />
+      <VideoPropertiesModal
+        isOpen={isVideoModalOpen} 
+        closeVideoModal={closeVideoModal} 
+        addElementToSlide={addElementToSlide}
+        displaySlide={displaySlide}
       />
     </>
   );

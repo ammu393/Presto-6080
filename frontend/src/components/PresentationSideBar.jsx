@@ -3,6 +3,7 @@ import { PresentationSideBarItem } from './PresentationSideBarItem';
 import trashIcon from '../assets/trash.svg';
 import dashboardIcon from '../assets/dashboard.svg';
 import editIcon from '../assets/edit.svg';
+import previewIcon from '../assets/eye.svg';
 import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmationModal } from './ConfirmationModal';
 import { putStore } from '../api';
@@ -67,6 +68,11 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
     await putStore({ store: newStore }, token, closeThumbnailModal);
   }
 
+  const openPreview = () => {
+    const previewUrl = `/presentations/preview/${presentationId}`;
+    window.open(previewUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <>
       <aside
@@ -90,6 +96,7 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
             <PresentationSideBarItem text="Back to Dashboard" icon={dashboardIcon} onClick={goToDashboard} />
             <PresentationSideBarItem text="Edit Thumbnail" icon={editIcon} onClick={openThumbnailModal} />
             <PresentationSideBarItem text="Delete Presentation" icon={trashIcon} onClick={openDeleteModal} />
+            <PresentationSideBarItem text="Preview" icon={previewIcon} onClick={openPreview} />
           </ul>
         </div>
         <PresentationToolSideBar addElementToSlide={addElementToSlide} displaySlide={displaySlide}/>

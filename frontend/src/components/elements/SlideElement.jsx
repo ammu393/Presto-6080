@@ -1,7 +1,7 @@
 import TextElement from "./TextElement";
 import ImageElement from "./ImageElement";
+import VideoElement from "./VideoElement";
 import CodeElement from "./CodeElement";
-
 export default function SlideElement({ element, onDoubleClick, onContextMenu }) {
   const commonStyles = {
     position: "absolute",
@@ -20,8 +20,10 @@ export default function SlideElement({ element, onDoubleClick, onContextMenu }) 
       return <TextElement element={element} style={commonStyles} />;
     case "image":
       return <ImageElement element={element} style={commonStyles} />;
+    case "video":
+      return <VideoElement element={element} style={commonStyles} />;
     case "code":
-      return <CodeElement element={element} style = {commonStyles} />
+      return <CodeElement element={element} style={commonStyles} />
     default:
       return null;
     }
