@@ -15,6 +15,8 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
   const [currentElement, setCurrentElement] = useState({});
   const [slideWidth, setSlideWidth] = useState("70vw");
   const [slideHeight, setSlideHeight] = useState("80vh");
+  const [selectedElement, setSelectedElement] = useState(null); // Track selected element
+  const [clicked, setClicked] = useState(false); // Track selected element
 
   useEffect(() => {
     if (preview) {
@@ -81,6 +83,17 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
 
   const slideContent = displaySlide?.elements || [];
   const slideNum = slides.findIndex(slide => slide.slideId === displaySlide.slideId) + 1;
+  
+  const handleSingleClick = (element) => {
+    if (!clicked) {
+      setClicked(true)
+      setSelectedElement(element); // Set the selected element
+    } else {
+      setClicked(false);
+    }
+  };
+
+
 
   const handleDeleteElement = (elementToDelete) => {
     deleteElementFromSlide(elementToDelete.elementId);
@@ -109,30 +122,44 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     }
   };
 
+  const updateElementPosition = (updatedElement) => {
+    // Update the element's position
+    addElementToSlide(updatedElement, displaySlide); // Update the slide with the new element position
+  };
+
+
   return (
     <>
       <div
-        className={`bg-white flex items-center justify-center p-4 relative ${preview ? "" : "border-4 border-[#cbd5e1] border-dashed m-4 sm:m-10"}`}
+        className={`bg-white flex items-center justify-center p-4 relative ${
+          preview ? "" : "border-4 border-[#cbd5e1] border-dashed m-4 sm:m-10"
+        }`}
         style={{
           width: slideWidth,
           height: slideHeight,
         }}
       >
-        {slideContent.length > 0 && slideContent.map((element, index) => (
-          <SlideElement
-            key={index}
-            element={element}
-            onDoubleClick={() => handleDoubleClick(element)}
-            onContextMenu={() => openDeleteModal(element)}
-            preview={preview}
-          />
-        ))}
+        {slideContent.length > 0 &&
+          slideContent.map((element, index) => (
+            <SlideElement
+              key={index}
+              element={element}
+              selected={selectedElement?.elementId === element.elementId}
+              onDoubleClick={() => handleDoubleClick(element)}
+              onContextMenu={() => openDeleteModal(element)}
+              onSingleClick={() => handleSingleClick(element)}
+              updateElementPosition={updateElementPosition}
+              preview={preview}
+            />
+          ))}
+        {/* Slide number */}
         <div
           className="absolute bottom-0 left-0 text-[#1f2a38] text-sm w-[10vw] h-[10vw] max-w-[50px] max-h-[50px] flex justify-center items-center text-base"
         >
           {slideNum}
         </div>
       </div>
+
 
       {isTextModalOpen && (
         <TextPropertiesModal

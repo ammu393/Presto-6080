@@ -126,35 +126,6 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
           <option value="Times New Roman">Times New Roman</option>
           <option value="Courier New">Courier New</option>
         </select>
-
-        {currentElement && (
-          <>
-            <label className="block text-lg font-medium mb-2">Position:</label>
-            <div className="flex space-x-2 mb-4">
-              <label className="flex-1">
-                Top (%):
-                <input
-                  type="number"
-                  placeholder="Top (%)"
-                  value={top}
-                  onChange={(e) => setTop(parseFloat(e.target.value))}
-                  className="border p-2 w-full"
-                />
-              </label>
-              <label className="flex-1">
-                Left (%):
-                <input
-                  type="number"
-                  placeholder="Left (%)"
-                  value={left}
-                  onChange={(e) => setLeft(parseFloat(e.target.value))}
-                  className="border p-2 w-full"
-                />
-              </label>
-            </div>
-          </>
-        )}
-
         <div className="flex justify-end">
           <button
             type="submit"

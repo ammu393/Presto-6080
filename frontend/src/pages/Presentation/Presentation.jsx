@@ -71,21 +71,12 @@ export default function Presentation({ token, store, setStore }) {
   };
 
   const addElementToSlide = (element, currentSlide) => {
-    const updatedElements = currentSlide.elements.map((el) => 
-      el.elementId === element.elementId ? element : el
-    );
-  
-    const isElementNew = !currentSlide.elements.some(el => el.elementId === element.elementId);
-    if (isElementNew) {
-      updatedElements.push(element);
-    }
-  
+    console.log(currentSlide)
     const updatedSlide = {
-      ...currentSlide,
-      elements: updatedElements,
+      ...currentSlide, 
+      elements: [...currentSlide.elements, element],
     };
-  
-    updateSlide(updatedSlide); 
+    updateSlide(updatedSlide);
   };
 
   const deleteElementFromSlide = async (elementId) => {
