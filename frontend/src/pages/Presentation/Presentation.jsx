@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PresentationSideBar from '../../components/PresentationSideBar';
 import { useEffect, useState } from 'react';
 import editIcon from '../../assets/edit.svg';
@@ -13,24 +13,28 @@ import DeleteButon from '../../components/DeleteButton';
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
+  const { slideNum } = useParams();
   const presentation = store.presentations.find(presentation => presentation.presentationId === presentationId);
   const [slides, setSlides] = useState(presentation ? presentation.slides : []);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [displaySlide, setDisplaySlide] = useState(slides[slides.length-1]);
+  const [displaySlide, setDisplaySlide] = useState(slides[slideNum - 1]);
   const [isFirstSlide, setIsFirstSlide] = useState(false);
   const [isLastSlide, setIsLastSlide] = useState(true);
+  const navigate = useNavigate();
+
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);
   };
 
   useEffect(() => {
-    if (presentation && slides.length) {
-      const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
-      setIsFirstSlide(currentIndex === 0);
-      setIsLastSlide(currentIndex === slides.length - 1);
+    if (presentation) {
+      setSlides(presentation.slides);
+      const slideIndex = parseInt(slideNum, 10) - 1;
+      setDisplaySlide(presentation.slides[slideIndex] || null);
+      setIsFirstSlide(slideIndex === 0);
+      setIsLastSlide(slideIndex === presentation.slides.length - 1);
     }
-
-  }, [displaySlide, slides]);
+  }, [presentation, slideNum]);
 
   const getTitle = () => {
     const presentationInfo = store.presentations.filter(p => p.presentationId === presentationId)[0];
@@ -40,6 +44,7 @@ export default function Presentation({ token, store, setStore }) {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
     if (currentIndex > 0) {
       setDisplaySlide(slides[currentIndex - 1]);
+      updateURL(parseInt(slideNum) - 1);
     }
     console.log(displaySlide)
   };
@@ -49,11 +54,16 @@ export default function Presentation({ token, store, setStore }) {
 
     if (currentIndex < slides.length - 1) {
       setDisplaySlide(slides[currentIndex + 1]);
+      updateURL(parseInt(slideNum) + 1);
     }
     console.log(displaySlide)
 
   };
 
+  const updateURL = (slideNumber) => {
+    const newURL = `/presentations/${presentationId}/${slideNumber}`;
+    navigate(newURL, { replace: true });
+  };
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -172,7 +182,7 @@ export default function Presentation({ token, store, setStore }) {
           </div>
 
           <div className="aspect-Slide">
-            {displaySlide?.slideId && (
+            {displaySlide && (
               <Slide 
                 displaySlide={displaySlide} 
                 slides = {slides}
@@ -184,7 +194,7 @@ export default function Presentation({ token, store, setStore }) {
           <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
             <div className="h-8">
               {/* Only display arrows if slides are present */}
-              <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} setSlides={setSlides} />
+              <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} setSlides={setSlides} updateURL={updateURL}/>
               {slides.length > 0 && (
                 <div className="mt-5 h-8">
                   <div className={isFirstSlide ? 'invisible' : ''}>
@@ -193,7 +203,7 @@ export default function Presentation({ token, store, setStore }) {
                   <div className={isLastSlide ? 'invisible' : ''}>
                     <DownArrow onClick={moveSlideDown} />
                   </div>
-                  <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} className="mt-5"/>
+                  <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} updateURL={updateURL} className="mt-5"/>
                 </div>
               )}
             </div>
