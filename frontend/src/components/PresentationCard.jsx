@@ -8,7 +8,7 @@ export function PresentationCard({ title, description, numSlides, presentationId
 
   return (
     <div 
-      className="bg-white aspect-[2/1] max-w-lg flex flex-col p-4 cursor-pointer border border-transparent hover:border-gray-400 transition-all duration-300"
+      className="bg-white aspect-[2/1] w-min-[100px] max-w-lg flex flex-col p-4 cursor-pointer border border-transparent hover:border-gray-400 transition-all duration-300"
       tabIndex="0"
       role="group"
       aria-label="Presentation Card"
