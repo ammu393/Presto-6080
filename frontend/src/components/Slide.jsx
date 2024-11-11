@@ -140,6 +140,17 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
           currentElement={currentElement}
         />
       )}
+      {isCodeModalOpen && (
+        <CodePropertiesModal
+          isOpen={isCodeModalOpen}
+          closeCodeModal={closeCodeModal}
+          addElementToSlide={addElementToSlide}
+          deleteElementFromSlide={deleteElementFromSlide}
+          displaySlide={displaySlide}
+          currentElement={currentElement}
+        />
+      )}
+
 
       <ConfirmationModal
         isOpen={isDeleteModalOpen}
