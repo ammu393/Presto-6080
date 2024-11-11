@@ -1,15 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TextPropertiesModal from "./TextPropertiesModal";
 import { ConfirmationModal } from "./ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
 import ImagePropertiesModal from "./ImagePropertiesModal";
 //import VideoPropertiesModal from "./videoPropertiesModal";
 
-export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide }) {
+export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide, preview }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentElement, setCurrentElement] = useState({});
+  const [slideWidth, setSlideWidth] = useState("70vw");
+  const [slideHeight, setSlideHeight] = useState("80vh");
+
+  useEffect(() => {
+    if (preview) {
+      setSlideHeight("100vh");
+      setSlideWidth("100vw");
+    } else {
+      setSlideHeight("80vh");
+      setSlideWidth("70vw");
+    }
+  }, [preview]);
 
   const openTextModal = (element) => {
     setIsTextModalOpen(true);
@@ -32,8 +44,10 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
   };
 
   const openDeleteModal = (element) => {
-    setIsDeleteModalOpen(true);
-    setCurrentElement(element);
+    if (!preview) {
+      setIsDeleteModalOpen(true);
+      setCurrentElement(element);
+    }
   };
 
   const closeDeleteModal = () => {
@@ -50,24 +64,31 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
   };
 
   const handleDoubleClick = (element) => {
-    console.log("here")
-    if (element.type === "text") {
-      openTextModal(element);
-    } else if (element.type === "image") {
-      console.log("hereeeee")
-      openImageModal(element);
+    if (!preview) {
+      if (element.type === "text") {
+        openTextModal(element);
+      } else if (element.type === "image") {
+        openImageModal(element);
+      }
     }
   };
 
   return (
     <>
-      <div className="bg-white max-w-[70vw] h-[80vh] max-h-[80vh] flex items-center border-4 border-[#cbd5e1] border-dashed justify-center p-4 m-4 sm:m-10 relative">
+      <div
+        className={`bg-white flex items-center justify-center p-4 relative ${preview ? "" : "border-4 border-[#cbd5e1] border-dashed m-4 sm:m-10"}`}
+        style={{
+          width: slideWidth,
+          height: slideHeight,
+        }}
+      >
         {slideContent.length > 0 && slideContent.map((element, index) => (
           <SlideElement
             key={index}
             element={element}
             onDoubleClick={() => handleDoubleClick(element)}
             onContextMenu={() => openDeleteModal(element)}
+            preview={preview}
           />
         ))}
         <div

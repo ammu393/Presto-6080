@@ -32,6 +32,7 @@ export const getStore = async (token, onSuccess, onError) => {
 
     if (response.status === 200) {
       if (onSuccess) onSuccess();
+      return response;
     } else {
       console.log("Error: ", response.data);
     }
