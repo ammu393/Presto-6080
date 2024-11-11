@@ -1,16 +1,20 @@
 import { useState } from "react";
 import textIcon from "../assets/text.svg";
 import imageIcon from "../assets/image.svg";
+import codeIcon from "../assets/code_icon.svg"
+
 import PresentationToolBarItem from "./PresentationToolBarItem";
 import TextPropertiesModal from "./TextPropertiesModal";
 import ImagePropertiesModal from "./ImagePropertiesModal";
 import VideoPropertiesModal from "./VideoPropertiesModal";
 import videoIcon from "../assets/video.svg";
+import CodePropertiesModal from "./CodePropertiesModal";
 
 export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
 
   const openTextModal = () => setIsTextModalOpen(true);
   const closeTextModal = () => setIsTextModalOpen(false);
@@ -19,6 +23,10 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
 
   const openImageModal = () => setIsImageModalOpen(true);
   const closeImageModal = () => setIsImageModalOpen(false);
+
+  const openCodeModal = () => setIsCodeModalOpen(true);
+  const closeCodeModal = () => setIsCodeModalOpen(false);
+
 
   return (
     <>
@@ -32,6 +40,7 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
             <PresentationToolBarItem icon={textIcon} text="Text" onClick={openTextModal} />
             <PresentationToolBarItem icon={imageIcon} text="Image" onClick={openImageModal} />
             <PresentationToolBarItem icon={videoIcon} text="Video" onClick={openVideoModal} />
+            <PresentationToolBarItem icon={codeIcon} text="Code" onClick={openCodeModal} />
 
           </ul>
         </div>
@@ -53,6 +62,75 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
         closeVideoModal={closeVideoModal} 
         addElementToSlide={addElementToSlide}
         displaySlide={displaySlide}
+      />
+      <CodePropertiesModal 
+        isOpen={isCodeModalOpen}
+        closeCodeModal = {closeCodeModal}
+        addElementToSlide = {addElementToSlide}
+        displaySlide = {displaySlide}
+      />
+    </>
+  );
+}
+
+import { useState } from "react";
+import textIcon from "../assets/text.svg";
+import imageIcon from "../assets/image.svg";
+import codeIcon from "../assets/code_icon.svg"
+import PresentationToolBarItem from "./PresentationToolBarItem";
+import TextPropertiesModal from "./TextPropertiesModal";
+import ImagePropertiesModal from "./ImagePropertiesModal";
+import CodePropertiesModal from "./CodePropertiesModal";
+
+export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
+  const [isTextModalOpen, setIsTextModalOpen] = useState(false);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
+
+  const openTextModal = () => setIsTextModalOpen(true);
+  const closeTextModal = () => setIsTextModalOpen(false);
+
+  const openImageModal = () => setIsImageModalOpen(true);
+  const closeImageModal = () => setIsImageModalOpen(false);
+
+
+  const openCodeModal = () => setIsCodeModalOpen(true);
+  const closeCodeModal = () => setIsCodeModalOpen(false);
+
+  return (
+    <>
+      <aside
+        id="default-sidebar"
+        className="z-40 w-24 min-h-screen transition-transform bg-[#2f2f33] dark:bg-gray-800"
+        aria-label="Tool Sidebar"
+      >
+        <div className="h-full px-3 py-4 overflow-y-auto">
+          <ul className="space-y-2 font-medium">
+            <PresentationToolBarItem icon={textIcon} text="Text" onClick={openTextModal} />
+            <PresentationToolBarItem icon={imageIcon} text="Image" onClick={openImageModal} />
+            <PresentationToolBarItem icon={codeIcon} text="Code" onClick={openCodeModal} />
+
+          </ul>
+        </div>
+      </aside>
+      <TextPropertiesModal 
+        isOpen={isTextModalOpen} 
+        closeTextModal={closeTextModal} 
+        addElementToSlide={addElementToSlide}
+        displaySlide={displaySlide}
+      />
+      <ImagePropertiesModal
+        isOpen={isImageModalOpen} 
+        closeImageModal={closeImageModal} 
+        addElementToSlide={addElementToSlide}
+        displaySlide={displaySlide}
+      />
+
+      <CodePropertiesModal 
+        isOpen={isCodeModalOpen}
+        closeCodeModal = {closeCodeModal}
+        addElementToSlide = {addElementToSlide}
+        displaySlide = {displaySlide}
       />
     </>
   );
