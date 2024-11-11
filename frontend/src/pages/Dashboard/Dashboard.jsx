@@ -1,7 +1,6 @@
 import { useEffect, useCallback } from "react";
 import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
-//import { Slide } from "../../components/Slide";
 
 import axios from "axios";
 
@@ -25,12 +24,10 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
     }
   }, [token, setStore]);
 
-  // UseEffect to fetch presentations on component mount and token change
   useEffect(() => {
     fetchPresentations();
   }, [fetchPresentations]);
 
-  // Function to refresh presentations when a new one is created
   const refreshPresentations = () => {
     fetchPresentations();
   };

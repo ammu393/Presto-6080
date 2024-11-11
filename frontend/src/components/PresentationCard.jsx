@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 export function PresentationCard({ title, description, numSlides, presentationId, thumbnail }) {
   const navigate = useNavigate();
   const goToPresentationPage = () => {
-    navigate(`/presentations/${presentationId}`);
+    navigate(`/presentations/${presentationId}/1`);
   }
 
   return (
