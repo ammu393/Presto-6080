@@ -88,7 +88,9 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
     if (!clicked) {
       setClicked(true)
       setSelectedElement(element); // Set the selected element
+      console.log(element)
     } else {
+      setSelectedElement(null); // Deselect element if clicked again
       setClicked(false);
     }
   };
@@ -124,8 +126,18 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
 
   const updateElementPosition = (updatedElement) => {
     // Update the element's position
-    addElementToSlide(updatedElement, displaySlide); // Update the slide with the new element position
+    const elementExistsInCurrentSlide = displaySlide.elements.some(
+      (element) => element.elementId === updatedElement.elementId
+    );
+  
+    if (elementExistsInCurrentSlide) {
+      console.log("Updating position for element", updatedElement);
+      addElementToSlide(updatedElement, displaySlide); // Update the slide with the new element position
+    } else {
+      console.log("Attempted to update position of element not in this slide");
+    }
   };
+
 
 
   return (
@@ -139,7 +151,10 @@ export default function Slide({ displaySlide, slides, addElementToSlide, deleteE
           height: slideHeight,
         }}
       >
+        {            console.log("this is the selected element's id" + selectedElement)
+        }
         {slideContent.length > 0 &&
+        
           slideContent.map((element, index) => (
             <SlideElement
               key={index}

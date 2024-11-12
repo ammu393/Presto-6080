@@ -34,6 +34,8 @@ export default function SlideElement({
 
     const newTop = Math.max(0, Math.min(initialTop + (deltaY / e.currentTarget.parentElement.offsetHeight) * 100, 100 - parseFloat(element.height))); 
     const newLeft = Math.max(0, Math.min(initialLeft + (deltaX / e.currentTarget.parentElement.offsetWidth) * 100, 100 - parseFloat(element.width)));
+    console.log("Updated element position", { top: newTop, left: newLeft });
+
     updateElementPosition({ ...element, top: `${newTop}%`, left: `${newLeft}%` });
   };
 
