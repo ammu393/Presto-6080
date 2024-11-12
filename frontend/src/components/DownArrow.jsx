@@ -14,7 +14,11 @@ export default function DownArrow( {onClick } ) {
         onClick();
       }}
     >
-      <img src={isHovered ?  downArrowBlack : downArrowGrey } className="w-12 h-12 transition duration-50" alt="Add Slide" />
+      <img
+        src={isHovered ?  downArrowBlack : downArrowGrey }
+        className="w-12 h-12 transition duration-50"
+        aria-label="Next Slide"
+      />
     </a>
   );
 }

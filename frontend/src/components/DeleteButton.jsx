@@ -144,7 +144,11 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
         onMouseLeave={() => setIsHovered(false)}
         onClick={(event) => deleteSlide(event)}
       >
-        <img src={isHovered ? deleteRed : deleteGrey} className="w-12 h-12 transition duration-50" alt="Add Slide" />
+        <img
+          src={isHovered ? deleteRed : deleteGrey}
+          className="w-12 h-12 transition duration-50"
+          aria-label="Delete Slide"
+        />
       </a>
       <ConfirmationModal
         isOpen={ isDeletePresentationModalOpen }

@@ -4,7 +4,6 @@ export default function ImageElement({ element, style, preview }) {
       src={element.src}
       alt={element.alt || "Slide image"}
       style={{ width: "100%", height: "100%", objectFit: "cover", ...style }}
-      tabIndex={preview ? undefined : 0}
     />
   );
 }

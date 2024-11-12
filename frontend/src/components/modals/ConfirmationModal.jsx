@@ -3,7 +3,11 @@ export function ConfirmationModal({ isOpen, onClose, onConfirm, title, text }) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg p-6 w-1/3">
+      <div 
+        className="bg-white rounded-lg p-6 max-w-sm sm:w-2/3 lg:w-1/3"
+        aria-label="Confirmation modal"
+        aria-modal="true"
+      >
         <h2 className="text-lg font-semibold">{title}</h2>
         <div className="mt-4">
           <p className="text-gray-700">{text}</p>

@@ -19,9 +19,9 @@ export default function InputModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg p-6 w-1/3">
-        <h2 className="text-xl font-bold mb-4">{title}</h2>
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4" aria-label="Input modal">
+      <div className="bg-white rounded-lg p-6 w-full max-w-md sm:w-2/3 lg:w-1/3">
+        <h2 className="text-lg font-bold mb-4">{title}</h2>
         <form onSubmit={handleFormSubmit}>
           <input 
             type="text" 
@@ -30,10 +30,10 @@ export default function InputModal({
             placeholder={placeholder}
             className="w-full p-2 border border-gray-300 rounded mb-4"
           />
-          <div className="flex justify-end">
+          <div className="flex justify-end space-x-2">
             <button 
               type="submit"
-              className="bg-blue-500 text-white font-semibold py-2 px-4 rounded mr-2"
+              className="bg-blue-500 text-white font-semibold py-2 px-4 rounded"
             >
               {submitText}
             </button>
