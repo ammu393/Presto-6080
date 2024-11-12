@@ -88,9 +88,9 @@ export default function Preview({ token }) {
 
   return (
     <>
-      {displaySlide && (
+      {displaySlide && presentation && (
         <>
-          <Slide displaySlide={displaySlide} slides={slides} preview={true}/>
+          <Slide displaySlide={displaySlide} slides={slides} preview={true} presentation={presentation}/>
           <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
             <div className="h-8">
               {slides.length > 0 && (

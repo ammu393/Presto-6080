@@ -2,7 +2,7 @@ import deleteGrey from "../assets/delete-grey.svg";
 import deleteRed from "../assets/delete-red.svg";
 import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";
-import { ConfirmationModal } from "./ConfirmationModal";
+import { ConfirmationModal } from "./modals/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
 import { putStore } from "../api";
 export default function DeleteButon({ setDisplaySlide, token, store, setStore, presentationId, displaySlide, setSlides, updateURL }) {

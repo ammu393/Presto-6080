@@ -4,15 +4,15 @@ import imageIcon from "../assets/image.svg";
 import codeIcon from "../assets/code_icon.svg"
 
 import PresentationToolBarItem from "./PresentationToolBarItem";
-import TextPropertiesModal from "./models/TextPropertiesModal";
-import ImagePropertiesModal from "./models/ImagePropertiesModal";
-import VideoPropertiesModal from "./models/VideoPropertiesModal";
+import TextPropertiesModal from "./modals/TextPropertiesModal";
+import ImagePropertiesModal from "./modals/ImagePropertiesModal";
+import VideoPropertiesModal from "./modals/VideoPropertiesModal";
 import videoIcon from "../assets/video.svg";
 import backgroundIcon from "../assets/back.svg";
-import CodePropertiesModal from "./models/CodePropertiesModal";
-import BackgroundModal from "./models/BackgroundModal";
+import CodePropertiesModal from "./modals/CodePropertiesModal";
+import BackgroundModal from "./modals/BackgroundModal";
 
-export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
+export default function PresentationToolSideBar({ addElementToSlide, updateBackground, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
@@ -77,6 +77,7 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
       <BackgroundModal 
         isOpen={isBackgroundModalOpen}
         closeBackgroundModal={closeBackgroundModal}
+        updateBackground={updateBackground}
         displaySlide={displaySlide}
       />
     </>

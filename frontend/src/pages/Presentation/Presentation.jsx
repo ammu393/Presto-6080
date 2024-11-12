@@ -6,7 +6,7 @@ import CreateButton from '../../components/CreateButton';
 import Slide from '../../components/Slide';
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
-import InputModal from '../../components/InputModal';
+import InputModal from '../../components/modals/InputModal';
 import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
 
@@ -28,13 +28,19 @@ export default function Presentation({ token, store, setStore }) {
 
   useEffect(() => {
     if (presentation) {
-      setSlides(presentation.slides);
       const slideIndex = parseInt(slideNum, 10) - 1;
-      setDisplaySlide(presentation.slides[slideIndex] || null);
       setIsFirstSlide(slideIndex === 0);
-      setIsLastSlide(slideIndex === presentation.slides.length - 1);
+      setIsLastSlide(slideIndex === slides.length - 1);
     }
-  }, [presentation, slideNum]);
+  }, [slideNum]);
+
+  useEffect(() => {
+    if (presentation) {
+      const slideIndex = parseInt(slideNum, 10) - 1;
+      setSlides(presentation.slides);
+      setDisplaySlide(presentation.slides[slideIndex] || null);
+    }
+  }, [presentation])
 
   const getTitle = () => {
     const presentationInfo = store.presentations.filter(p => p.presentationId === presentationId)[0];
@@ -46,7 +52,6 @@ export default function Presentation({ token, store, setStore }) {
       setDisplaySlide(slides[currentIndex - 1]);
       updateURL(parseInt(slideNum) - 1);
     }
-    console.log(displaySlide)
   };
   
   const moveSlideDown = () => {
@@ -56,8 +61,6 @@ export default function Presentation({ token, store, setStore }) {
       setDisplaySlide(slides[currentIndex + 1]);
       updateURL(parseInt(slideNum) + 1);
     }
-    console.log(displaySlide)
-
   };
 
   const updateURL = (slideNumber) => {
@@ -125,11 +128,49 @@ export default function Presentation({ token, store, setStore }) {
       index === presentationIndex ? updatedPresentation : presentation
     );
   
-    const newStore = { store: { presentations: updatedPresentations } };
+    const newStore = { presentations: updatedPresentations };
+    setStore(newStore);
     setSlides(updatedSlidesArray);
-    console.log("This is my new store upon updating", newStore);
   
-    await putStore(newStore, token);
+    await putStore({ store: newStore }, token);
+  };
+  
+  const updateBackground = async (newBackgroundInfo, isDefault) => {
+    // Update the slide's background style
+    const newSlide = {
+      ...displaySlide, 
+      backgroundStyle: newBackgroundInfo,
+    };
+  
+    const currentPresentations = store.presentations || [];
+    const presentationIndex = currentPresentations.findIndex(
+      (presentation) => presentation.presentationId === presentationId
+    );
+
+    if (presentationIndex !== -1) {
+      const foundPresentation = { ...currentPresentations[presentationIndex] };
+      if (isDefault) {
+        foundPresentation.backgroundStyle = newBackgroundInfo;
+      }
+
+      const slidesArray = foundPresentation.slides || [];
+      const slideIndex = slidesArray.findIndex((slide) => slide.slideId === newSlide.slideId);
+    
+      const updatedSlidesArray = slideIndex !== -1
+        ? slidesArray.map((slide, index) => (index === slideIndex ? newSlide : slide))
+        : slidesArray;
+    
+      const updatedPresentation = { ...foundPresentation, slides: updatedSlidesArray };
+    
+      const updatedPresentations = currentPresentations.map((presentation, index) =>
+        index === presentationIndex ? updatedPresentation : presentation
+      );
+
+      const newStore = { presentations: updatedPresentations };
+      
+      setStore(newStore);
+      await putStore({ store: newStore }, token);
+    }
   };
   
 
@@ -152,7 +193,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide}/>
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground}/>
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}
@@ -188,6 +229,7 @@ export default function Presentation({ token, store, setStore }) {
                 slides = {slides}
                 addElementToSlide={addElementToSlide}
                 deleteElementFromSlide={deleteElementFromSlide}
+                presentation={presentation}
               />
             )}
           </div>            
