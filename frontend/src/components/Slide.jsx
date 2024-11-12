@@ -4,7 +4,7 @@ import { ConfirmationModal } from "./modals/ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
 import ImagePropertiesModal from "./modals/ImagePropertiesModal";
 import CodePropertiesModal from "./modals/CodePropertiesModal";
-import VideoPropertiesModal from "./modals/videoPropertiesModal";
+import VideoPropertiesModal from "./modals/VideoPropertiesModal";
 
 export default function Slide({
   displaySlide,

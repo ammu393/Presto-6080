@@ -114,17 +114,6 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
           onChange={(e) => setColor(e.target.value)}
           className="border p-2 w-full mb-4"
         />
-
-        <label className="block text-lg font-medium mb-2">Font Family:</label>
-        <select
-          value={fontFamily}
-          onChange={(e) => setFontFamily(e.target.value)}
-          className="border p-2 w-full mb-4"
-        >
-          <option value="Arial">Arial</option>
-          <option value="Times New Roman">Times New Roman</option>
-          <option value="Courier New">Courier New</option>
-        </select>
         <div className="flex justify-end">
           <button
             type="submit"

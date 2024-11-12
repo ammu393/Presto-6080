@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function FontModal({ isOpen, closeFontModal, displaySlide, updateSlideFont }) {
-  const [fontFamily, setFontFamily] = useState("Arial");
+  const [fontFamily, setFontFamily] = useState(displaySlide.fontFamily);
+  
+  useEffect(() => {
+    setFontFamily(displaySlide.fontFamily);
+  }, [displaySlide])
 
   if (!isOpen) return null;
 
