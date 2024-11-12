@@ -91,16 +91,16 @@ export default function Preview({ token }) {
       {displaySlide && presentation && (
         <>
           <Slide displaySlide={displaySlide} slides={slides} preview={true} presentation={presentation}/>
-          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
+          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-top items-center pr-1  pb-5 pt-5'>
             <div className="h-8">
               {slides.length > 0 && (
-                <div className="mt-5 h-8">
-                  <div className={isFirstSlide ? 'invisible' : ''}>
-                    <UpArrow onClick={moveSlideUp} />
-                  </div>
-                  <div className={isLastSlide ? 'invisible' : ''}>
-                    <DownArrow onClick={moveSlideDown} />
-                  </div>
+                <div className="h-5 mb-2 flex flex-row ml-auto">
+                    <div className={isFirstSlide ? 'invisible' : ''}>
+                      <UpArrow onClick={moveSlideUp} />
+                    </div>
+                    <div className={isLastSlide ? 'invisible' : ''}>
+                      <DownArrow onClick={moveSlideDown} />
+                    </div>
                 </div>
               )}
             </div>
