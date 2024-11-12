@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import Logout from '../components/Logout';
-import InputModal from './InputModal';
+import InputModal from './modals/InputModal';
 import { putStore } from '../api';
 export function DashboardHeader({ token, onPresentationsUpdated, store, setToken }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +22,14 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
       thumbnail: "",
       title: presentationName,
       description: "",
-      slides: []
+      slides: [],
+      backgroundStyle: {
+        type: "solid",
+        firstColour: "white",
+        secondColour: null,
+        gradientDirection: null,
+        src: null,
+      }
     };
 
     const currentPresentations = store.presentations || [];

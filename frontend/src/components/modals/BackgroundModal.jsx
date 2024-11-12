@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import ColourInput from "../ColourInput";
 
-export default function BackgroundModal({ isOpen, closeBackgroundModal, updateSlideBackground, displaySlide }) {
+export default function BackgroundModal({ isOpen, closeBackgroundModal, updateBackground, displaySlide }) {
   const [backgroundType, setBackgroundType] = useState("solid");
   const [colour, setColour] = useState("#ffffff");
   const [secondColour, setSecondColour] = useState("#000000");
@@ -11,13 +11,13 @@ export default function BackgroundModal({ isOpen, closeBackgroundModal, updateSl
   const [defaultBackground, setDefaultBackground] = useState(false);
 
   useEffect(() => {
-    if (displaySlide.background) {
-      const { type, color, secondColor, gradientDirection, imageUrl } = displaySlide.background;
+    if (displaySlide) {
+      const { type, firstColour, secondColour, gradientDirection, src } = displaySlide.backgroundStyle;
       setBackgroundType(type || "solid");
-      setColour(color || "#ffffff");
-      setSecondColour(secondColor || "#000000");
+      setColour(firstColour || "#ffffff");
+      setSecondColour(secondColour || "#000000");
       setGradientDirection(gradientDirection || "to right");
-      setImageUrl(imageUrl || "");
+      setImageUrl(src || "");
     }
   }, [displaySlide]);
 
@@ -28,13 +28,13 @@ export default function BackgroundModal({ isOpen, closeBackgroundModal, updateSl
 
     const backgroundSettings = {
       type: backgroundType,
-      color: backgroundType === "solid" ? colour : null,
-      secondColor: backgroundType === "gradient" ? secondColour : null,
+      firstColour: backgroundType === "solid" ? colour : (backgroundType === "gradient" ? colour : null),
+      secondColour: backgroundType === "gradient" ? secondColour : null,
       gradientDirection: backgroundType === "gradient" ? gradientDirection : null,
-      imageUrl: backgroundType === "image" ? imageUrl : null,
+      src: backgroundType === "image" ? imageUrl : null,
     };
 
-    updateSlideBackground(displaySlide.id, backgroundSettings);
+    updateBackground(backgroundSettings, defaultBackground);
     closeBackgroundModal();
   };
 

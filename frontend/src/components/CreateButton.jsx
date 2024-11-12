@@ -13,6 +13,13 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
     const newSlide = {
       slideId: uniqueSlideId,
       elements: [],
+      backgroundStyle: {
+        type: null,
+        firstColour: null,
+        secondColour: null,
+        gradientDirection: null,
+        src: null,
+      }
     }; 
     console.log("this is the new slide" + newSlide)
     console.log("this is the new slide id " + newSlide.slideId)
