@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import TextPropertiesModal from "./modals/TextPropertiesModal";
 import { ConfirmationModal } from "./modals/ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
-import ImagePropertiesModal from "./ImagePropertiesModal";
-import CodePropertiesModal from "./CodePropertiesModal";
-import VideoPropertiesModal from "./videoPropertiesModal";
+import ImagePropertiesModal from "./modals/ImagePropertiesModal";
+import CodePropertiesModal from "./modals/CodePropertiesModal";
+import VideoPropertiesModal from "./modals/videoPropertiesModal";
 
 export default function Slide({
   displaySlide,

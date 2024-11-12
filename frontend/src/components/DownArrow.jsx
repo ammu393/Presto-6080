@@ -1,12 +1,12 @@
-import downArrowGrey from "../assets/slideArrows/down_arrow_grey.svg";
-import downArrowBlack from "../assets/slideArrows/down_arrow_black.svg";
+import downArrowGrey from "../assets/slideArrows/rightArrow-grey.svg";
+import downArrowBlack from "../assets/slideArrows/rightArrow-black.svg";
 import { useState} from "react";
 
 export default function DownArrow( {onClick } ) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <a href="#" className="flex items-center p-2 text-white rounded-lg mb-5"
+    <a href="#" className="flex items-center p-2 mr-5 text-white rounded-lg"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={(e) => {
