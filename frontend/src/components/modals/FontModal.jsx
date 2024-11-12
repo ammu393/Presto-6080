@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 
 export default function FontModal({ isOpen, closeFontModal, displaySlide, updateSlideFont }) {
-  const [fontFamily, setFontFamily] = useState(displaySlide.fontFamily);
+  const [fontFamily, setFontFamily] = useState("");
   
   useEffect(() => {
-    setFontFamily(displaySlide.fontFamily);
+    if (displaySlide) {
+      setFontFamily(displaySlide.fontFamily);
+    }
   }, [displaySlide])
 
   if (!isOpen) return null;
@@ -17,7 +19,7 @@ export default function FontModal({ isOpen, closeFontModal, displaySlide, update
   
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 w-screen">
-      <form onSubmit={handleSubmitText} className="bg-white rounded-lg p-6 w-1/3">
+      <form onSubmit={handleSubmitText} className="bg-white rounded-lg p-6 max-w-md sm:w-2/3 lg:w-1/3">
         <h2 className="text-xl font-bold mb-4">Set Slide Font</h2>
 
         <label className="block text-lg font-medium mb-2">Font Family:</label>
