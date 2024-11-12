@@ -84,11 +84,32 @@ export default function Presentation({ token, store, setStore }) {
   };
 
   const addElementToSlide = (element, currentSlide) => {
-    console.log(currentSlide)
-    const updatedSlide = {
-      ...currentSlide, 
-      elements: [...currentSlide.elements, element],
-    };
+    console.log(currentSlide);
+      const existingElementIndex = currentSlide.elements.findIndex(e => e.elementId === element.elementId);
+  
+    let updatedSlide;
+  
+    if (existingElementIndex !== -1) {
+      const updatedElements = [...currentSlide.elements];
+      updatedElements[existingElementIndex] = {
+        ...updatedElements[existingElementIndex],
+        top: element.top,  
+        left: element.left, 
+        width: element.width,
+        height: element.height
+      };
+  
+      updatedSlide = {
+        ...currentSlide,
+        elements: updatedElements,
+      };
+    } else {
+      updatedSlide = {
+        ...currentSlide,
+        elements: [...currentSlide.elements, element],
+      };
+    }
+  
     updateSlide(updatedSlide);
   };
 
@@ -163,7 +184,7 @@ export default function Presentation({ token, store, setStore }) {
   
     await updatePresentationStore(updatedPresentation);
   };
-
+  
   return (
     <>
       <div className="flex h-screen">
