@@ -135,7 +135,37 @@ export default function SlideElement({
    
   };
 
+  const renderElement = () => {
+    switch (localElement.type) {
+      case "text":
+        return <TextElement element={localElement} style={commonStyles} />;
+      case "image":
+        return <ImageElement element={localElement} style={commonStyles} />;
+      case "video":
+        return <VideoElement element={localElement} style={commonStyles} />;
+      case "code":
+        return <CodeElement element={localElement} style={commonStyles} />;
+      default:
+        return null;
+    }
+  };
 
+  const renderCorners = () => {
+    const corners = [
+      { direction: "top-left", style: "top-0 left-0" },
+      { direction: "top-right", style: "top-0 right-0" },
+      { direction: "bottom-left", style: "bottom-0 left-0" },
+      { direction: "bottom-right", style: "bottom-0 right-0" },
+    ];
+
+    return corners.map(({ direction, style }) => (
+      <div
+        key={direction}
+        data-direction={direction}
+        className={`resize-handle absolute w-2 h-2 bg-blue-500 ${style} cursor-se-resize`}
+      ></div>
+    ));
+  };
   return (
     <div
       style={commonStyles}
