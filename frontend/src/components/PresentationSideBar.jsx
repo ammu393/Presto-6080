@@ -10,7 +10,7 @@ import { putStore } from '../api';
 import InputModal from './modals/InputModal';
 import PresentationToolSideBar from './PresentationToolSideBar';
 
-export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground }) {
+export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont}) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
   const [presentationIdToDelete, setPresentationIdToDelete] = useState(null);
@@ -99,7 +99,7 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
             <PresentationSideBarItem text="Preview" icon={previewIcon} onClick={openPreview} />
           </ul>
         </div>
-        <PresentationToolSideBar addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground}/>
+        <PresentationToolSideBar addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont}/>
       </aside>
       <ConfirmationModal 
         isOpen={isDeleteModalOpen} 

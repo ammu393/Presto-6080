@@ -92,6 +92,14 @@ export default function Presentation({ token, store, setStore }) {
     updateSlide(updatedSlide);
   };
 
+  const updateSlideFont = (newFont, currentSlide) => {
+    const updatedSlide = {
+      ...currentSlide, 
+      fontFamily: newFont,
+    };
+    updateSlide(updatedSlide);
+  }
+
   const deleteElementFromSlide = async (elementId) => {
     const updatedSlide = {
       ...displaySlide, 
@@ -183,7 +191,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground}/>
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont}/>
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}

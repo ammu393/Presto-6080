@@ -155,6 +155,7 @@ export default function Slide({
               onDoubleClick={() => handleDoubleClick(element)}
               onContextMenu={() => openDeleteModal(element)}
               preview={preview}
+              displaySlide={displaySlide}
             />
           ))}
         <div className="absolute bottom-0 left-0 text-[#1f2a38] text-sm w-[10vw] h-[10vw] max-w-[50px] max-h-[50px] flex justify-center items-center text-base">
