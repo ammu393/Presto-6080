@@ -9,6 +9,7 @@ export default function FontModal({ isOpen, closeFontModal, displaySlide, update
     }
   }, [displaySlide])
 
+  if (!isOpen) return null;
 
   const handleSubmitText = async (e) => {
     e.preventDefault();
