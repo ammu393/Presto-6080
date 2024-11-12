@@ -101,9 +101,7 @@ export default function Presentation({ token, store, setStore }) {
     return updatedSlide;
   }
 
-  const updateSlide = async (newSlide) => {
-    setDisplaySlide(newSlide);
-  
+  const updatePresentationStore = async (updatedPresentation) => {
     const currentPresentations = store.presentations || [];
     const presentationIndex = currentPresentations.findIndex(
       (presentation) => presentation.presentationId === presentationId
@@ -114,65 +112,57 @@ export default function Presentation({ token, store, setStore }) {
       return;
     }
   
-    const foundPresentation = currentPresentations[presentationIndex];
-    const slidesArray = foundPresentation.slides || [];
-    const slideIndex = slidesArray.findIndex((slide) => slide.slideId === newSlide.slideId);
-  
-    const updatedSlidesArray = slideIndex !== -1
-      ? slidesArray.map((slide, index) => (index === slideIndex ? newSlide : slide))
-      : slidesArray;
-  
-    const updatedPresentation = { ...foundPresentation, slides: updatedSlidesArray };
-  
     const updatedPresentations = currentPresentations.map((presentation, index) =>
       index === presentationIndex ? updatedPresentation : presentation
     );
   
     const newStore = { presentations: updatedPresentations };
     setStore(newStore);
-    setSlides(updatedSlidesArray);
-  
     await putStore({ store: newStore }, token);
   };
   
-  const updateBackground = async (newBackgroundInfo, isDefault) => {
-    // Update the slide's background style
-    const newSlide = {
-      ...displaySlide, 
-      backgroundStyle: newBackgroundInfo,
-    };
+  const updateSlidesInPresentation = (slidesArray, newSlide) => {
+    const slideIndex = slidesArray.findIndex((slide) => slide.slideId === newSlide.slideId);
+    return slideIndex !== -1
+      ? slidesArray.map((slide, index) => (index === slideIndex ? newSlide : slide))
+      : slidesArray;
+  };
+  
+  const updateSlide = async (newSlide) => {
+    setDisplaySlide(newSlide);
   
     const currentPresentations = store.presentations || [];
     const presentationIndex = currentPresentations.findIndex(
       (presentation) => presentation.presentationId === presentationId
     );
-
-    if (presentationIndex !== -1) {
-      const foundPresentation = { ...currentPresentations[presentationIndex] };
-      if (isDefault) {
-        foundPresentation.backgroundStyle = newBackgroundInfo;
-      }
-
-      const slidesArray = foundPresentation.slides || [];
-      const slideIndex = slidesArray.findIndex((slide) => slide.slideId === newSlide.slideId);
-    
-      const updatedSlidesArray = slideIndex !== -1
-        ? slidesArray.map((slide, index) => (index === slideIndex ? newSlide : slide))
-        : slidesArray;
-    
-      const updatedPresentation = { ...foundPresentation, slides: updatedSlidesArray };
-    
-      const updatedPresentations = currentPresentations.map((presentation, index) =>
-        index === presentationIndex ? updatedPresentation : presentation
-      );
-
-      const newStore = { presentations: updatedPresentations };
-      
-      setStore(newStore);
-      await putStore({ store: newStore }, token);
-    }
+  
+    const foundPresentation = { ...currentPresentations[presentationIndex] };
+    const updatedSlidesArray = updateSlidesInPresentation(foundPresentation.slides || [], newSlide);
+    const updatedPresentation = { ...foundPresentation, slides: updatedSlidesArray };
+  
+    await updatePresentationStore(updatedPresentation);
+    setSlides(updatedSlidesArray);
   };
   
+  const updateBackground = async (newBackgroundInfo, isDefault) => {
+    const newSlide = { ...displaySlide, backgroundStyle: newBackgroundInfo };
+    
+    const currentPresentations = store.presentations || [];
+    const presentationIndex = currentPresentations.findIndex(
+      (presentation) => presentation.presentationId === presentationId
+    );
+  
+    const foundPresentation = { ...currentPresentations[presentationIndex] };
+    
+    if (isDefault) {
+      foundPresentation.backgroundStyle = newBackgroundInfo;
+    }
+  
+    const updatedSlidesArray = updateSlidesInPresentation(foundPresentation.slides || [], newSlide);
+    const updatedPresentation = { ...foundPresentation, slides: updatedSlidesArray };
+  
+    await updatePresentationStore(updatedPresentation);
+  };
 
   return (
     <>
