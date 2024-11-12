@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 //import NavBar from '../../NavBar';
+import NavBar from "../../components/NavBar"
 
 export default function Login({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
@@ -31,15 +32,11 @@ export default function Login({ token, setTokenFn }) {
   return (
     <>
       <div className="h-screen bg-register-background">
-        <div className="flex justify-end items-center p-4">
-          <a href="/register" className="bg-register-background my-3 mx-3 text-black hover:bg-[#d9d9db] py-2 px-4 rounded whitespace-nowrap">
-            Sign up
-          </a>
-        </div>
+      <NavBar></NavBar>
         <div className="flex flex-col justify-center items-center px-4">
-          <div className="flex justify-center text-center mb-8">
-            <div>
-              <p className="text-2xl sm:text-3xl font-normal text-[#828282]">
+          <div className="flex justify-center text-center">
+            <div className="mt-20">
+              <p className="text-2xl sm:text-3xl font-normal text-[#2f3033] mb-3">
                 Welcome back!
               </p>
               <p className="text-xl sm:text-2xl text-[#ababab] mb-6">
@@ -49,14 +46,6 @@ export default function Login({ token, setTokenFn }) {
           </div>
           <div className="flex flex-col justify-center items-center w-full max-w-sm sm:max-w-md">
             <div className="bg-white w-full rounded-lg shadow-lg p-6 sm:w-[32rem]">
-              <div className="flex justify-center my-5">
-                {/* Add login with Google/Facebook buttons here */}
-                <p>through google/facebook login buttons here</p>
-              </div>
-              <div className="inline-flex items-center justify-center w-full">
-                <hr className="w-full h-px my-8 mx-8 border-0 bg-gray-300" />
-                <span className="absolute px-3 font-medium text-gray-300 -translate-x-1/2 bg-white left-1/2">or</span>
-              </div>
               <form className="w-[90%] my-5 mx-6 flex flex-col justify-center">
                 <div className="relative mb-5 group">
                   <input
@@ -88,6 +77,10 @@ export default function Login({ token, setTokenFn }) {
                     Password
                   </label>
                 </div>
+                <div className="inline-flex items-center justify-center w-full">
+                <hr className="w-full h-px my-8 mx-8 border-0 bg-gray-300" />
+              </div>
+
                 <button onClick={login} className="bg-[#3f4d52] w-full sm:w-[20%] mx-auto text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap">
                   Log in
                 </button>

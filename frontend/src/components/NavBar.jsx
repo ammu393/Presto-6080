@@ -3,14 +3,20 @@
 
 export default function NavBar() {
   return (
-    <div className="bg-gradient-to-r from-navBar-purple-start from-30% via-navBar-purple-end via-70% to-navBar-purple-end to-60%  h-14 flex justify-end items-center mr-auto">
-      <div className="inline-block h-10 min-h-[1em] w-0.5 bg-white/10"></div>   
-      <a href="/login" className="bg-navBar-purple-end hover:bg-navBar-purple-start text-white font-bold py-2 px-4 rounded mx-2">
-        Log in 
-      </a>  
-      <a href="/register" className="bg-white text-navBar-purple-start font-bold py-2 px-4 rounded whitespace-nowrap mx-3 ">
-        Sign up 
-      </a>  
+    <div className="bg-[#2f2f33] h-16 flex justify-between items-center px-6 shadow-md">
+      {/* Logo or Brand Name */}
+      <a href="/" className="text-2xl font-bold text-white">
+        Presto
+      </a>
+      {/* Navigation Links */}
+      <div className="flex space-x-4">
+        <a href="/login" className="bg-[#2f2f33] hover:bg-[#818182] text-white font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out">
+          Log in
+        </a>
+        <a href="/register" className="bg-white text-[#2f2f33] font-semibold py-2 px-6 rounded-lg transition duration-300 ease-in-out hover:bg-[#f0f0f0]">
+          Sign up
+        </a>
+      </div>
     </div>
   )
 }
