@@ -4,12 +4,13 @@ import trashIcon from '../assets/trash.svg';
 import dashboardIcon from '../assets/dashboard.svg';
 import editIcon from '../assets/edit.svg';
 import previewIcon from '../assets/eye.svg';
+import rearrangeIcon from '../assets/Rearrange.svg'
 import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmationModal } from './modals/ConfirmationModal';
 import { putStore } from '../api';
 import InputModal from './modals/InputModal';
 import PresentationToolSideBar from './PresentationToolSideBar';
-
+import Rearrange from '../pages/Rearrange/Rearrange';
 export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont}) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
@@ -73,6 +74,11 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
     window.open(previewUrl, '_blank', 'noopener,noreferrer');
   };
 
+  const goToRearrange = () => {
+    navigate(`/presentations/rearrange/${presentationId}`);
+
+  }
+
   return (
     <>
       <aside
@@ -97,6 +103,8 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
             <PresentationSideBarItem text="Edit Thumbnail" icon={editIcon} onClick={openThumbnailModal} />
             <PresentationSideBarItem text="Delete Presentation" icon={trashIcon} onClick={openDeleteModal} />
             <PresentationSideBarItem text="Preview" icon={previewIcon} onClick={openPreview} />
+            <PresentationSideBarItem text="Rearrange" icon={rearrangeIcon} onClick={goToRearrange} />
+
           </ul>
         </div>
         <PresentationToolSideBar addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont}/>
