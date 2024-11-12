@@ -56,7 +56,7 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
             <h2 className="text-xl font-bold mb-4">{currentElement ? "Edit Video" : "New Video"}</h2>
   
             <label className="block text-lg font-medium mb-2">Size:</label>
-            <div className="flex space-x-2 mb-4">
+            {!currentElement && (            <div className="flex space-x-2 mb-4">
               <label className="flex-1">
                 Width (%):
                 <input
@@ -82,6 +82,7 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
                 />
               </label>
             </div>
+          )}
   
             <label className="block text-lg font-medium">Video URL</label>
             <input

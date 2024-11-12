@@ -54,33 +54,34 @@ export default function ImagePropertiesModal({ isOpen, closeImageModal, addEleme
           <h2 className="text-xl font-bold mb-4">{currentElement ? "Edit Image" : "New Image"}</h2>
 
           <label className="block text-lg font-medium mb-2">Size:</label>
+          {!currentElement && (
           <div className="flex space-x-2 mb-4">
-            <label className="flex-1">
-              Width (%):
-              <input
-                type="number"
-                placeholder="Width (%)"
-                min="0"
-                max="100"
-                value={width}
-                onChange={(e) => setWidth(e.target.value)}
-                className="border p-2 w-full"
-              />
-            </label>
-            <label className="flex-1">
-              Height (%):
-              <input
-                type="number"
-                placeholder="Height (%)"
-                min="0"
-                max="100"
-                value={height}
-                onChange={(e) => setHeight(e.target.value)}
-                className="border p-2 w-full"
-              />
-            </label>
-          </div>
-
+          <label className="flex-1">
+            Width (%):
+            <input
+              type="number"
+              placeholder="Width (%)"
+              min="0"
+              max="100"
+              value={width}
+              onChange={(e) => setWidth(e.target.value)}
+              className="border p-2 w-full"
+            />
+          </label>
+          <label className="flex-1">
+            Height (%):
+            <input
+              type="number"
+              placeholder="Height (%)"
+              min="0"
+              max="100"
+              value={height}
+              onChange={(e) => setHeight(e.target.value)}
+              className="border p-2 w-full"
+            />
+          </label>
+        </div>
+          )}
           <label className="block text-lg font-medium mb-2">Image URL</label>
           <input
             placeholder="Enter URL here"

@@ -72,19 +72,18 @@ export default function Presentation({ token, store, setStore }) {
 
   const addElementToSlide = (element, currentSlide) => {
     console.log(currentSlide);
-  
-    // Check if the element already exists in the slide (based on elementId or another unique property)
-    const existingElementIndex = currentSlide.elements.findIndex(e => e.elementId === element.elementId);
+      const existingElementIndex = currentSlide.elements.findIndex(e => e.elementId === element.elementId);
   
     let updatedSlide;
   
     if (existingElementIndex !== -1) {
-      // If the element exists, update its top and left properties
       const updatedElements = [...currentSlide.elements];
       updatedElements[existingElementIndex] = {
         ...updatedElements[existingElementIndex],
-        top: element.top,  // Update the top position
-        left: element.left, // Update the left position
+        top: element.top,  
+        left: element.left, 
+        width: element.width,
+        height: element.height
       };
   
       updatedSlide = {
