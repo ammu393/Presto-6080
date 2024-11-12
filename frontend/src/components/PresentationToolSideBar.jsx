@@ -4,17 +4,20 @@ import imageIcon from "../assets/image.svg";
 import codeIcon from "../assets/code_icon.svg"
 
 import PresentationToolBarItem from "./PresentationToolBarItem";
-import TextPropertiesModal from "./TextPropertiesModal";
-import ImagePropertiesModal from "./ImagePropertiesModal";
-import VideoPropertiesModal from "./VideoPropertiesModal";
+import TextPropertiesModal from "./models/TextPropertiesModal";
+import ImagePropertiesModal from "./models/ImagePropertiesModal";
+import VideoPropertiesModal from "./models/VideoPropertiesModal";
 import videoIcon from "../assets/video.svg";
-import CodePropertiesModal from "./CodePropertiesModal";
+import backgroundIcon from "../assets/back.svg";
+import CodePropertiesModal from "./models/CodePropertiesModal";
+import BackgroundModal from "./models/BackgroundModal";
 
 export default function PresentationToolSideBar({ addElementToSlide, displaySlide }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
+  const [isBackgroundModalOpen, setIsBackgroundModalOpen] = useState(false);
 
   const openTextModal = () => setIsTextModalOpen(true);
   const closeTextModal = () => setIsTextModalOpen(false);
@@ -27,12 +30,14 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
   const openCodeModal = () => setIsCodeModalOpen(true);
   const closeCodeModal = () => setIsCodeModalOpen(false);
 
+  const openBackgroundModal = () => setIsBackgroundModalOpen(true);
+  const closeBackgroundModal = () => setIsBackgroundModalOpen(false);
 
   return (
     <>
       <aside
         id="default-sidebar"
-        className="z-40 w-24 min-h-screen transition-transform bg-[#2f2f33] dark:bg-gray-800"
+        className="z-40 w-26 min-h-screen transition-transform bg-[#2f2f33] dark:bg-gray-800"
         aria-label="Tool Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto">
@@ -41,7 +46,7 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
             <PresentationToolBarItem icon={imageIcon} text="Image" onClick={openImageModal} />
             <PresentationToolBarItem icon={videoIcon} text="Video" onClick={openVideoModal} />
             <PresentationToolBarItem icon={codeIcon} text="Code" onClick={openCodeModal} />
-
+            <PresentationToolBarItem icon={backgroundIcon} text="Background" onClick={openBackgroundModal} />
           </ul>
         </div>
       </aside>
@@ -68,6 +73,11 @@ export default function PresentationToolSideBar({ addElementToSlide, displaySlid
         closeCodeModal = {closeCodeModal}
         addElementToSlide = {addElementToSlide}
         displaySlide = {displaySlide}
+      />
+      <BackgroundModal 
+        isOpen={isBackgroundModalOpen}
+        closeBackgroundModal={closeBackgroundModal}
+        displaySlide={displaySlide}
       />
     </>
   );
