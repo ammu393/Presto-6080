@@ -96,35 +96,6 @@ export default function ImagePropertiesModal({ isOpen, closeImageModal, addEleme
             onChange={(e) => setAlt(e.target.value)}
             className="border p-2 w-full mb-4 resize-none"
           />
-
-          {currentElement && (
-            <>
-              <label className="block text-lg font-medium mb-2">Position:</label>
-              <div className="flex space-x-2 mb-4">
-                <label className="flex-1">
-                  Top (%):
-                  <input
-                    type="number"
-                    placeholder="Top (%)"
-                    value={top}
-                    onChange={(e) => setTop(e.target.value)}
-                    className="border p-2 w-full"
-                  />
-                </label>
-                <label className="flex-1">
-                  Left (%):
-                  <input
-                    type="number"
-                    placeholder="Left (%)"
-                    value={left}
-                    onChange={(e) => setLeft(e.target.value)}
-                    className="border p-2 w-full"
-                  />
-                </label>
-              </div>
-            </>
-          )}
-
           <div className="flex justify-end">
             <button
               type="submit"
