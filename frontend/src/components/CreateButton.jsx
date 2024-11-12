@@ -1,4 +1,4 @@
-import plusIconBlack from "../assets/plusIconBlack.svg";
+import plusIconBlack from "../assets/plusIconGreen.svg";
 import plusIconGrey from "../assets/plusIconGrey.svg";
 import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";

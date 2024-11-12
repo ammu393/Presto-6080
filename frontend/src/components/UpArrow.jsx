@@ -1,5 +1,5 @@
-import upArrowGrey from "../assets/slideArrows/up_arrow_grey.svg";
-import upArrowBlack from "../assets/slideArrows/up_arrow_black.svg";
+import upArrowGrey from "../assets/slideArrows/leftArrow-grey.svg";
+import upArrowBlack from "../assets/slideArrows/leftArrow-black.svg";
 import { useState} from "react";
 
 export default function UpArrow({ onClick }) {

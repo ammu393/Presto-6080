@@ -4,6 +4,7 @@ import { ConfirmationModal } from "./modals/ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
 import ImagePropertiesModal from "./modals/ImagePropertiesModal";
 import CodePropertiesModal from "./modals/CodePropertiesModal";
+import VideoPropertiesModal from "./modals/videoPropertiesModal";
 
 export default function Slide({
   displaySlide,
@@ -16,10 +17,13 @@ export default function Slide({
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [currentElement, setCurrentElement] = useState({});
   const [slideWidth, setSlideWidth] = useState("70vw");
   const [slideHeight, setSlideHeight] = useState("80vh");
+  const [selectedElement, setSelectedElement] = useState(null); // Track selected element
+  const [clicked, setClicked] = useState(false); // Track selected element
   const [finalBackground, setFinalBackground] = useState({});
 
   useEffect(() => {
@@ -88,6 +92,17 @@ export default function Slide({
     setCurrentElement({});
   };
 
+  const openVideoModal = (element) => {
+    setIsVideoModalOpen(true);
+    setCurrentElement(element);
+  }
+
+  const closeVideoModal = () => {
+    setIsVideoModalOpen(false);
+    setCurrentElement({});
+  }
+
+
   const openDeleteModal = (element) => {
     if (!preview) {
       setIsDeleteModalOpen(true);
@@ -101,7 +116,20 @@ export default function Slide({
   };
 
   const slideContent = displaySlide?.elements || [];
-  const slideNum = slides.findIndex((slide) => slide.slideId === displaySlide.slideId) + 1;
+  const slideNum = slides.findIndex(slide => slide.slideId === displaySlide.slideId) + 1;
+  
+  const handleSingleClick = (element) => {
+    if (!clicked) {
+      setClicked(true)
+      setSelectedElement(element); // Set the selected element
+      console.log(element)
+    } else {
+      setSelectedElement(null); // Deselect element if clicked again
+      setClicked(false);
+    }
+  };
+
+
 
   const handleDeleteElement = (elementToDelete) => {
     deleteElementFromSlide(elementToDelete.elementId);
@@ -115,6 +143,9 @@ export default function Slide({
       openImageModal(element);
     } else if (element.type === "code") {
       openCodeModal(element);
+    } else if (element.type == 'video') {
+      openVideoModal(element);
+
     }
   };
 
@@ -135,6 +166,22 @@ export default function Slide({
     return {};
   };
 
+  const updateElementPosition = (updatedElement) => {
+    // Update the element's position
+    const elementExistsInCurrentSlide = displaySlide.elements.some(
+      (element) => element.elementId === updatedElement.elementId
+    );
+  
+    if (elementExistsInCurrentSlide) {
+      console.log("Updating position for element", updatedElement);
+      addElementToSlide(updatedElement, displaySlide); // Update the slide with the new element position
+    } else {
+      console.log("Attempted to update position of element not in this slide");
+    }
+  };
+
+
+
   return (
     <>
       <div
@@ -152,17 +199,22 @@ export default function Slide({
             <SlideElement
               key={index}
               element={element}
+              selected={selectedElement?.elementId === element.elementId}
               onDoubleClick={() => handleDoubleClick(element)}
               onContextMenu={() => openDeleteModal(element)}
+              onSingleClick={() => handleSingleClick(element)}
+              updateElementPosition={updateElementPosition}
               preview={preview}
               displaySlide={displaySlide}
             />
           ))}
-        <div className="absolute bottom-0 left-0 text-[#1f2a38] text-sm w-[10vw] h-[10vw] max-w-[50px] max-h-[50px] flex justify-center items-center text-base">
+        {/* Slide number */}
+        <div
+          className="absolute bottom-0 left-0 text-[#1f2a38] text-sm w-[10vw] h-[10vw] max-w-[50px] max-h-[50px] flex justify-center items-center text-base"
+        >
           {slideNum}
         </div>
       </div>
-
       {isTextModalOpen && (
         <TextPropertiesModal
           isOpen={isTextModalOpen}
@@ -195,6 +247,17 @@ export default function Slide({
         />
       )}
 
+      {isVideoModalOpen && (
+        <VideoPropertiesModal
+        isOpen={isVideoModalOpen}
+        closeVideoModal={closeVideoModal}
+        addElementToSlide={addElementToSlide}
+        deleteElementFromSlide={deleteElementFromSlide}
+        displaySlide={displaySlide}
+        currentElement={currentElement}
+        />
+      )}
+      
       <ConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
