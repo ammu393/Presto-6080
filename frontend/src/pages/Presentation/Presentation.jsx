@@ -20,6 +20,8 @@ export default function Presentation({ token, store, setStore }) {
   const [displaySlide, setDisplaySlide] = useState(slides[slideNum - 1]);
   const [isFirstSlide, setIsFirstSlide] = useState(false);
   const [isLastSlide, setIsLastSlide] = useState(true);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
   const navigate = useNavigate();
 
   const toggleSidebar = () => {
@@ -49,6 +51,7 @@ export default function Presentation({ token, store, setStore }) {
   const moveSlideUp = () => {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
     if (currentIndex > 0) {
+      setIsTransitioning(true);
       setDisplaySlide(slides[currentIndex - 1]);
       updateURL(parseInt(slideNum) - 1);
     }
@@ -58,10 +61,19 @@ export default function Presentation({ token, store, setStore }) {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
 
     if (currentIndex < slides.length - 1) {
+      setIsTransitioning(true);
       setDisplaySlide(slides[currentIndex + 1]);
       updateURL(parseInt(slideNum) + 1);
     }
   };
+
+  useEffect(() => {
+    if (isTransitioning) {
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 200); 
+    }
+  }, [isTransitioning]);
 
   const updateURL = (slideNumber) => {
     const newURL = `/presentations/${presentationId}/${slideNumber}`;
@@ -84,11 +96,32 @@ export default function Presentation({ token, store, setStore }) {
   };
 
   const addElementToSlide = (element, currentSlide) => {
-    console.log(currentSlide)
-    const updatedSlide = {
-      ...currentSlide, 
-      elements: [...currentSlide.elements, element],
-    };
+    console.log(currentSlide);
+      const existingElementIndex = currentSlide.elements.findIndex(e => e.elementId === element.elementId);
+  
+    let updatedSlide;
+  
+    if (existingElementIndex !== -1) {
+      const updatedElements = [...currentSlide.elements];
+      updatedElements[existingElementIndex] = {
+        ...updatedElements[existingElementIndex],
+        top: element.top,  
+        left: element.left, 
+        width: element.width,
+        height: element.height
+      };
+  
+      updatedSlide = {
+        ...currentSlide,
+        elements: updatedElements,
+      };
+    } else {
+      updatedSlide = {
+        ...currentSlide,
+        elements: [...currentSlide.elements, element],
+      };
+    }
+  
     updateSlide(updatedSlide);
   };
 
@@ -171,7 +204,7 @@ export default function Presentation({ token, store, setStore }) {
   
     await updatePresentationStore(updatedPresentation);
   };
-
+  
   return (
     <>
       <div className="flex h-screen">
@@ -218,9 +251,19 @@ export default function Presentation({ token, store, setStore }) {
               tabIndex={0}
               onClick={toggleModal}
             />
-          </div>
+            {slides.length > 0 && (
+                <div className="h-5 mb-2 flex flex-row ml-auto">
+                    <div className={isFirstSlide ? 'invisible' : ''}>
+                      <UpArrow onClick={moveSlideUp} />
+                    </div>
+                    <div className={isLastSlide ? 'invisible' : ''}>
+                      <DownArrow onClick={moveSlideDown} />
+                    </div>
+                </div>
+              )}
+            </div>
 
-          <div className="aspect-Slide">
+          <div className={`flex flex-row gap-6 ${isTransitioning ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200 ease-in`}>
             {displaySlide && (
               <Slide 
                 displaySlide={displaySlide} 
@@ -235,17 +278,8 @@ export default function Presentation({ token, store, setStore }) {
             <div className="h-8">
               {/* Only display arrows if slides are present */}
               <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} setSlides={setSlides} updateURL={updateURL}/>
-              {slides.length > 0 && (
-                <div className="mt-5 h-8">
-                  <div className={isFirstSlide ? 'invisible' : ''}>
-                    <UpArrow onClick={moveSlideUp} />
-                  </div>
-                  <div className={isLastSlide ? 'invisible' : ''}>
-                    <DownArrow onClick={moveSlideDown} />
-                  </div>
-                  <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} updateURL={updateURL} className="mt-5"/>
-                </div>
-              )}
+              <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} updateURL={updateURL} className="mt-5"/>
+
             </div>
           </div>
         </div>
