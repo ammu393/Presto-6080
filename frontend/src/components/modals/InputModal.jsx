@@ -19,7 +19,7 @@ export default function InputModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 px-4" aria-label="Input modal">
       <div className="bg-white rounded-lg p-6 w-full max-w-md sm:w-2/3 lg:w-1/3">
         <h2 className="text-lg font-bold mb-4">{title}</h2>
         <form onSubmit={handleFormSubmit}>

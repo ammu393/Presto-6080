@@ -246,10 +246,15 @@ export default function Presentation({ token, store, setStore }) {
             <h1 className="text-4xl">{getTitle()}</h1>
             <img
               src={editIcon}
-              alt="Edit Icon"
+              aria-label="Edit Icon"
               className="w-6 cursor-pointer transition-transform duration-200 hover:scale-110 hover:border"
               tabIndex={0}
               onClick={toggleModal}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  toggleModal();
+                }
+              }}
             />
             {slides.length > 0 && (
                 <div className="h-5 mb-2 flex flex-row ml-auto">
@@ -276,10 +281,8 @@ export default function Presentation({ token, store, setStore }) {
           </div>            
           <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
             <div className="h-8">
-              {/* Only display arrows if slides are present */}
               <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} setSlides={setSlides} updateURL={updateURL}/>
               <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} updateURL={updateURL} className="mt-5"/>
-
             </div>
           </div>
         </div>

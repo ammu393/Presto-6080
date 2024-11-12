@@ -128,15 +128,13 @@ export default function Register({ token, setTokenFn }) {
                     Confirm Password
                   </label>
                 </div>
+                <button
+                  onClick={signup}
+                  className="bg-[#3f4d52] w-full sm:w-[20%] text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap mt-4"
+                >
+                  Sign up
+                </button>
               </form>
-  
-              {/* Sign Up Button */}
-              <button
-                onClick={signup}
-                className="bg-[#3f4d52] w-full sm:w-[20%] text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap mt-4"
-              >
-                Sign up
-              </button>
             </div>
           </div>
         </div>

@@ -37,7 +37,6 @@ export default function Slide({
   }, [preview]);
 
   useEffect(() => {
-    console.log("display slide: ", displaySlide, "presentation: ", presentation);
     const finalStyle = displaySlide.backgroundStyle.type || presentation.backgroundStyle.type;
     const finalColour1 = displaySlide.backgroundStyle.firstColour || presentation.backgroundStyle.firstColour;
     const finalColour2 = displaySlide.backgroundStyle.secondColour || presentation.backgroundStyle.secondColour;
@@ -53,13 +52,6 @@ export default function Slide({
         src: finalSrc,
       }
     )
-    console.log("in slide.jsx heres the final background: ", {
-      type: finalStyle,
-      firstColour: finalColour1,
-      secondColour: finalColour2,
-      gradientDirection: finalGradientDirection,
-      src: finalSrc,
-    })
   }, [displaySlide]);
 
   const openTextModal = (element) => {

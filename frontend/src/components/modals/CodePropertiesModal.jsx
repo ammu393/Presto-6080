@@ -52,7 +52,12 @@ export default function CodePropertiesModal({ isOpen, closeCodeModal, addElement
   
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 w-screen">
-      <form onSubmit={handleSubmitCode} className="bg-white rounded-lg p-6 max-w-md sm:w-2/3 lg:w-1/3">
+      <form 
+        onSubmit={handleSubmitCode}
+        className="bg-white rounded-lg p-6 max-w-md sm:w-2/3 lg:w-1/3"
+        aria-label="Code element modal"
+        aria-modal="true"
+      >
         <h2 className="text-xl font-bold mb-4">{currentElement ? "Edit Code" : "New Code"}</h2>
 
         <label className="block text-lg font-medium mb-2">Code Area:</label>

@@ -13,6 +13,11 @@ export function PresentationCard({ title, description, numSlides, presentationId
       role="group"
       aria-label="Presentation Card"
       onClick={goToPresentationPage}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          goToPresentationPage();
+        }
+      }}
     >
       <div className="w-full h-3/4 bg-gray-300 mb-2 flex items-center justify-center overflow-hidden">
         {thumbnail ? (

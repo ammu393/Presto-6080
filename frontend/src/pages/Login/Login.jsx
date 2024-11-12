@@ -20,13 +20,11 @@ export default function Login({ token, setTokenFn }) {
       password: password
     })
       .then((response) => {
-        console.log(response)
         localStorage.setItem('token', response.data.token)
         setTokenFn(response.data.token)
         navigate('/dashboard')
       })
       .catch((error) => {
-        console.log(error)
         alert(error.response.data.error)
       })
   }
@@ -90,13 +88,11 @@ export default function Login({ token, setTokenFn }) {
                     Password
                   </label>
                 </div>
+                <button onClick={login} className="bg-[#3f4d52] w-full sm:w-[20%] mx-auto text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap">
+                  Log in
+                </button>
               </form>
-              <div className="mb-10 text-sm">
-                <p className="ml-2">remember me button to be added later</p>
-              </div>
-              <button onClick={login} className="bg-[#3f4d52] w-full sm:w-[20%] mx-auto text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap">
-                Log in
-              </button>
+              
             </div>
           </div>
         </div>
