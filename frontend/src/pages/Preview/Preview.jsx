@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Slide from "../../components/Slide";
 import UpArrow from '../../components/UpArrow';
@@ -13,6 +13,8 @@ export default function Preview({ token }) {
   const [slides, setSlides] = useState(null);
   const [isFirstSlide, setIsFirstSlide] = useState(false);
   const [isLastSlide, setIsLastSlide] = useState(true);
+  const { slideNum } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPresentations = async () => {
@@ -45,7 +47,7 @@ export default function Preview({ token }) {
   useEffect(() => {
     if (presentation && presentation.slides) {
       setSlides(presentation.slides);
-      setDisplaySlide(presentation.slides[0]);
+      setDisplaySlide(presentation.slides[slideNum - 1]);
     }
   }, [presentation]);
 
@@ -62,6 +64,7 @@ export default function Preview({ token }) {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
     if (currentIndex > 0) {
       setDisplaySlide(slides[currentIndex - 1]);
+      updateURL(parseInt(slideNum) - 1);
     }
   };
   
@@ -70,18 +73,24 @@ export default function Preview({ token }) {
 
     if (currentIndex < slides.length - 1) {
       setDisplaySlide(slides[currentIndex + 1]);
+      updateURL(parseInt(slideNum) + 1);
     }
   };
 
+  const updateURL = (slideNumber) => {
+    const newURL = `/presentations/preview/${presentationId}/${slideNumber}`;
+    navigate(newURL, { replace: true });
+  };
+
   if (loading) {
-    return <p>Loading store data...</p>;
+    return <p>Loading...</p>;
   }
 
   return (
     <>
-      {displaySlide && (
+      {displaySlide && presentation && (
         <>
-          <Slide displaySlide={displaySlide} slides={slides} preview={true}/>
+          <Slide displaySlide={displaySlide} slides={slides} preview={true} presentation={presentation}/>
           <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
             <div className="h-8">
               {slides.length > 0 && (
