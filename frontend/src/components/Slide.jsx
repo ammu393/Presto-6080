@@ -215,51 +215,6 @@ export default function Slide({
         </div>
       </div>
 
-
-      {isTextModalOpen && (
-        <TextPropertiesModal
-          isOpen={isTextModalOpen}
-          closeTextModal={closeTextModal}
-          addElementToSlide={addElementToSlide}
-          deleteElementFromSlide={deleteElementFromSlide}
-          displaySlide={displaySlide}
-          currentElement={currentElement}
-        />
-      )}
-
-      {isImageModalOpen && (
-        <ImagePropertiesModal
-          isOpen={isImageModalOpen}
-          closeImageModal={closeImageModal}
-          addElementToSlide={addElementToSlide}
-          deleteElementFromSlide={deleteElementFromSlide}
-          displaySlide={displaySlide}
-          currentElement={currentElement}
-        />
-      )}
-      {isCodeModalOpen && (
-        <CodePropertiesModal
-          isOpen={isCodeModalOpen}
-          closeCodeModal={closeCodeModal}
-          addElementToSlide={addElementToSlide}
-          deleteElementFromSlide={deleteElementFromSlide}
-          displaySlide={displaySlide}
-          currentElement={currentElement}
-        />
-      )}
-
-      {isVideoModalOpen && (
-        <VideoPropertiesModal
-        isOpen={isVideoModalOpen}
-        closeVideoModal={closeVideoModal}
-        addElementToSlide={addElementToSlide}
-        deleteElementFromSlide={deleteElementFromSlide}
-        displaySlide={displaySlide}
-        currentElement={currentElement}
-        />
-      )}
-
-
       <ConfirmationModal
         isOpen={isDeleteModalOpen}
         onClose={closeDeleteModal}
