@@ -19,7 +19,8 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
         secondColour: null,
         gradientDirection: null,
         src: null,
-      }
+      },
+      fontFamily: "Arial",
     }; 
     console.log("this is the new slide" + newSlide)
     console.log("this is the new slide id " + newSlide.slideId)

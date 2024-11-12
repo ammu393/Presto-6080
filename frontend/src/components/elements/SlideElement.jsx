@@ -11,6 +11,7 @@ export default function SlideElement({
   onSingleClick,
   updateElementPosition,
   selected,
+  displaySlide,
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -138,7 +139,7 @@ export default function SlideElement({
   const renderElement = () => {
     switch (localElement.type) {
       case "text":
-        return <TextElement element={localElement} style={commonStyles} />;
+        return <TextElement element={localElement} style={commonStyles} displaySlide={displaySlide}/>;
       case "image":
         return <ImageElement element={localElement} style={commonStyles} />;
       case "video":

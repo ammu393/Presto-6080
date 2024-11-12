@@ -11,13 +11,15 @@ import videoIcon from "../assets/video.svg";
 import backgroundIcon from "../assets/back.svg";
 import CodePropertiesModal from "./modals/CodePropertiesModal";
 import BackgroundModal from "./modals/BackgroundModal";
+import FontModal from "./modals/FontModal";
 
-export default function PresentationToolSideBar({ addElementToSlide, updateBackground, displaySlide }) {
+export default function PresentationToolSideBar({ addElementToSlide, updateBackground, displaySlide, updateSlideFont }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [isCodeModalOpen, setIsCodeModalOpen] = useState(false);
   const [isBackgroundModalOpen, setIsBackgroundModalOpen] = useState(false);
+  const [isFontModalOpen, setIsFontModalOpen] = useState(false);
 
   const openTextModal = () => setIsTextModalOpen(true);
   const closeTextModal = () => setIsTextModalOpen(false);
@@ -33,6 +35,9 @@ export default function PresentationToolSideBar({ addElementToSlide, updateBackg
   const openBackgroundModal = () => setIsBackgroundModalOpen(true);
   const closeBackgroundModal = () => setIsBackgroundModalOpen(false);
 
+  const openFontModal = () => setIsFontModalOpen(true);
+  const closeFontModal = () => setIsFontModalOpen(false);
+
   return (
     <>
       <aside
@@ -47,6 +52,7 @@ export default function PresentationToolSideBar({ addElementToSlide, updateBackg
             <PresentationToolBarItem icon={videoIcon} text="Video" onClick={openVideoModal} />
             <PresentationToolBarItem icon={codeIcon} text="Code" onClick={openCodeModal} />
             <PresentationToolBarItem icon={backgroundIcon} text="Background" onClick={openBackgroundModal} />
+            <PresentationToolBarItem icon={textIcon} text="Font" onClick={openFontModal} />
           </ul>
         </div>
       </aside>
@@ -79,6 +85,12 @@ export default function PresentationToolSideBar({ addElementToSlide, updateBackg
         closeBackgroundModal={closeBackgroundModal}
         updateBackground={updateBackground}
         displaySlide={displaySlide}
+      />
+      <FontModal
+        isOpen={isFontModalOpen}
+        closeFontModal={closeFontModal}
+        displaySlide={displaySlide}
+        updateSlideFont={updateSlideFont}
       />
     </>
   );

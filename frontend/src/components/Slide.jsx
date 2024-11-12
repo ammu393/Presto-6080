@@ -4,7 +4,7 @@ import { ConfirmationModal } from "./modals/ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
 import ImagePropertiesModal from "./modals/ImagePropertiesModal";
 import CodePropertiesModal from "./modals/CodePropertiesModal";
-import VideoPropertiesModal from "./modals/videoPropertiesModal";
+import VideoPropertiesModal from "./modals/VideoPropertiesModal";
 
 export default function Slide({
   displaySlide,
@@ -205,6 +205,7 @@ export default function Slide({
               onSingleClick={() => handleSingleClick(element)}
               updateElementPosition={updateElementPosition}
               preview={preview}
+              displaySlide={displaySlide}
             />
           ))}
         {/* Slide number */}

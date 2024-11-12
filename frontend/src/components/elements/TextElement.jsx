@@ -1,7 +1,7 @@
-export default function TextElement({ element, style, preview }) {
+export default function TextElement({ element, style, preview, displaySlide }) {
   return (
     <p 
-      style={{ fontSize: element.fontSize, color: element.color, fontFamily: element.fontFamily, ...style }}
+      style={{ fontSize: element.fontSize, color: element.color, fontFamily: displaySlide.fontFamily, ...style }}
       tabIndex={preview ? undefined : 0}
     >
       {element.text}
