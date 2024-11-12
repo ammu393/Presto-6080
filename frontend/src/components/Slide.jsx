@@ -4,7 +4,7 @@ import { ConfirmationModal } from "./ConfirmationModal";
 import SlideElement from "./elements/SlideElement";
 import ImagePropertiesModal from "./ImagePropertiesModal";
 import CodePropertiesModal from "./CodePropertiesModal";
-import VideoPropertiesModal from "./CodePropertiesModal";
+import VideoPropertiesModal from "./videoPropertiesModal";
 
 export default function Slide({ displaySlide, slides, addElementToSlide, deleteElementFromSlide, preview }) {
   const [isTextModalOpen, setIsTextModalOpen] = useState(false);
