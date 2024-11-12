@@ -11,7 +11,8 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
 
     useEffect(() => {
         if (currentElement) {
-          setSrc(currentElement.src || "");
+
+          setUrl(currentElement.url || "");
           setWidth(parseFloat(currentElement.width) || 0);
           setHeight(parseFloat(currentElement.height) || 0);
           setUrl(currentElement.url || "");
@@ -55,7 +56,7 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
             <h2 className="text-xl font-bold mb-4">{currentElement ? "Edit Video" : "New Video"}</h2>
   
             <label className="block text-lg font-medium mb-2">Size:</label>
-            <div className="flex space-x-2 mb-4">
+            {!currentElement && (            <div className="flex space-x-2 mb-4">
               <label className="flex-1">
                 Width (%):
                 <input
@@ -81,6 +82,7 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
                 />
               </label>
             </div>
+          )}
   
             <label className="block text-lg font-medium">Video URL</label>
             <input
@@ -95,37 +97,12 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
                 type="checkbox" 
                 value="" 
                 className="w-4 h-4 mb-2 mr-1 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" 
-                onChange={(e) => setAutoplay(e.target.checked)} // Use onChange and update state based on checkbox's checked value
+                checked={autoplay}
+                onChange={(e) => setAutoplay(e.target.checked)}
                 />
                 <label className="ms-2 mb-2 ml-2 text-sm font-medium italic">Auto-play video?</label>
+
             </div>
-            {currentElement && (
-              <>
-                <label className="block text-lg font-medium mb-2">Position:</label>
-                <div className="flex space-x-2 mb-4">
-                  <label className="flex-1">
-                    Top (%):
-                    <input
-                      type="number"
-                      placeholder="Top (%)"
-                      value={top}
-                      onChange={(e) => setTop(e.target.value)}
-                      className="border p-2 w-full"
-                    />
-                  </label>
-                  <label className="flex-1">
-                    Left (%):
-                    <input
-                      type="number"
-                      placeholder="Left (%)"
-                      value={left}
-                      onChange={(e) => setLeft(e.target.value)}
-                      className="border p-2 w-full"
-                    />
-                  </label>
-                </div>
-              </>
-            )}
   
             <div className="flex justify-end">
               <button

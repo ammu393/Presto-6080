@@ -120,3 +120,4 @@ export default function BackgroundModal({ isOpen, closeBackgroundModal, updateBa
     </div>
   );
 }
+
