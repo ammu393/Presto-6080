@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 
 export default function FontModal({ isOpen, closeFontModal, displaySlide, updateSlideFont }) {
+  if (!isOpen) return null;
+
   const [fontFamily, setFontFamily] = useState(displaySlide.fontFamily);
   
   useEffect(() => {
     setFontFamily(displaySlide.fontFamily);
   }, [displaySlide])
 
-  if (!isOpen) return null;
 
   const handleSubmitText = async (e) => {
     e.preventDefault();
