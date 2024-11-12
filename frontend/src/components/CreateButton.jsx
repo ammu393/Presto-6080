@@ -120,10 +120,14 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={(event) => {
-        createNewSlide(event);  // First, create the new slide
+        createNewSlide(event);
       }}       
     >
-      <img src={isHovered ? plusIconBlack : plusIconGrey} className="w-12 h-12 transition duration-50" alt="Add Slide" />
+      <img
+        src={isHovered ? plusIconBlack : plusIconGrey}
+        className="w-12 h-12 transition duration-50"
+        aria-label="Add Slide"
+      />
     </a>
   );
 }

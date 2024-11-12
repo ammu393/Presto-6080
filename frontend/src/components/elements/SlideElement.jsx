@@ -12,6 +12,7 @@ export default function SlideElement({
   updateElementPosition,
   selected,
   displaySlide,
+  preview,
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const [isResizing, setIsResizing] = useState(false);
@@ -179,7 +180,7 @@ export default function SlideElement({
         onContextMenu(localElement);
       }}
       onClick={() => onSingleClick(localElement)}
-      tabIndex={0}
+      tabIndex={preview ? undefined : 0}
     >
       {renderElement()}
       {selected && renderCorners()}
