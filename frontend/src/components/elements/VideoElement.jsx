@@ -4,6 +4,8 @@ export default function VideoElement({element, style}) {
     <iframe
       src={videoSrc}
       allowFullScreen
+      title={`Video - ${element.elementId}`}
+      role="video" 
       allow="autoplay; encrypted-media"
       style={{ width: "100%", height: "100%", objectFit: "cover", ...style }}
     />
