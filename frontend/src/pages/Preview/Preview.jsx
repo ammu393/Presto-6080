@@ -95,12 +95,12 @@ export default function Preview({ token }) {
             <div className="h-8">
               {slides.length > 0 && (
                 <div className="h-5 mb-2 flex flex-row ml-auto">
-                    <div className={isFirstSlide ? 'invisible' : ''}>
-                      <UpArrow onClick={moveSlideUp} />
-                    </div>
-                    <div className={isLastSlide ? 'invisible' : ''}>
-                      <DownArrow onClick={moveSlideDown} />
-                    </div>
+                  <div className={isFirstSlide ? 'invisible' : ''}>
+                    <UpArrow onClick={moveSlideUp} />
+                  </div>
+                  <div className={isLastSlide ? 'invisible' : ''}>
+                    <DownArrow onClick={moveSlideDown} />
+                  </div>
                 </div>
               )}
             </div>
