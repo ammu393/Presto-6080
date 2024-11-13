@@ -241,12 +241,12 @@ export default function Slide({
 
       {isVideoModalOpen && (
         <VideoPropertiesModal
-        isOpen={isVideoModalOpen}
-        closeVideoModal={closeVideoModal}
-        addElementToSlide={addElementToSlide}
-        deleteElementFromSlide={deleteElementFromSlide}
-        displaySlide={displaySlide}
-        currentElement={currentElement}
+          isOpen={isVideoModalOpen}
+          closeVideoModal={closeVideoModal}
+          addElementToSlide={addElementToSlide}
+          deleteElementFromSlide={deleteElementFromSlide}
+          displaySlide={displaySlide}
+          currentElement={currentElement}
         />
       )}
       
