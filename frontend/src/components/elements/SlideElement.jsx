@@ -139,16 +139,16 @@ export default function SlideElement({
 
   const renderElement = () => {
     switch (localElement.type) {
-      case "text":
-        return <TextElement element={localElement} style={commonStyles} displaySlide={displaySlide}/>;
-      case "image":
-        return <ImageElement element={localElement} style={commonStyles} />;
-      case "video":
-        return <VideoElement element={localElement} style={commonStyles} />;
-      case "code":
-        return <CodeElement element={localElement} style={commonStyles} />;
-      default:
-        return null;
+    case "text":
+      return <TextElement element={localElement} style={commonStyles} displaySlide={displaySlide}/>;
+    case "image":
+      return <ImageElement element={localElement} style={commonStyles} />;
+    case "video":
+      return <VideoElement element={localElement} style={commonStyles} />;
+    case "code":
+      return <CodeElement element={localElement} style={commonStyles} />;
+    default:
+      return null;
     }
   };
 

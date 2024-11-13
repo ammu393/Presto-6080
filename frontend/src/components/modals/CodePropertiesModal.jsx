@@ -62,32 +62,32 @@ export default function CodePropertiesModal({ isOpen, closeCodeModal, addElement
 
         <label className="block text-lg font-medium mb-2">Code Area:</label>
         {!currentElement && (
-        <div className="flex space-x-2 mb-4">
-        <label className="flex-1">
-          Width (%):
-          <input
-            type="number"
-            placeholder="Width (%)"
-            min="0"
-            max="100"
-            value={width}
-            onChange={(e) => setWidth(e.target.value)}
-            className="border p-2 w-full"
-          />
-        </label>
-        <label className="flex-1">
-          Height (%):
-          <input
-            type="number"
-            placeholder="Height (%)"
-            min="0"
-            max="100"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            className="border p-2 w-full"
-          />
-        </label>
-      </div>
+          <div className="flex space-x-2 mb-4">
+            <label className="flex-1">
+              Width (%):
+              <input
+                type="number"
+                placeholder="Width (%)"
+                min="0"
+                max="100"
+                value={width}
+                onChange={(e) => setWidth(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </label>
+            <label className="flex-1">
+              Height (%):
+              <input
+                type="number"
+                placeholder="Height (%)"
+                min="0"
+                max="100"
+                value={height}
+                onChange={(e) => setHeight(e.target.value)}
+                className="border p-2 w-full"
+              />
+            </label>
+          </div>
         )}
         <label className="block text-lg font-medium mb-2">Code:</label>
         <textarea

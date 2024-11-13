@@ -10,7 +10,6 @@ import { ConfirmationModal } from './modals/ConfirmationModal';
 import { putStore } from '../api';
 import InputModal from './modals/InputModal';
 import PresentationToolSideBar from './PresentationToolSideBar';
-import Rearrange from '../pages/Rearrange/Rearrange';
 export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont}) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
