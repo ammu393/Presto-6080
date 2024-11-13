@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-//import NavBar from '../../NavBar';
+import NavBar from "../../components/NavBar"
 
 export default function Register({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
@@ -42,19 +42,17 @@ export default function Register({ token, setTokenFn }) {
   return (
     <>
       <div className="h-screen bg-register-background">
+        <NavBar></NavBar>
         <div className="flex justify-end items-center">
-          <a
-            href="/login"
-            className="bg-register-background my-3 mx-3 text-black hover:bg-[#d9d9db] py-2 px-4 rounded whitespace-nowrap"
-          >
-            Log in
-          </a>
         </div>
         <div className="flex flex-col justify-center">
           <div className="flex justify-center text-center">
             <div>
-              <p className="text-3xl font-normal text-[#828282] mb-8">
+              <p className="text-3xl mt-20 font-normal text-[#2f3133] mb-3">
                 Create an account
+              </p>
+              <p className="text-xl sm:text-xl text-[#ababab] mb-6">
+                Not yet a member? Sign up now!
               </p>
             </div>
           </div>
@@ -128,13 +126,16 @@ export default function Register({ token, setTokenFn }) {
                     Confirm Password
                   </label>
                 </div>
-                <button
+              </form>
+              <div className='flex justify-center'>
+              <button
                   onClick={signup}
                   className="bg-[#3f4d52] w-full sm:w-[20%] text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap mt-4"
                 >
                   Sign up
                 </button>
-              </form>
+              </div>
+
             </div>
           </div>
         </div>
