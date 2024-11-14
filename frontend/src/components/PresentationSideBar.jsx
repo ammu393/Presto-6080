@@ -4,22 +4,33 @@ import trashIcon from '../assets/trash.svg';
 import dashboardIcon from '../assets/dashboard.svg';
 import editIcon from '../assets/edit.svg';
 import previewIcon from '../assets/eye.svg';
-import rearrangeIcon from '../assets/Rearrange.svg'
+import rearrangeIcon from '../assets/Rearrange.svg';
+import historyIcon from '../assets/history.svg';
 import { useNavigate, useParams } from "react-router-dom";
 import { ConfirmationModal } from './modals/ConfirmationModal';
 import { putStore } from '../api';
 import InputModal from './modals/InputModal';
 import PresentationToolSideBar from './PresentationToolSideBar';
+import RevisionHistoryModal from './modals/RevisionHistoryModal';
+
 export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont}) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
   const [presentationIdToDelete, setPresentationIdToDelete] = useState(null);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const { presentationId } = useParams();
   const navigate = useNavigate();
 
   const goToDashboard = () => {
     navigate("/dashboard");
   }
+  const openHistoryModal = () => {
+    setIsHistoryModalOpen(true);
+  };
+
+  const closeHistoryModal = () => {
+    setIsHistoryModalOpen(false);
+  };
 
   const openDeleteModal = () => {
     setPresentationIdToDelete(presentationId);
@@ -103,6 +114,7 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
             <PresentationSideBarItem text="Delete Presentation" icon={trashIcon} onClick={openDeleteModal} />
             <PresentationSideBarItem text="Preview" icon={previewIcon} onClick={openPreview} />
             <PresentationSideBarItem text="Rearrange" icon={rearrangeIcon} onClick={goToRearrange} />
+            <PresentationSideBarItem text="History" icon={historyIcon} onClick={openHistoryModal} />
 
           </ul>
         </div>
@@ -115,6 +127,14 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
         title="Are you sure?"
         text="Do you really want to permanently delete this presentation?"
       />
+      <RevisionHistoryModal 
+        isOpen={isHistoryModalOpen} 
+        onClose={closeHistoryModal} 
+        presentationId={presentationId}
+        store={store}
+        setStore={setStore}
+      />
+
       <InputModal
         title="Edit Thumbnail" 
         placeholder="Enter Image URL"
