@@ -190,7 +190,7 @@ export default function Presentation({ token, store, setStore }) {
   useEffect(() => {
     const interval = setInterval(() => {
       saveSnapshot(presentation); 
-    }, 1500); 
+    }, 60000); 
     console.log(presentation.revisionHistory)
     return () => clearInterval(interval); 
   }, [slides]); 
