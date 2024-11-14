@@ -58,7 +58,7 @@ describe('PresentationCard Component', () => {
 
     const card = screen.getByRole('group', { name: /presentation card/i });
     fireEvent.click(card);
-    expect(navigate).toHaveBeenCalledWith('/presentations/123');
+    expect(navigate).toHaveBeenCalledWith('/presentations/123/1');
   });
 
   it('applies correct aspect ratio and responsive styles', () => {
