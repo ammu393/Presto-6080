@@ -1,6 +1,3 @@
-
-
-
 export default function NavBar() {
   return (
     <div className="bg-[#2f2f33] h-16 flex justify-between items-center px-6 shadow-md">

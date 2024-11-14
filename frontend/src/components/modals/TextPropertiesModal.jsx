@@ -10,6 +10,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
 
+  // Set to current values or default values
   useEffect(() => {
     if (currentElement) {
       setTextValue(currentElement.text || "");
@@ -24,6 +25,7 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
 
   if (!isOpen) return null;
 
+  // Adds text to the slide and closes the modal
   const handleSubmitText = async (e) => {
     e.preventDefault();
     

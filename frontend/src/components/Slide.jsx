@@ -22,10 +22,11 @@ export default function Slide({
   const [currentElement, setCurrentElement] = useState({});
   const [slideWidth, setSlideWidth] = useState("70vw");
   const [slideHeight, setSlideHeight] = useState("80vh");
-  const [selectedElement, setSelectedElement] = useState(null); // Track selected element
-  const [clicked, setClicked] = useState(false); // Track selected element
+  const [selectedElement, setSelectedElement] = useState(null);
+  const [clicked, setClicked] = useState(false);
   const [finalBackground, setFinalBackground] = useState({});
 
+  // Resizes the slide dependingwhether in preview state or not
   useEffect(() => {
     if (preview) {
       setSlideHeight("100vh");
@@ -36,6 +37,7 @@ export default function Slide({
     }
   }, [preview]);
 
+  // Computes what the background of the current slide should be
   useEffect(() => {
     const finalStyle = displaySlide.backgroundStyle.type || presentation.backgroundStyle.type;
     const finalColour1 = displaySlide.backgroundStyle.firstColour || presentation.backgroundStyle.firstColour;
@@ -110,6 +112,7 @@ export default function Slide({
   const slideContent = displaySlide?.elements || [];
   const slideNum = slides.findIndex(slide => slide.slideId === displaySlide.slideId) + 1;
   
+  // Selects or deselects an element
   const handleSingleClick = (element) => {
     if (!clicked) {
       setClicked(true)
@@ -121,13 +124,12 @@ export default function Slide({
     }
   };
 
-
-
   const handleDeleteElement = (elementToDelete) => {
     deleteElementFromSlide(elementToDelete.elementId);
     closeDeleteModal();
   };
 
+  // Handles double click event on an element
   const handleDoubleClick = (element) => {
     if (element.type === "text") {
       openTextModal(element);
@@ -137,10 +139,10 @@ export default function Slide({
       openCodeModal(element);
     } else if (element.type == 'video') {
       openVideoModal(element);
-
     }
   };
 
+  // Returns the background style of the current slide
   const getBackgroundStyle = () => {
     if (finalBackground.type === "solid") {
       return { backgroundColor: finalBackground.firstColour };
@@ -158,8 +160,8 @@ export default function Slide({
     return {};
   };
 
+  // updates an element's position
   const updateElementPosition = (updatedElement) => {
-    // Update the element's position
     const elementExistsInCurrentSlide = displaySlide.elements.some(
       (element) => element.elementId === updatedElement.elementId
     );
@@ -171,8 +173,6 @@ export default function Slide({
       console.log("Attempted to update position of element not in this slide");
     }
   };
-
-
 
   return (
     <>

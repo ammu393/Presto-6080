@@ -11,16 +11,12 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
   const [presentationToDelete, setPresentationToDelete] = useState(null);
   const navigate = useNavigate();
 
-  const openDeletePresentationModal = () => {
-    setDeletePresentationModal(true)
-  }
-  const closeDeletePresentationModal = () => {
-    setDeletePresentationModal(false)
-  }
+  const openDeletePresentationModal = () => setDeletePresentationModal(true);
+  const closeDeletePresentationModal = () => setDeletePresentationModal(false);
+
+  // Deletes a presentation
   const handleDeletePresentation = async () => {
     if (!presentationToDelete) return;
-    console.log("this is the presentation to delete " + presentationToDelete)
-    console.log("this is the presentation to delete " + presentationToDelete.presentationId)
 
     const updatedPresentations = store.presentations.filter(
       (presentation) => presentation.presentationId !== presentationToDelete.presentationId
@@ -38,8 +34,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
     await putStore(newStore, token, onSuccess);
   };
   
-  
-  
+  // Deletes a slide
   const deleteSlide = async (event) => {
     event.preventDefault();
 
@@ -88,6 +83,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
     } 
   };
 
+  // Updates the slides stored in th backend
   const updateSlidesAtBackend = async (newStore) => {
     try {
       const response = await axios.put('http://localhost:5005/store', newStore, {
@@ -108,6 +104,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
     }
   };
 
+  // Returns the user's presentations
   const fetchPresentations = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:5005/store', {
@@ -129,12 +126,6 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
 
   const refreshPresentations = useCallback(() => {
     fetchPresentations();
-  }, [fetchPresentations]);
-
-
-
-  useEffect(() => {
-
   }, [fetchPresentations]);
 
   return (

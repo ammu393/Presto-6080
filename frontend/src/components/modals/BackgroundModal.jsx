@@ -9,6 +9,7 @@ export default function BackgroundModal({ isOpen, closeBackgroundModal, updateBa
   const [imageUrl, setImageUrl] = useState("");
   const [defaultBackground, setDefaultBackground] = useState(false);
 
+  // Set states to the current background style
   useEffect(() => {
     if (displaySlide) {
       const { type, firstColour, secondColour, gradientDirection, src } = displaySlide.backgroundStyle;
@@ -22,6 +23,7 @@ export default function BackgroundModal({ isOpen, closeBackgroundModal, updateBa
 
   if (!isOpen) return null;
 
+  // Updates background
   const handleSubmitBackground = (e) => {
     e.preventDefault();
 
