@@ -2,13 +2,17 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import NavBar from "../../components/NavBar"
+import ErrorModal from '../../components/modals/ErrorModal';
+import { useError } from '../../contexts/ErrorContext';
 
 export default function Register({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [name, setName] = useState('');
+
   const navigate = useNavigate();
+  const { showError } = useError();
 
   useEffect(() => {
     if (token) {
@@ -19,8 +23,7 @@ export default function Register({ token, setTokenFn }) {
   const signup = () => {
 	  console.log(email,password,name)
 	  if (password != password2) {
-		  alert("passwords do not match!");
-		  return;
+      return showError("Passwords do not match!");;
 	  }
     axios.post('http://localhost:5005/admin/auth/register', {
       email: email,
