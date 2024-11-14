@@ -1,9 +1,11 @@
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useError } from "../contexts/ErrorContext";
 
 export default function Logout({ token, setToken }) {
   const navigate = useNavigate();
+  const { showError } = useError();
 
   console.log('token in logout' + token);
   console.log('setTokenFn:', setToken); // Check if it's a function
@@ -20,7 +22,7 @@ export default function Logout({ token, setToken }) {
         navigate('/');
       })
       .catch((error) => {
-        alert(error);
+        showError(error)
       });
   }
 

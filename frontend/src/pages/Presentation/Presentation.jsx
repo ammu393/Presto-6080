@@ -9,6 +9,7 @@ import DownArrow from '../../components/DownArrow';
 import InputModal from '../../components/modals/InputModal';
 import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
+import { useError } from '../../contexts/ErrorContext';
 
 export default function Presentation({ token, store, setStore }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -23,6 +24,7 @@ export default function Presentation({ token, store, setStore }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const navigate = useNavigate();
+  const { showError } = useError();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(prevState => !prevState);

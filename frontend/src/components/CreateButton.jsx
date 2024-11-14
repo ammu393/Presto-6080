@@ -3,9 +3,12 @@ import plusIconGrey from "../assets/plusIconGrey.svg";
 import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
+import { useError } from "../contexts/ErrorContext";
 
 export default function CreateButton({ setDisplaySlide, token, store, presentationId, setStore, setSlides, updateURL}) {
   const [isHovered, setIsHovered] = useState(false);
+  const { showError } = useError();
+
   const createNewSlide = async (event) => {
     event.preventDefault();
     const uniqueSlideId = uuidv4();
@@ -58,7 +61,7 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       setDisplaySlide(newSlide);
       updateURL(parseInt(foundPresentation.slides.length) + 1);
     } else {
-      console.error("Presentation not found");
+      showError("Presentation not found");
     }
   };
 
@@ -77,10 +80,10 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
 
 
       } else {
-        console.log("Error: ", response.data);
+        showError(response.data);
       }
     } catch (error) {
-      console.error(error);
+      showError(error);
     }
   };
 
@@ -97,10 +100,10 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
         console.log(response);
         setStore(response.data.store);
       } else {
-        console.log("Error: ", response.data);
+        showError(response.data);
       }
     } catch (error) {
-      console.error("An error occurred:", error.response ? error.response.data : error.message);
+      showError(error);
     }
   }, [token, setStore]);
 

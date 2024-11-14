@@ -6,9 +6,9 @@ export default function ErrorModal({ msg }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 overflow-y-auto">
       <div 
-        className="bg-white rounded-lg p-6 max-w-sm sm:w-2/3 lg:w-1/3"
+        className="bg-white rounded-lg p-6 max-w-full sm:max-w-lg w-full md:w-2/3 lg:w-1/3 max-h-[90vh] overflow-y-auto"
         aria-label="Error modal"
         aria-modal="true"
       >
@@ -28,3 +28,4 @@ export default function ErrorModal({ msg }) {
     </div>
   );
 }
+

@@ -3,8 +3,11 @@ import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
 
 import axios from "axios";
+import { useError } from "../../contexts/ErrorContext";
 
 export default function Dashboard({ token, store, setStore, setTokenFn }) {
+  const { showError } = useError();
+
   const fetchPresentations = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:5005/store', {
@@ -17,10 +20,10 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
       if (response.status === 200) {
         setStore(response.data.store || { presentations: [] });
       } else {
-        console.log("Error: ", response.data);
+        showError(response.data);
       }
     } catch (error) {
-      console.error("An error occurred:", error.response ? error.response.data : error.message);
+      showError(error);
     }
   }, [token, setStore]);
 
