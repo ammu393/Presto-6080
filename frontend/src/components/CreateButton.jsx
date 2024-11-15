@@ -35,7 +35,6 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       const foundPresentation = currentPresentations[presentationIndex];
       const updatedSlides = [...(foundPresentation.slides || []), newSlide];
 
-      console.log("Found Presentation:", foundPresentation);
       setSlides(updatedSlides);
 
       // Create a new updated presentation
@@ -76,9 +75,6 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
 
       if (response.status === 200) {
         refreshPresentations()
-        console.log("Successfully updated backend");
-
-
       } else {
         showError("Failed to update store");
       }
@@ -98,7 +94,6 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       });
 
       if (response.status === 200) {
-        console.log(response);
         setStore(response.data.store);
       } else {
         showError("Failed to get store");

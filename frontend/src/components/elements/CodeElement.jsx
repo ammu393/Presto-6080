@@ -11,7 +11,6 @@ SyntaxHighlighter.registerLanguage('python', python_lang);
 SyntaxHighlighter.registerLanguage('c', c_lang);
 
 export default function CodeElement({ element, style }) {
-  console.log(element)
   return (
     <div
       style={{ width: "100%", height: "100%", objectFit: "cover", ...style }}

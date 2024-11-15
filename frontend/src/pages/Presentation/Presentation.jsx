@@ -101,7 +101,6 @@ export default function Presentation({ token, store, setStore, setToken }) {
 
   // adds an element to the slide
   const addElementToSlide = (element, currentSlide) => {
-    console.log(currentSlide);
     const existingElementIndex = currentSlide.elements.findIndex(e => e.elementId === element.elementId);
   
     let updatedSlide;
@@ -200,7 +199,6 @@ export default function Presentation({ token, store, setStore, setToken }) {
     const interval = setInterval(() => {
       saveSnapshot(presentation); 
     }, 60000); 
-    console.log(presentation.revisionHistory)
     return () => clearInterval(interval); 
   }, [slides]); 
   
