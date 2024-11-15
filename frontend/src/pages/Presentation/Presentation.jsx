@@ -157,7 +157,7 @@ export default function Presentation({ token, store, setStore, setToken }) {
   
     const updatedPresentations = currentPresentations.map((presentation, index) =>
       index === presentationIndex ? updatedPresentation : presentation
-  );
+    );
   
     const newStore = { presentations: updatedPresentations };
     setStore(newStore);
@@ -194,9 +194,7 @@ export default function Presentation({ token, store, setStore, setToken }) {
     console.log(presentation.revisionHistory)
     return () => clearInterval(interval); 
   }, [slides]); 
-
-  const uniqueId = uuidv4();
-
+  
   const saveSnapshot = (presentation) => {
     const now = new Date().getTime();
     const lastSnapshot = presentation.revisionHistory?.[presentation.revisionHistory.length - 1];

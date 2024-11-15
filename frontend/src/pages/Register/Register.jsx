@@ -128,7 +128,7 @@ export default function Register({ token, setTokenFn }) {
                 </div>
               </form>
               <div className='flex justify-center'>
-              <button
+                <button
                   onClick={signup}
                   className="bg-[#3f4d52] w-full sm:w-[20%] text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap mt-4"
                 >

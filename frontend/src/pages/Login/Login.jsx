@@ -32,7 +32,7 @@ export default function Login({ token, setTokenFn }) {
   return (
     <>
       <div className="h-screen bg-register-background">
-      <NavBar></NavBar>
+        <NavBar></NavBar>
         <div className="flex flex-col justify-center items-center px-4">
           <div className="flex justify-center text-center">
             <div className="mt-20">
@@ -78,8 +78,8 @@ export default function Login({ token, setTokenFn }) {
                   </label>
                 </div>
                 <div className="inline-flex items-center justify-center w-full">
-                <hr className="w-full h-px my-8 mx-8 border-0 bg-gray-300" />
-              </div>
+                  <hr className="w-full h-px my-8 mx-8 border-0 bg-gray-300" />
+                </div>
 
                 <button onClick={login} className="bg-[#3f4d52] w-full sm:w-[20%] mx-auto text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap">
                   Log in
