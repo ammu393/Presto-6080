@@ -19,7 +19,7 @@ export default function Logout({ token, setToken }) {
         navigate('/');
       })
       .catch((error) => {
-        showError(error)
+        showError("Failed to logout");
       });
   }
 

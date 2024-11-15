@@ -80,10 +80,10 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
 
 
       } else {
-        showError(response.data);
+        showError("Failed to update store");
       }
     } catch (error) {
-      showError(error);
+      showError("Failed to update store");
     }
   };
 
@@ -101,10 +101,10 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
         console.log(response);
         setStore(response.data.store);
       } else {
-        showError(response.data);
+        showError("Failed to get store");
       }
     } catch (error) {
-      showError(error);
+      showError("Failed to get store");
     }
   }, [token, setStore]);
 
