@@ -36,7 +36,7 @@ export default function Login({ token, setTokenFn }) {
   return (
     <>
       <div className="h-screen bg-register-background">
-      <NavBar></NavBar>
+        <NavBar></NavBar>
         <div className="flex flex-col justify-center items-center px-4">
           <div className="flex justify-center text-center">
             <div className="mt-20">

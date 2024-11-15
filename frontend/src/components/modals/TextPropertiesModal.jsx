@@ -139,3 +139,4 @@ export default function TextPropertiesModal({ isOpen, closeTextModal, addElement
     </div>
   );
 }
+

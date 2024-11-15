@@ -9,9 +9,10 @@ import DownArrow from '../../components/DownArrow';
 import InputModal from '../../components/modals/InputModal';
 import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
+import { v4 as uuidv4 } from 'uuid';
 import { useError } from '../../contexts/ErrorContext';
 
-export default function Presentation({ token, store, setStore }) {
+export default function Presentation({ token, store, setStore, setToken }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
   const { slideNum } = useParams();
@@ -152,6 +153,7 @@ export default function Presentation({ token, store, setStore }) {
   // Updates the 'store' state variable and backend as well
   const updatePresentationStore = async (updatedPresentation) => {
     const currentPresentations = store.presentations || [];
+
     const presentationIndex = currentPresentations.findIndex(
       (presentation) => presentation.presentationId === presentationId
     );
@@ -194,7 +196,39 @@ export default function Presentation({ token, store, setStore }) {
     await updatePresentationStore(updatedPresentation);
     setSlides(updatedSlidesArray);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      saveSnapshot(presentation); 
+    }, 60000); 
+    console.log(presentation.revisionHistory)
+    return () => clearInterval(interval); 
+  }, [slides]); 
   
+  const saveSnapshot = (presentation) => {
+    const now = new Date().getTime();
+    const lastSnapshot = presentation.revisionHistory?.[presentation.revisionHistory.length - 1];
+
+    const currentSlidesSerialized = JSON.stringify(presentation.slides);
+    const lastSlidesSerialized = lastSnapshot ? JSON.stringify(lastSnapshot.slides) : null;
+
+
+    if (!lastSnapshot || now - lastSnapshot.timestamp >= 60000 && currentSlidesSerialized !== lastSlidesSerialized) {
+      const newSnapshot = {
+        historyId: uuidv4(), 
+        slides: [...presentation.slides], 
+        timestamp: now, 
+      };
+  
+      const updatedPresentation = {
+        ...presentation,
+        revisionHistory: [...(presentation.revisionHistory || []), newSnapshot], // Append new snapshot
+      };
+  
+      updatePresentationStore(updatedPresentation);
+    }
+  };
+
   // Updates the default background of a presentaion
   const updateBackground = async (newBackgroundInfo, isDefault) => {
     const newSlide = { ...displaySlide, backgroundStyle: newBackgroundInfo };
@@ -235,7 +269,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont}/>
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont} setToken={setToken}/>
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}
@@ -279,7 +313,7 @@ export default function Presentation({ token, store, setStore }) {
             )}
           </div>
 
-          <div className={`flex flex-row gap-6 ${isTransitioning ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200 ease-in`}>
+          <div className={`flex flex-col md:flex-row gap-4  md:gap-6 ${isTransitioning ? 'opacity-0' : 'opacity-100'} transition-opacity duration-200 ease-in`}>
             {displaySlide && (
               <Slide 
                 displaySlide={displaySlide} 
@@ -290,10 +324,11 @@ export default function Presentation({ token, store, setStore }) {
               />
             )}
           </div>            
-          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-1  pb-5'>
-            <div className="h-8">
-              <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} setSlides={setSlides} updateURL={updateURL}/>
-              <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} updateURL={updateURL} className="mt-5"/>
+          <div className='h-full flex flex-col absolute bottom-0 right-0 justify-center items-center pr-2 pb-5 gap-3 md:gap-5'>
+            <div className="h-8 flex flex-col gap-3">
+              <CreateButton setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} setSlides={setSlides} updateURL={updateURL} className="w-full md:w-auto"
+              />
+              <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} updateURL={updateURL} className="mt-2 w-full md:w-auto"/>
             </div>
           </div>
         </div>

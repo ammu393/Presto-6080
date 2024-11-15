@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';  // Import axios
 import { putStore } from "../../api";
-
+import { useError } from "../../contexts/ErrorContext";
 export default function Rearrange({ token, store, setStore }) {
   const navigate = useNavigate();
   const { presentationId } = useParams();
@@ -109,12 +109,12 @@ export default function Rearrange({ token, store, setStore }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
       <button
-        className="absolute top-4 right-4 px-4 py-2 bg-red-500 text-white rounded"
+        className="absolute top-4 right-4 px-4 py-2 ml-2 bg-red-500 text-white rounded"
         onClick={() => navigate(`/presentations/${presentationId}/1`)}
       >
         Close
       </button>
-      <h1 className="text-3xl font-bold pb-10 text-center text-[#fffff]">Rearrange Slides</h1>
+      <h1 className="text-3xl font-bold pb-10 mr-10 text-center text-[#fffff]">Rearrange Slides</h1>
 
       <div
         className="relative w-full max-w-lg bg-[#1f2a38] p-8 rounded-lg shadow-lg border"
