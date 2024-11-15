@@ -1,9 +1,8 @@
 import { useEffect, useCallback } from "react";
 import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
-
 import axios from "axios";
-import { useError } from "../../contexts/useError";
+import { useError } from "../../contexts/UseError";
 
 export default function Dashboard({ token, store, setStore, setTokenFn }) {
   const { showError } = useError();
