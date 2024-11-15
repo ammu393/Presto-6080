@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Logout from '../components/Logout';
 import InputModal from './modals/InputModal';
 import { putStore } from '../api';
-import { useError } from '../contexts/ErrorContext';
+import { useError } from '../contexts/useError';
 export function DashboardHeader({ token, onPresentationsUpdated, store, setToken }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { showError } = useError();

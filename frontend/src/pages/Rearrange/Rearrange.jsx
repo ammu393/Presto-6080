@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';  // Import axios
 import { putStore } from "../../api";
-import { useError } from "../../contexts/ErrorContext";
+import { useError } from "../../contexts/useError";
 export default function Rearrange({ token, store, setStore }) {
   const navigate = useNavigate();
   const { presentationId } = useParams();
@@ -36,7 +36,7 @@ export default function Rearrange({ token, store, setStore }) {
         } else {
           showError("Failed to get store");
         }
-      } catch (error) {
+      } catch {
         showError("Failed to get store");
       } finally {
         setLoading(false);
@@ -73,7 +73,7 @@ export default function Rearrange({ token, store, setStore }) {
     try {
       await putStore({ store: newStore }, token);
       console.log("Backend updated successfully");
-    } catch (error) {
+    } catch {
       showError("Failed to update store");
     }
   };

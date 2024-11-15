@@ -4,7 +4,7 @@ import axios from "axios";
 import Slide from "../../components/Slide";
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
-import { useError } from "../../contexts/ErrorContext";
+import { useError } from "../../contexts/useError";
 
 export default function Preview({ token }) {
   const { presentationId } = useParams();
@@ -37,7 +37,7 @@ export default function Preview({ token }) {
         } else {
           showError("Failed to get store");
         }
-      } catch (error) {
+      } catch {
         showError("Failed to get store");
       } finally {
         setLoading(false);

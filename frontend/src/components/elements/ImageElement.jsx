@@ -1,4 +1,4 @@
-export default function ImageElement({ element, style, preview }) {
+export default function ImageElement({ element, style }) {
   return (
     <img
       src={element.src}

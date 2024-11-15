@@ -3,7 +3,7 @@ import { DashboardHeader } from "../../components/DashboardHeader";
 import { PresentationCard } from "../../components/PresentationCard";
 
 import axios from "axios";
-import { useError } from "../../contexts/ErrorContext";
+import { useError } from "../../contexts/useError";
 
 export default function Dashboard({ token, store, setStore, setTokenFn }) {
   const { showError } = useError();
@@ -23,7 +23,7 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
       } else {
         showError("Failed to get store");
       }
-    } catch (error) {
+    } catch {
       showError("Failed to get store");
     }
   }, [token, setStore]);

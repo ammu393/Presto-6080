@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 //import NavBar from '../../NavBar';
 import NavBar from "../../components/NavBar"
-import { useError } from '../../contexts/ErrorContext';
+import { useError } from '../../contexts/useError';
 
 export default function Login({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
@@ -29,7 +29,7 @@ export default function Login({ token, setTokenFn }) {
         setTokenFn(response.data.token)
         navigate('/dashboard')
       })
-      .catch((error) => {
+      .catch(() => {
         showError("Failed to login");
       })
   }
@@ -82,8 +82,8 @@ export default function Login({ token, setTokenFn }) {
                   </label>
                 </div>
                 <div className="inline-flex items-center justify-center w-full">
-                <hr className="w-full h-px my-8 mx-8 border-0 bg-gray-300" />
-              </div>
+                  <hr className="w-full h-px my-8 mx-8 border-0 bg-gray-300" />
+                </div>
                 <button onClick={login} className="bg-[#3f4d52] w-full sm:w-[20%] mx-auto text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap">
                   Log in
                 </button>

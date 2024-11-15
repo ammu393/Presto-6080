@@ -12,8 +12,7 @@ import { putStore } from '../api';
 import InputModal from './modals/InputModal';
 import PresentationToolSideBar from './PresentationToolSideBar';
 import RevisionHistoryModal from './modals/RevisionHistoryModal';
-import Logout from './Logout';
-export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont, setToken}) {
+export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont}) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
   const [presentationIdToDelete, setPresentationIdToDelete] = useState(null);
