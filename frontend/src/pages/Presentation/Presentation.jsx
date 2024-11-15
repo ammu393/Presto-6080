@@ -9,11 +9,8 @@ import DownArrow from '../../components/DownArrow';
 import InputModal from '../../components/modals/InputModal';
 import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
-<<<<<<< HEAD
 import { v4 as uuidv4 } from 'uuid';
-=======
 import { useError } from '../../contexts/ErrorContext';
->>>>>>> origin/master
 
 export default function Presentation({ token, store, setStore, setToken }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
