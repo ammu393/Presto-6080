@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import NavBar from "../../components/NavBar"
-import { useError } from '../../contexts/UseError';
+import { useError } from '../../contexts/useError';
 
 export default function Register({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
