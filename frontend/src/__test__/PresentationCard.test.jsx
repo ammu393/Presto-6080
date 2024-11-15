@@ -20,6 +20,7 @@ describe('PresentationCard Component', () => {
       />
     );
 
+    // Test that the presentation card displays all the required features
     expect(screen.getByText('Sample Title')).toBeInTheDocument();
     expect(screen.getByText('Sample Description')).toBeInTheDocument();
     expect(screen.getByText('Number of Slides: 10')).toBeInTheDocument();
@@ -37,7 +38,8 @@ describe('PresentationCard Component', () => {
         presentationId="123" 
       />
     );
-  
+    
+    // Tests that it displays a grey background when no thumbnail is provided
     const thumbnailContainer = screen.getByRole('group', { name: /presentation card/i }).querySelector('.w-full.h-3\\/4');
     expect(thumbnailContainer).toHaveClass('bg-gray-300');
   });
@@ -56,9 +58,10 @@ describe('PresentationCard Component', () => {
       />
     );
 
+    // Test if when you click on the presentation card it takes you to the presentation page
     const card = screen.getByRole('group', { name: /presentation card/i });
     fireEvent.click(card);
-    expect(navigate).toHaveBeenCalledWith('/presentations/123');
+    expect(navigate).toHaveBeenCalledWith('/presentations/123/1');
   });
 
   it('applies correct aspect ratio and responsive styles', () => {
@@ -72,6 +75,7 @@ describe('PresentationCard Component', () => {
       />
     );
 
+    // Tests if the card is the correct ratio as required by the spec
     const card = screen.getByRole('group', { name: /presentation card/i });
     expect(card).toHaveClass('aspect-[2/1]');
   });
@@ -87,6 +91,7 @@ describe('PresentationCard Component', () => {
       />
     );
 
+    // Tests that the card has a minimum width of 100px as required by spec
     const card = screen.getByRole('group', { name: /presentation card/i });
     expect(card).toHaveClass('w-min-[100px]');
   });

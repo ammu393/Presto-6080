@@ -1,12 +1,11 @@
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useError } from "../contexts/ErrorContext";
 
 export default function Logout({ token, setToken }) {
   const navigate = useNavigate();
-
-  console.log('token in logout' + token);
-  console.log('setTokenFn:', setToken); // Check if it's a function
+  const { showError } = useError();
 
   const logout = () => {
     console.log(`Bearer ${token}`);
@@ -20,11 +19,13 @@ export default function Logout({ token, setToken }) {
         navigate('/');
       })
       .catch((error) => {
-        alert(error);
+        showError(error)
       });
   }
 
-  return <button onClick={logout} className="bg-transparent hover:bg-zinc-700 text-white font-semibold hover:text-white py-2 px-4 rounded whitespace-nowrap"> 
+  return (
+    <button onClick={logout} className="bg-transparent hover:bg-zinc-700 text-white font-semibold hover:text-white py-2 px-4 rounded whitespace-nowrap"> 
       Log out
-  </button>
+    </button>
+  )
 }

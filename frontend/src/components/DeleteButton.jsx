@@ -5,22 +5,21 @@ import axios from "axios";
 import { ConfirmationModal } from "./modals/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
 import { putStore } from "../api";
+import { useError } from "../contexts/ErrorContext";
 export default function DeleteButon({ setDisplaySlide, token, store, setStore, presentationId, displaySlide, setSlides, updateURL }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDeletePresentationModalOpen, setDeletePresentationModal] = useState(false);
   const [presentationToDelete, setPresentationToDelete] = useState(null);
-  const navigate = useNavigate();
 
-  const openDeletePresentationModal = () => {
-    setDeletePresentationModal(true)
-  }
-  const closeDeletePresentationModal = () => {
-    setDeletePresentationModal(false)
-  }
+  const navigate = useNavigate();
+  const { showError } = useError();
+
+  const openDeletePresentationModal = () => setDeletePresentationModal(true);
+  const closeDeletePresentationModal = () => setDeletePresentationModal(false);
+
+  // Deletes a presentation
   const handleDeletePresentation = async () => {
     if (!presentationToDelete) return;
-    console.log("this is the presentation to delete " + presentationToDelete)
-    console.log("this is the presentation to delete " + presentationToDelete.presentationId)
 
     const updatedPresentations = store.presentations.filter(
       (presentation) => presentation.presentationId !== presentationToDelete.presentationId
@@ -38,8 +37,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
     await putStore(newStore, token, onSuccess);
   };
   
-  
-  
+  // Deletes a slide
   const deleteSlide = async (event) => {
     event.preventDefault();
 
@@ -55,7 +53,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
         return;
       }
       if (slideIndex === -1) {
-        console.error("Slide not found");
+        showError("Slide not found")
         return;
       }
 
@@ -84,10 +82,11 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       setDisplaySlide(previousSlide || null);
       updateURL(slideIndex);
     } else {
-      console.error("Presentation not found");
+      showError("Presentation not found")
     } 
   };
 
+  // Updates the slides stored in th backend
   const updateSlidesAtBackend = async (newStore) => {
     try {
       const response = await axios.put('http://localhost:5005/store', newStore, {
@@ -101,13 +100,14 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
         refreshPresentations();
         console.log("Successfully updated backend");
       } else {
-        console.log("Error: ", response.data);
+        showError(response.data)
       }
     } catch (error) {
-      console.error(error);
+      showError(error);
     }
   };
 
+  // Returns the user's presentations
   const fetchPresentations = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:5005/store', {
@@ -120,21 +120,15 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       if (response.status === 200) {
         setStore(response.data.store);
       } else {
-        console.log("Error: ", response.data);
+        showError(response.data);
       }
     } catch (error) {
-      console.error("An error occurred:", error.response ? error.response.data : error.message);
+      showError(error)
     }
   }, [token, setStore]);
 
   const refreshPresentations = useCallback(() => {
     fetchPresentations();
-  }, [fetchPresentations]);
-
-
-
-  useEffect(() => {
-
   }, [fetchPresentations]);
 
   return (

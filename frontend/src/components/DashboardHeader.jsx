@@ -3,16 +3,20 @@ import { v4 as uuidv4 } from 'uuid';
 import Logout from '../components/Logout';
 import InputModal from './modals/InputModal';
 import { putStore } from '../api';
+import { useError } from '../contexts/ErrorContext';
 export function DashboardHeader({ token, onPresentationsUpdated, store, setToken }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { showError } = useError();
 
+  // Opens and closes new presentation modal
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  // Creates a new presentation and updates store
   const handleCreatePresentation = async (presentationName) => {
     if (!presentationName.trim()) {
-      alert("Please enter a presentation name."); // replace with actual error box 
+      showError("Please enter a presentation name.")
       return;
     }
 
@@ -41,6 +45,7 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
     await sendPresentationToBackend(newStore);
   };
 
+  // Closes the modal updates data in backend
   const sendPresentationToBackend = async (newStore) => {
     const onSuccess = () => {
       toggleModal();
