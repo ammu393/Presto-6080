@@ -117,7 +117,6 @@ export default function Slide({
     if (!clicked) {
       setClicked(true)
       setSelectedElement(element); // Set the selected element
-      console.log(element)
     } else {
       setSelectedElement(null); // Deselect element if clicked again
       setClicked(false);
@@ -167,10 +166,7 @@ export default function Slide({
     );
   
     if (elementExistsInCurrentSlide) {
-      console.log("Updating position for element", updatedElement);
       addElementToSlide(updatedElement, displaySlide); // Update the slide with the new element position
-    } else {
-      console.log("Attempted to update position of element not in this slide");
     }
   };
 

@@ -34,7 +34,7 @@ export const getStore = async (token, onSuccess, onError) => {
       if (onSuccess) onSuccess();
       return response;
     } else {
-      console.log("Error: ", response.data);
+      console.error("Error: ", response.data);
     }
   } catch (error) {
     console.error("Failed to get store", error);

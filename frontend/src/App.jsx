@@ -23,11 +23,7 @@ function App() {
     if (localStorage.getItem('token') != null) {
       setToken(localStorage.getItem('token'));      
     }
-    console.log("REFRESH")
   },[]);
-
-  {console.log('outer token' + token)}
-
 
   return (
     <ErrorProvider>

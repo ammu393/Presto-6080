@@ -98,7 +98,6 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
 
       if (response.status === 200) {
         refreshPresentations();
-        console.log("Successfully updated backend");
       }
     } catch{
       showError("Cannot connect to backend")

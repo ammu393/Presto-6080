@@ -74,7 +74,6 @@ export default function Rearrange({ token, store, setStore, setToken }) {
 
     try {
       await putStore({ store: newStore }, token);
-      console.log("Backend updated successfully");
     } catch {
       showError("Failed to update store");
     }

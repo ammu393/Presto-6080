@@ -21,7 +21,6 @@ export default function Register({ token, setTokenFn }) {
 
   // Registers a user and redirects to dashboard on success
   const signup = () => {
-	  console.log(email,password,name)
 	  if (password != password2) {
       return showError("Passwords do not match!");
 	  }
@@ -32,7 +31,6 @@ export default function Register({ token, setTokenFn }) {
       presentations: [],
     })
       .then((response) => {
-        console.log(response)
         localStorage.setItem('token', response.data.token)
         setTokenFn(response.data.token)
         navigate('/dashboard')
