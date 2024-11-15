@@ -100,10 +100,10 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
         refreshPresentations();
         console.log("Successfully updated backend");
       } else {
-        showError(response.data)
+        showError("Failed to update store");
       }
     } catch (error) {
-      showError(error);
+      showError("Failed to update store");
     }
   };
 
@@ -120,10 +120,10 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       if (response.status === 200) {
         setStore(response.data.store);
       } else {
-        showError(response.data);
+        showError("Failed to get store");
       }
     } catch (error) {
-      showError(error)
+      showError("Failed to get store");
     }
   }, [token, setStore]);
 

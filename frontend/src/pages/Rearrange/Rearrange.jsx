@@ -34,10 +34,10 @@ export default function Rearrange({ token, store, setStore }) {
           }));
           setSlides(slidesWithOriginalIndex || []); 
         } else {
-          showError(response.data);
+          showError("Failed to get store");
         }
       } catch (error) {
-        showError(error);
+        showError("Failed to get store");
       } finally {
         setLoading(false);
       }
@@ -58,7 +58,7 @@ export default function Rearrange({ token, store, setStore }) {
     );
 
     if (presentationIndex === -1) {
-      showError(error);
+      showError("Presentation couldn't be found");
       return;
     }
 
@@ -74,7 +74,7 @@ export default function Rearrange({ token, store, setStore }) {
       await putStore({ store: newStore }, token);
       console.log("Backend updated successfully");
     } catch (error) {
-      showError(error);
+      showError("Failed to update store");
     }
   };
 

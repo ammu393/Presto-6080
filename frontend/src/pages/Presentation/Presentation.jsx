@@ -24,7 +24,6 @@ export default function Presentation({ token, store, setStore }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
 
   const navigate = useNavigate();
-  const { showError } = useError();
 
   const toggleSidebar = () => setIsSidebarOpen(prevState => !prevState);
 

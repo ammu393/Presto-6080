@@ -21,10 +21,10 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
       if (response.status === 200) {
         setStore(response.data.store || { presentations: [] });
       } else {
-        showError(response.data);
+        showError("Failed to get store");
       }
     } catch (error) {
-      showError(error);
+      showError("Failed to get store");
     }
   }, [token, setStore]);
 

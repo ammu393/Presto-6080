@@ -23,7 +23,7 @@ export default function Register({ token, setTokenFn }) {
   const signup = () => {
 	  console.log(email,password,name)
 	  if (password != password2) {
-      return showError("Passwords do not maour friend who is a creepy stalker? maybe you thought it was your friend, but it was actually your fri end (let me explain: you are happily in McDonalds, getting fat while eating yummy food and some random dude walks up and blots out the sun (he looks like a regular here) you can’t see anything else than him, so you can’t try to avoid eye contact. he finishes eating his cheeseburger (more like horseburgher(I learned that word from the merchant of Venice(which is a good play(if you can understand it(I can cause I got a special book with all the words in readable English written on the side of the page(which is kinda funny because Shakespeare was supposed to be a good poet but no-one can understand him(and he’s racist in act 2 scene1 of the play too))))))) and sits down beside you , like you are old pals (you’ve never met him before but he looks like he could be in some weird cult) he clears his throat and asks you a very personal question. “can i have some French fries?” (I don’t know why there called French fries when I’ve never seen a French person eat fries! all they eat it is stuff like baguettes and crêpes and rats named ratty-two-ee which is a really fun game on the PlayStation 2) And you think {bubbly cloud thinking bubble} “Hahahahahhahahahahahahahaha!!!!!!!!!!!! Hehheheheheh…..heeeheehe..hehe… sigh. I remember that i was just about to eat one of my fries when I noticed something mushy and moist and [insert gross color like green or brown] on the end of one of my fries! now I can give it to this NERD!! ” (yes he is a nerd because all he does all day is watch the extended editions of the hobbit, lord of the rings and star wars and eat fat cakes (what the heck is a fat cake? I think it might be like a Twinkie or something)and twinkies(wow so is doesn’t really matter which is which because he eats both(i may have just done that so I didn’t have to Google what a fat cake is (right now I am typing on my iPhone 3gs anyway, which has a broken antenna so i can’t get internet anyway (it’s actually a really funny story that i’ll tell you sometime)))and sit in his man cave with his friend named Joe (an ACTUAL friend, not a fri end)and all Joe does is watch sports like football with bob and all bob does is gamble ferociously (don’t ask(it means he buys all those bags of chips that say “win a free monkey or something if you find a banana in your bag*”(if there is a little star it meantch!");
+      return showError("Passwords do not match!");
 	  }
     axios.post('http://localhost:5005/admin/auth/register', {
       email: email,
@@ -38,7 +38,7 @@ export default function Register({ token, setTokenFn }) {
         navigate('/dashboard')
       })
       .catch((error) => {
-        showError(error);
+        showError("Failed to register");
       })
   }
   return (

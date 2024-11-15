@@ -30,7 +30,7 @@ export default function Login({ token, setTokenFn }) {
         navigate('/dashboard')
       })
       .catch((error) => {
-        showError(error.response.data.error);
+        showError("Failed to login");
       })
   }
   return (

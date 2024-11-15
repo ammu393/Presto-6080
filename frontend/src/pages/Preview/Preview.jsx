@@ -35,16 +35,18 @@ export default function Preview({ token }) {
           );
           setPresentation(foundPresentation);
         } else {
-          showError(response.data);
+          showError("Failed to get store");
         }
       } catch (error) {
-        showError(error);
+        showError("Failed to get store");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPresentations();
+    if (token) {
+      fetchPresentations();
+    }
   }, [token, presentationId]);
 
   useEffect(() => {
