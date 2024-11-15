@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';  // Import axios
 import { putStore } from "../../api";
 import { useError } from "../../contexts/UseError";
-export default function Rearrange({ token, store, setStore }) {
+import FixedLogout from "../../components/FixedLogout";
+export default function Rearrange({ token, store, setStore, setToken }) {
   const navigate = useNavigate();
   const { presentationId } = useParams();
   const [presentation, setPresentation] = useState(null);
@@ -42,8 +43,9 @@ export default function Rearrange({ token, store, setStore }) {
         setLoading(false);
       }
     };
-
-    fetchPresentations();
+    if (token) {
+      fetchPresentations();
+    }
   }, [token, presentationId]);
 
   const handleDragStart = (e, index) => {
@@ -108,8 +110,9 @@ export default function Rearrange({ token, store, setStore }) {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
+      <FixedLogout token={token} setToken={setToken}/>
       <button
-        className="absolute top-4 right-4 px-4 py-2 ml-2 bg-red-500 text-white rounded"
+        className="absolute top-5 right-32 px-4 py-2 ml-2 bg-red-500 text-white rounded"
         onClick={() => navigate(`/presentations/${presentationId}/1`)}
       >
         Close

@@ -5,8 +5,9 @@ import Slide from "../../components/Slide";
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
 import { useError } from "../../contexts/UseError";
+import FixedLogout from "../../components/FixedLogout";
 
-export default function Preview({ token }) {
+export default function Preview({ token, setToken }) {
   const { presentationId } = useParams();
   const [presentation, setPresentation] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -115,6 +116,7 @@ export default function Preview({ token }) {
           </div>
         </>
       )}
+      <FixedLogout token={token} setToken={setToken} />
     </>
   );
 }

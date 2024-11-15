@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import Logout from '../components/Logout';
+import Logout from './Logout';
 import InputModal from './modals/InputModal';
 import { putStore } from '../api';
 import { useError } from '../contexts/UseError';

@@ -29,7 +29,9 @@ export default function Dashboard({ token, store, setStore, setTokenFn }) {
   }, [token, setStore]);
 
   useEffect(() => {
-    fetchPresentations();
+    if (token) {
+      fetchPresentations();
+    }
   }, [fetchPresentations]);
 
   const refreshPresentations = () => {
