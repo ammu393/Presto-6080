@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import DeleteButton from '../components/DeleteButton';
 import axios from 'axios';
-import { ErrorContext, ErrorProvider } from '../contexts/ErrorContext';
+import { ErrorProvider } from '../contexts/ErrorContext';
 
 vi.mock('axios');
 vi.mock('react-router-dom', () => ({
