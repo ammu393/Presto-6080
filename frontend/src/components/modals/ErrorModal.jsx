@@ -5,9 +5,6 @@ export default function ErrorModal({ msg }) {
 
   if (!isOpen) return null;
 
-  const displayMessage = typeof msg === 'object' && msg.message ? msg.message : String(msg);
-
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 overflow-y-auto">
       <div 
