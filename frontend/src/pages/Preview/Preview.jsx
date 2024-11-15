@@ -4,7 +4,7 @@ import axios from "axios";
 import Slide from "../../components/Slide";
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
-import { useError } from "../../contexts/useError";
+import { useError } from "../../contexts/UseError";
 
 export default function Preview({ token }) {
   const { presentationId } = useParams();
