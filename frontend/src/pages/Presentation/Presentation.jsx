@@ -301,7 +301,7 @@ export default function Presentation({ token, store, setStore, setToken }) {
               }}
             />
             {slides.length > 0 && (
-              <div className="h-5 mb-2 flex flex-row ml-auto">
+              <div className="h-5 mb-10 mr-20 flex flex-row ml-auto">
                 <div className={isFirstSlide ? 'invisible' : ''}>
                   <UpArrow onClick={moveSlideRight} />
                 </div>
