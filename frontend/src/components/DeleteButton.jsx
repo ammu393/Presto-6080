@@ -17,7 +17,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
   const openDeletePresentationModal = () => setDeletePresentationModal(true);
   const closeDeletePresentationModal = () => setDeletePresentationModal(false);
 
-  // Deletes a presentation
+  // Deletes a presentation from store
   const handleDeletePresentation = async () => {
     if (!presentationToDelete) return;
 
