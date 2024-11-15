@@ -10,6 +10,8 @@ export default function Rearrange({ token, store, setStore }) {
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const { showError } = useError();
+
   // Gets current slides of a particular presentation, and provides indexes to all of them
   useEffect(() => {
     const fetchPresentations = async () => {
@@ -32,10 +34,10 @@ export default function Rearrange({ token, store, setStore }) {
           }));
           setSlides(slidesWithOriginalIndex || []); 
         } else {
-          console.log("Error:", response.data);
+          showError(response.data);
         }
       } catch (error) {
-        console.error("An error occurred:", error.response ? error.response.data : error.message);
+        showError(error);
       } finally {
         setLoading(false);
       }
@@ -56,7 +58,7 @@ export default function Rearrange({ token, store, setStore }) {
     );
 
     if (presentationIndex === -1) {
-      console.error("Presentation not found");
+      showError(error);
       return;
     }
 
@@ -72,7 +74,7 @@ export default function Rearrange({ token, store, setStore }) {
       await putStore({ store: newStore }, token);
       console.log("Backend updated successfully");
     } catch (error) {
-      console.error("Error updating the backend:", error);
+      showError(error);
     }
   };
 

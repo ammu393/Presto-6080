@@ -3,11 +3,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 //import NavBar from '../../NavBar';
 import NavBar from "../../components/NavBar"
+import { useError } from '../../contexts/ErrorContext';
 
 export default function Login({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const navigate = useNavigate();
+  const { showError } = useError();
 
   useEffect(() => {
     if (token) {
@@ -27,7 +30,7 @@ export default function Login({ token, setTokenFn }) {
         navigate('/dashboard')
       })
       .catch((error) => {
-        alert(error.response.data.error)
+        showError(error.response.data.error);
       })
   }
   return (

@@ -1,9 +1,11 @@
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useError } from "../contexts/ErrorContext";
 
 export default function Logout({ token, setToken }) {
   const navigate = useNavigate();
+  const { showError } = useError();
 
   const logout = () => {
     console.log(`Bearer ${token}`);
@@ -17,7 +19,7 @@ export default function Logout({ token, setToken }) {
         navigate('/');
       })
       .catch((error) => {
-        alert(error);
+        showError(error)
       });
   }
 

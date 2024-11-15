@@ -4,6 +4,7 @@ import axios from "axios";
 import Slide from "../../components/Slide";
 import UpArrow from '../../components/UpArrow';
 import DownArrow from '../../components/DownArrow';
+import { useError } from "../../contexts/ErrorContext";
 
 export default function Preview({ token }) {
   const { presentationId } = useParams();
@@ -15,6 +16,7 @@ export default function Preview({ token }) {
   const [isLastSlide, setIsLastSlide] = useState(true);
   const { slideNum } = useParams();
   const navigate = useNavigate();
+  const { showError } = useError();
 
   // Gets the current presentation info
   useEffect(() => {
@@ -33,10 +35,10 @@ export default function Preview({ token }) {
           );
           setPresentation(foundPresentation);
         } else {
-          console.log("Error:", response.data);
+          showError(response.data);
         }
       } catch (error) {
-        console.error("An error occurred:", error.response ? error.response.data : error.message);
+        showError(error);
       } finally {
         setLoading(false);
       }
@@ -80,7 +82,7 @@ export default function Preview({ token }) {
     }
   };
 
-  // Updates the url to reflect the current slide number 
+  // Updates the url to reflect the current slide number
   const updateURL = (slideNumber) => {
     const newURL = `/presentations/preview/${presentationId}/${slideNumber}`;
     navigate(newURL, { replace: true });
