@@ -5,7 +5,7 @@ export default function FixedLogout({token, setToken}) {
     position: 'fixed',
     top: '20px',
     right: '20px',
-    zIndex: '1000',
+    zIndex: '10',
   };
 
   return (
