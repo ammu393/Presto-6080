@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';  // Import axios
 import { putStore } from "../../api";
-import { useError } from "../../contexts/UseError";
+import { useError } from "../../contexts/useError";
 import FixedLogout from "../../components/FixedLogout";
 export default function Rearrange({ token, store, setStore, setToken }) {
   const navigate = useNavigate();
