@@ -5,7 +5,7 @@ import axios from "axios";
 import { ConfirmationModal } from "./modals/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
 import { putStore } from "../api";
-import { useError } from "../contexts/useError";
+import { useError } from "../contexts/UseError";
 export default function DeleteButon({ setDisplaySlide, token, store, setStore, presentationId, displaySlide, setSlides, updateURL }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDeletePresentationModalOpen, setDeletePresentationModal] = useState(false);
@@ -118,15 +118,17 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       if (response.status === 200) {
         setStore(response.data.store);
       } else {
-        showError(response.data);
+        showError("Failed to get presentations");
       }
     } catch (error) {
-      showError(error)
+      showError("Failed to get Store")
     }
   }, [token, setStore]);
 
   const refreshPresentations = useCallback(() => {
-    fetchPresentations();
+    if (token) {
+      fetchPresentations();
+    }
   }, [fetchPresentations]);
 
   return (

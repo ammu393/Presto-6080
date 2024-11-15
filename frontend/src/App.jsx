@@ -37,9 +37,9 @@ function App() {
           <Route path="/dashboard" element={<Dashboard token={token} store={store} setStore={setStore} setTokenFn={setToken} />} />
           <Route path="/login" element={<Login token= { token } setTokenFn={ setToken } />} />
           <Route path="/register" element={<Register token={token} setTokenFn={ setToken } />} />
-          <Route path="/presentations/:presentationId/:slideNum" element={<Presentation token={token} store={store} setStore={setStore} />} />
-          <Route path="/presentations/preview/:presentationId/:slideNum" element={<Preview token={token} />}/>
-          <Route path="/presentations/rearrange/:presentationId" element={<Rearrange token={token} store={store} setStore={setStore} />} />
+          <Route path="/presentations/:presentationId/:slideNum" element={<Presentation token={token} store={store} setStore={setStore} setToken={setToken}/>} />
+          <Route path="/presentations/preview/:presentationId/:slideNum" element={<Preview token={token} setToken={setToken} />}/>
+          <Route path="/presentations/rearrange/:presentationId" element={<Rearrange token={token} store={store} setStore={setStore} setToken={setToken}/>} />
         </Routes>
       </BrowserRouter>
     </ErrorProvider>

@@ -4,6 +4,7 @@ import Presentation from '../pages/Presentation/Presentation';
 import UpArrow from '../components/UpArrow';
 import upArrowGrey from '../assets/slideArrows/leftArrow-grey.svg';
 import upArrowBlack from '../assets/slideArrows/leftArrow-black.svg';
+import { ErrorProvider } from '../contexts/ErrorContext';
 
 vi.mock('react-router-dom', () => ({
   useNavigate: vi.fn(),
@@ -107,11 +108,13 @@ describe('up Arrow Button', () => {
   });
   it('no upArrow if only one slide is present', () => {
     render(
-      <Presentation 
-        token="test" 
-        store={mockStoreWithZeroSlide} 
-        setStore={() => {}} 
-      />
+      <ErrorProvider>
+        <Presentation 
+          token="test"
+          store={mockStoreWithZeroSlide} 
+          setStore={() => {}} 
+        />
+      </ErrorProvider>
     );
 
     screen.logTestingPlaygroundURL();
@@ -122,11 +125,13 @@ describe('up Arrow Button', () => {
 
   it('renders upArrow if more than one slide', () => {
     render(
-      <Presentation 
-        token="test" 
-        store={mockStoreWithTwoSlides} 
-        setStore={() => {}} 
-      />
+      <ErrorProvider>
+        <Presentation 
+          token="test" 
+          store={mockStoreWithTwoSlides} 
+          setStore={() => {}} 
+        />
+      </ErrorProvider>
     );
 
     const upArrow = screen.queryByRole('img', { name: /Previous Slide/i });

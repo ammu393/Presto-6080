@@ -10,6 +10,7 @@ import InputModal from '../../components/modals/InputModal';
 import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
 import { v4 as uuidv4 } from 'uuid';
+import FixedLogout from '../../components/FixedLogout';
 
 export default function Presentation({ token, store, setStore, setToken }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -300,7 +301,7 @@ export default function Presentation({ token, store, setStore, setToken }) {
               }}
             />
             {slides.length > 0 && (
-              <div className="h-5 mb-2 flex flex-row ml-auto">
+              <div className="h-5 mb-10 mr-20 flex flex-row ml-auto">
                 <div className={isFirstSlide ? 'invisible' : ''}>
                   <UpArrow onClick={moveSlideRight} />
                 </div>
@@ -329,6 +330,8 @@ export default function Presentation({ token, store, setStore, setToken }) {
               <DeleteButon setDisplaySlide={setDisplaySlide} token={token} store={store} setStore={setStore} presentationId={presentationId} displaySlide={displaySlide} setSlides={setSlides} updateURL={updateURL} className="mt-2 w-full md:w-auto"/>
             </div>
           </div>
+
+          <FixedLogout token={token} setToken={setToken} />
         </div>
       </div>
 

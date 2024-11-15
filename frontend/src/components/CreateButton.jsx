@@ -3,7 +3,7 @@ import plusIconGrey from "../assets/plusIconGrey.svg";
 import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import { useError } from "../contexts/useError";
+import { useError } from "../contexts/UseError";
 
 export default function CreateButton({ setDisplaySlide, token, store, presentationId, setStore, setSlides, updateURL}) {
   const [isHovered, setIsHovered] = useState(false);
