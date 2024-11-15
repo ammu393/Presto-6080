@@ -118,15 +118,17 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       if (response.status === 200) {
         setStore(response.data.store);
       } else {
-        showError(response.data);
+        showError("Failed to get presentations");
       }
     } catch (error) {
-      showError(error)
+      showError("Failed to get Store")
     }
   }, [token, setStore]);
 
   const refreshPresentations = useCallback(() => {
-    fetchPresentations();
+    if (token) {
+      fetchPresentations();
+    }
   }, [fetchPresentations]);
 
   return (
