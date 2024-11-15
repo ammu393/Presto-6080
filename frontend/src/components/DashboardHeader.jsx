@@ -6,10 +6,12 @@ import { putStore } from '../api';
 export function DashboardHeader({ token, onPresentationsUpdated, store, setToken }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Opens and closes new presentation modal
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
 
+  // Creates a new presentation and updates store
   const handleCreatePresentation = async (presentationName) => {
     if (!presentationName.trim()) {
       alert("Please enter a presentation name."); // replace with actual error box 
@@ -41,6 +43,7 @@ export function DashboardHeader({ token, onPresentationsUpdated, store, setToken
     await sendPresentationToBackend(newStore);
   };
 
+  // Closes the modal updates data in backend
   const sendPresentationToBackend = async (newStore) => {
     const onSuccess = () => {
       toggleModal();

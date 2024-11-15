@@ -9,6 +9,7 @@ export default function ImagePropertiesModal({ isOpen, closeImageModal, addEleme
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
 
+  // Set to current values or default
   useEffect(() => {
     if (currentElement) {
       setSrc(currentElement.src || "");
@@ -22,6 +23,7 @@ export default function ImagePropertiesModal({ isOpen, closeImageModal, addEleme
 
   if (!isOpen) return null;
 
+  // Add image to the slide
   const handleSubmitImage = async (e) => {
     e.preventDefault();
     

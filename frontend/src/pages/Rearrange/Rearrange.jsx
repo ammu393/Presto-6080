@@ -10,6 +10,7 @@ export default function Rearrange({ token, store, setStore }) {
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Gets current slides of a particular presentation, and provides indexes to all of them
   useEffect(() => {
     const fetchPresentations = async () => {
       try {
@@ -47,6 +48,7 @@ export default function Rearrange({ token, store, setStore }) {
     e.dataTransfer.setData("dragIndex", index);
   };
 
+  // Updates store in state variable and backend
   const updatePresentationStore = async (updatedPresentation) => {
     const currentPresentations = store.presentations || [];
     const presentationIndex = currentPresentations.findIndex(
@@ -74,6 +76,7 @@ export default function Rearrange({ token, store, setStore }) {
     }
   };
 
+  // Updates the new postion of the slides
   const handleDrop = async (e, dropIndex) => {
     e.preventDefault();
     const dragIndex = e.dataTransfer.getData("dragIndex");

@@ -15,6 +15,7 @@ export default function Login({ token, setTokenFn }) {
     }
   }, [token, navigate]);
 
+  // Calls admin/auth/login and redirects to dashboard on success
   const login = () => {
     axios.post('http://localhost:5005/admin/auth/login', {
       email: email,
@@ -80,7 +81,6 @@ export default function Login({ token, setTokenFn }) {
                 <div className="inline-flex items-center justify-center w-full">
                 <hr className="w-full h-px my-8 mx-8 border-0 bg-gray-300" />
               </div>
-
                 <button onClick={login} className="bg-[#3f4d52] w-full sm:w-[20%] mx-auto text-white hover:bg-[#566970] py-3.5 px-5 rounded whitespace-nowrap">
                   Log in
                 </button>

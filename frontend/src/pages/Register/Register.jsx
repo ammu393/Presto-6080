@@ -16,6 +16,7 @@ export default function Register({ token, setTokenFn }) {
     }
   }, [token, navigate]);
 
+  // Registers a user and redirects to dashboard on success
   const signup = () => {
 	  console.log(email,password,name)
 	  if (password != password2) {

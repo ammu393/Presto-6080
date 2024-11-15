@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function FontModal({ isOpen, closeFontModal, displaySlide, updateSlideFont }) {
   const [fontFamily, setFontFamily] = useState("");
   
+  // Set to the current font
   useEffect(() => {
     if (displaySlide) {
       setFontFamily(displaySlide.fontFamily);
@@ -11,6 +12,7 @@ export default function FontModal({ isOpen, closeFontModal, displaySlide, update
 
   if (!isOpen) return null;
 
+  // Update fotn and close modal
   const handleSubmitText = async (e) => {
     e.preventDefault();
     updateSlideFont(fontFamily, displaySlide);

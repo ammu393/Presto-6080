@@ -9,6 +9,7 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
 
+  // Sets states with current values or with default values
   useEffect(() => {
     if (currentElement) {
       setUrl(currentElement.url || "");
@@ -23,7 +24,7 @@ export default function VideoPropertiesModal({ isOpen, closeVideoModal, addEleme
 
   if (!isOpen) return null;
 
-
+  // Adds video to the slide closes modal
   const handleSubmitVideo = async (e) => {
     e.preventDefault();
     let slideToUpdate = displaySlide

@@ -16,6 +16,7 @@ export default function Preview({ token }) {
   const { slideNum } = useParams();
   const navigate = useNavigate();
 
+  // Gets the current presentation info
   useEffect(() => {
     const fetchPresentations = async () => {
       try {
@@ -60,7 +61,8 @@ export default function Preview({ token }) {
 
   }, [displaySlide, slides]);
 
-  const moveSlideUp = () => {
+  // Move current slide to the right
+  const moveSlideRight = () => {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
     if (currentIndex > 0) {
       setDisplaySlide(slides[currentIndex - 1]);
@@ -68,7 +70,8 @@ export default function Preview({ token }) {
     }
   };
   
-  const moveSlideDown = () => {
+  // Move current slide to the left
+  const moveSlideLeft = () => {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
 
     if (currentIndex < slides.length - 1) {
@@ -77,6 +80,7 @@ export default function Preview({ token }) {
     }
   };
 
+  // Updates the url to reflect the current slide number 
   const updateURL = (slideNumber) => {
     const newURL = `/presentations/preview/${presentationId}/${slideNumber}`;
     navigate(newURL, { replace: true });
@@ -96,10 +100,10 @@ export default function Preview({ token }) {
               {slides.length > 0 && (
                 <div className="h-5 mb-2 flex flex-row ml-auto">
                   <div className={isFirstSlide ? 'invisible' : ''}>
-                    <UpArrow onClick={moveSlideUp} />
+                    <UpArrow onClick={moveSlideRight} />
                   </div>
                   <div className={isLastSlide ? 'invisible' : ''}>
-                    <DownArrow onClick={moveSlideDown} />
+                    <DownArrow onClick={moveSlideLeft} />
                   </div>
                 </div>
               )}

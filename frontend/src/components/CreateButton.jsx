@@ -6,6 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function CreateButton({ setDisplaySlide, token, store, presentationId, setStore, setSlides, updateURL}) {
   const [isHovered, setIsHovered] = useState(false);
+
+  // Creates a new slide and stores it in the backend
   const createNewSlide = async (event) => {
     event.preventDefault();
     const uniqueSlideId = uuidv4();
@@ -22,8 +24,6 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       },
       fontFamily: "Arial",
     }; 
-    console.log("this is the new slide" + newSlide)
-    console.log("this is the new slide id " + newSlide.slideId)
 
     setDisplaySlide(newSlide)
     const currentPresentations = store.presentations || [];
@@ -62,6 +62,7 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
     }
   };
 
+  // Updates the store in backend
   const updateSlidesAtBackend = async (newStore) => {
     try {
       const response = await axios.put('http://localhost:5005/store', newStore, {
@@ -84,6 +85,7 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
     }
   };
 
+  // Returns all presentations 
   const fetchPresentations = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:5005/store', {
@@ -113,7 +115,6 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
   const refreshPresentations = () => {
     fetchPresentations();
   };
-
     
   return (
     <a href="#" className="flex items-center p-2 text-white rounded-lg ml-1"
