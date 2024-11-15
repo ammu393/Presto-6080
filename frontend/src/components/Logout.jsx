@@ -18,7 +18,7 @@ export default function Logout({ token, setToken, position }) {
           headers: { Authorization: `Bearer ${token}` },
         }
       )
-      .then((response) => {
+      .then(() => {
         localStorage.removeItem('token');
         setToken(null);
         navigate('/');

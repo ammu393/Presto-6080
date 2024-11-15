@@ -121,7 +121,7 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
         showError("Failed to get presentations");
       }
     } catch (error) {
-      showError("Failed to get Store")
+      showError("Failed to get Store: ", error.message);
     }
   }, [token, setStore]);
 
