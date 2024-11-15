@@ -11,7 +11,7 @@ import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function Presentation({ token, store, setStore }) {
+export default function Presentation({ token, store, setStore, setToken }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { presentationId } = useParams();
   const { slideNum } = useParams();
@@ -260,7 +260,7 @@ export default function Presentation({ token, store, setStore }) {
           </svg>
         </button>
 
-        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont}/>
+        <PresentationSideBar token={token} store={store} setStore={setStore} isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont} setToken={setToken}/>
         <div className="flex-1 p-8 bg-gray-100 relative">
           <button
             onClick={toggleSidebar}

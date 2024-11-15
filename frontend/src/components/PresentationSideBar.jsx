@@ -12,8 +12,8 @@ import { putStore } from '../api';
 import InputModal from './modals/InputModal';
 import PresentationToolSideBar from './PresentationToolSideBar';
 import RevisionHistoryModal from './modals/RevisionHistoryModal';
-
-export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont}) {
+import Logout from './Logout';
+export default function PresentationSideBar({ token, store, setStore, isSidebarOpen, toggleSidebar, addElementToSlide, displaySlide, updateBackground, updateSlideFont, setToken}) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isThumbnailModalOpen, setIsThumbnailModalOpen] = useState(false);
   const [presentationIdToDelete, setPresentationIdToDelete] = useState(null);
@@ -108,6 +108,8 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
           </svg>
         </button>
         <div className="h-full px-3 py-4 overflow-y-auto bg-[#222225] dark:bg-gray-800 z-50">
+          <div className="ml-10">
+          </div>
           <ul className="space-y-2 font-medium">
             <PresentationSideBarItem text="Back to Dashboard" icon={dashboardIcon} onClick={goToDashboard} />
             <PresentationSideBarItem text="Edit Thumbnail" icon={editIcon} onClick={openThumbnailModal} />
@@ -115,7 +117,6 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
             <PresentationSideBarItem text="Preview" icon={previewIcon} onClick={openPreview} />
             <PresentationSideBarItem text="Rearrange" icon={rearrangeIcon} onClick={goToRearrange} />
             <PresentationSideBarItem text="History" icon={historyIcon} onClick={openHistoryModal} />
-
           </ul>
         </div>
         <PresentationToolSideBar addElementToSlide={addElementToSlide} displaySlide={displaySlide} updateBackground={updateBackground} updateSlideFont={updateSlideFont}/>
