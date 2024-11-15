@@ -3,7 +3,7 @@ import plusIconGrey from "../assets/plusIconGrey.svg";
 import { useState, useCallback, useEffect } from 'react';
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import { useError } from "../contexts/ErrorContext";
+import { useError } from "../contexts/useError";
 
 export default function CreateButton({ setDisplaySlide, token, store, presentationId, setStore, setSlides, updateURL}) {
   const [isHovered, setIsHovered] = useState(false);
@@ -82,7 +82,7 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       } else {
         showError("Failed to update store");
       }
-    } catch (error) {
+    } catch {
       showError("Failed to update store");
     }
   };
@@ -103,7 +103,7 @@ export default function CreateButton({ setDisplaySlide, token, store, presentati
       } else {
         showError("Failed to get store");
       }
-    } catch (error) {
+    } catch {
       showError("Failed to get store");
     }
   }, [token, setStore]);

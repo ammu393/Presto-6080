@@ -10,7 +10,6 @@ import InputModal from '../../components/modals/InputModal';
 import { putStore } from '../../api';
 import DeleteButon from '../../components/DeleteButton';
 import { v4 as uuidv4 } from 'uuid';
-import { useError } from '../../contexts/ErrorContext';
 
 export default function Presentation({ token, store, setStore, setToken }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

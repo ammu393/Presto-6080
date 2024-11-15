@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 import ErrorModal from '../components/modals/ErrorModal';
 
 const ErrorContext = createContext();
@@ -17,6 +17,4 @@ export function ErrorProvider({ children }) {
   );
 }
 
-export function useError() {
-  return useContext(ErrorContext);
-}
+export { ErrorContext };  // Export ErrorContext without hooks in this file

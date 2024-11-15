@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import NavBar from "../../components/NavBar"
-import { useError } from '../../contexts/ErrorContext';
+import { useError } from '../../contexts/useError';
 
 export default function Register({ token, setTokenFn }) {
   const [email, setEmail] = useState('');
@@ -37,7 +37,7 @@ export default function Register({ token, setTokenFn }) {
         setTokenFn(response.data.token)
         navigate('/dashboard')
       })
-      .catch((error) => {
+      .catch(() => {
         showError("Failed to register");
       })
   }

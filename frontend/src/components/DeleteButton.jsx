@@ -1,11 +1,11 @@
 import deleteGrey from "../assets/delete-grey.svg";
 import deleteRed from "../assets/delete-red.svg";
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import axios from "axios";
 import { ConfirmationModal } from "./modals/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
 import { putStore } from "../api";
-import { useError } from "../contexts/ErrorContext";
+import { useError } from "../contexts/useError";
 export default function DeleteButon({ setDisplaySlide, token, store, setStore, presentationId, displaySlide, setSlides, updateURL }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDeletePresentationModalOpen, setDeletePresentationModal] = useState(false);
@@ -99,11 +99,9 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       if (response.status === 200) {
         refreshPresentations();
         console.log("Successfully updated backend");
-      } else {
-        showError("Failed to update store");
       }
-    } catch (error) {
-      showError("Failed to update store");
+    } catch{
+      showError("Cannot connect to backend")
     }
   };
 
@@ -120,10 +118,10 @@ export default function DeleteButon({ setDisplaySlide, token, store, setStore, p
       if (response.status === 200) {
         setStore(response.data.store);
       } else {
-        showError("Failed to get store");
+        showError(response.data);
       }
     } catch (error) {
-      showError("Failed to get store");
+      showError(error)
     }
   }, [token, setStore]);
 
