@@ -5,7 +5,7 @@ import axios from "axios";
 import { ConfirmationModal } from "./modals/ConfirmationModal";
 import { useNavigate } from "react-router-dom";
 import { putStore } from "../api";
-import { useError } from "../contexts/UseError";
+import { useError } from "../contexts/useError";
 export default function DeleteButon({ setDisplaySlide, token, store, setStore, presentationId, displaySlide, setSlides, updateURL }) {
   const [isHovered, setIsHovered] = useState(false);
   const [isDeletePresentationModalOpen, setDeletePresentationModal] = useState(false);
