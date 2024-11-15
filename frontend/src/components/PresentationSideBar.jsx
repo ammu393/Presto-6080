@@ -17,19 +17,17 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
   const { presentationId } = useParams();
   const navigate = useNavigate();
 
-  const goToDashboard = () => {
-    navigate("/dashboard");
-  }
+  const goToDashboard = () => navigate("/dashboard");
 
+  // Opens the delete presentation modal
   const openDeleteModal = () => {
     setPresentationIdToDelete(presentationId);
     setIsDeleteModalOpen(true);
   };
 
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-  };
+  const closeDeleteModal = () => setIsDeleteModalOpen(false);
 
+  // Deletes the presentation from store and updates backend
   const handleDeleteConfirmation = async () => {
     if (!presentationIdToDelete) return;
 
@@ -49,14 +47,10 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
     await putStore(newStore, token, onSuccess);
   };
 
-  const openThumbnailModal = () => {
-    setIsThumbnailModalOpen(true);
-  }
+  const openThumbnailModal = () => setIsThumbnailModalOpen(true);
+  const closeThumbnailModal = () => setIsThumbnailModalOpen(false);
 
-  const closeThumbnailModal = () => {
-    setIsThumbnailModalOpen(false);
-  }
-
+  // Updates the thumbnail of the current presentation and sets it in store
   const handleThumbnailEdit = async (newThumbnail) => {
     const updatedPresentations = store.presentations.map(p => 
       p.presentationId === presentationId ? { ...p, thumbnail: newThumbnail } : p
@@ -68,14 +62,15 @@ export default function PresentationSideBar({ token, store, setStore, isSidebarO
     await putStore({ store: newStore }, token, closeThumbnailModal);
   }
 
+  // Opens a new preview page
   const openPreview = () => {
     const previewUrl = `/presentations/preview/${presentationId}/1`;
     window.open(previewUrl, '_blank', 'noopener,noreferrer');
   };
 
+  // Goes to a rearranging page
   const goToRearrange = () => {
     navigate(`/presentations/rearrange/${presentationId}`);
-
   }
 
   return (

@@ -8,6 +8,7 @@ import { useError } from "../../contexts/ErrorContext";
 export default function Dashboard({ token, store, setStore, setTokenFn }) {
   const { showError } = useError();
 
+  // Gets all presentations from the backend and sets in in our state variable
   const fetchPresentations = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:5005/store', {

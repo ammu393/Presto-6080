@@ -26,9 +26,7 @@ export default function Presentation({ token, store, setStore }) {
   const navigate = useNavigate();
   const { showError } = useError();
 
-  const toggleSidebar = () => {
-    setIsSidebarOpen(prevState => !prevState);
-  };
+  const toggleSidebar = () => setIsSidebarOpen(prevState => !prevState);
 
   useEffect(() => {
     if (presentation) {
@@ -46,11 +44,14 @@ export default function Presentation({ token, store, setStore }) {
     }
   }, [presentation])
 
+  // Returns title of presentation
   const getTitle = () => {
     const presentationInfo = store.presentations.filter(p => p.presentationId === presentationId)[0];
     return presentationInfo ? presentationInfo.title : "";
   }
-  const moveSlideUp = () => {
+
+  // Moves current slide to the right
+  const moveSlideRight = () => {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
     if (currentIndex > 0) {
       setIsTransitioning(true);
@@ -59,7 +60,8 @@ export default function Presentation({ token, store, setStore }) {
     }
   };
   
-  const moveSlideDown = () => {
+  // Moves current slide to the left
+  const moveSlideLeft = () => {
     const currentIndex = slides.findIndex(slide => slide.slideId === displaySlide.slideId);
 
     if (currentIndex < slides.length - 1) {
@@ -77,15 +79,15 @@ export default function Presentation({ token, store, setStore }) {
     }
   }, [isTransitioning]);
 
+  // Updates the current URL depending on the slide number
   const updateURL = (slideNumber) => {
     const newURL = `/presentations/${presentationId}/${slideNumber}`;
     navigate(newURL, { replace: true });
   };
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  const toggleModal = () => setIsModalOpen(!isModalOpen);
 
+  // Updates title of a presentation and sets it in store
   const handleTitleUpdate = async (newTitle) => {
     const updatedPresentations = store.presentations.map(p => 
       p.presentationId === presentationId ? { ...p, title: newTitle } : p
@@ -97,6 +99,7 @@ export default function Presentation({ token, store, setStore }) {
     await putStore({ store: newStore }, token, toggleModal);
   };
 
+  // adds an element to the slide
   const addElementToSlide = (element, currentSlide) => {
     console.log(currentSlide);
     const existingElementIndex = currentSlide.elements.findIndex(e => e.elementId === element.elementId);
@@ -127,6 +130,7 @@ export default function Presentation({ token, store, setStore }) {
     updateSlide(updatedSlide);
   };
 
+  // Adds a global font to a particular slide
   const updateSlideFont = (newFont, currentSlide) => {
     const updatedSlide = {
       ...currentSlide, 
@@ -135,6 +139,7 @@ export default function Presentation({ token, store, setStore }) {
     updateSlide(updatedSlide);
   }
 
+  // Deletes a particular element from a slide
   const deleteElementFromSlide = async (elementId) => {
     const updatedSlide = {
       ...displaySlide, 
@@ -144,6 +149,7 @@ export default function Presentation({ token, store, setStore }) {
     return updatedSlide;
   }
 
+  // Updates the 'store' state variable and backend as well
   const updatePresentationStore = async (updatedPresentation) => {
     const currentPresentations = store.presentations || [];
     const presentationIndex = currentPresentations.findIndex(
@@ -164,6 +170,7 @@ export default function Presentation({ token, store, setStore }) {
     await putStore({ store: newStore }, token);
   };
   
+  // Replaces a particular slide
   const updateSlidesInPresentation = (slidesArray, newSlide) => {
     const slideIndex = slidesArray.findIndex((slide) => slide.slideId === newSlide.slideId);
     return slideIndex !== -1
@@ -171,6 +178,7 @@ export default function Presentation({ token, store, setStore }) {
       : slidesArray;
   };
   
+  // Updates the slide infomation of a particular slide
   const updateSlide = async (newSlide) => {
     setDisplaySlide(newSlide);
   
@@ -187,6 +195,7 @@ export default function Presentation({ token, store, setStore }) {
     setSlides(updatedSlidesArray);
   };
   
+  // Updates the default background of a presentaion
   const updateBackground = async (newBackgroundInfo, isDefault) => {
     const newSlide = { ...displaySlide, backgroundStyle: newBackgroundInfo };
     
@@ -261,10 +270,10 @@ export default function Presentation({ token, store, setStore }) {
             {slides.length > 0 && (
               <div className="h-5 mb-2 flex flex-row ml-auto">
                 <div className={isFirstSlide ? 'invisible' : ''}>
-                  <UpArrow onClick={moveSlideUp} />
+                  <UpArrow onClick={moveSlideRight} />
                 </div>
                 <div className={isLastSlide ? 'invisible' : ''}>
-                  <DownArrow onClick={moveSlideDown} />
+                  <DownArrow onClick={moveSlideLeft} />
                 </div>
               </div>
             )}

@@ -10,6 +10,7 @@ export default function CodePropertiesModal({ isOpen, closeCodeModal, addElement
   const [left, setLeft] = useState(0);
   const [fontSize, setFontSize] = useState(1);
 
+  // Set inputs to either current value or default value
   useEffect(() => {
     if (currentElement) {
       setCodeBlock(currentElement.code || "");
@@ -18,13 +19,12 @@ export default function CodePropertiesModal({ isOpen, closeCodeModal, addElement
       setFontSize(parseFloat(currentElement.fontSize) || 1);
       setTop(currentElement.top.replace(/%/g, "") || 0);
       setLeft(currentElement.left.replace(/%/g, "") || 0);
-      
-      console.log(currentElement);
     }
   }, [currentElement, displaySlide]);
 
   if (!isOpen) return null;
 
+  // Adds code element to the slide
   const handleSubmitCode = async (e) => {
     e.preventDefault();
     
