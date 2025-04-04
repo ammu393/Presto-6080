@@ -1,7 +1,5 @@
 # PRESTO
 
-[Please see course website for full spec](https://cgi.cse.unsw.edu.au/~cs6080/NOW/assessments/assignments/ass4)
-
 ### 2.1. Feature Set 1. Login & presentation Creation (10%)
 
 This feature set focuses solely on the ability to register, login, and logout. It does not concern itself with any functionality or screens that come after logged in - if the dashboard when logged in is just a blank screen with a logout button, then that is satisfactory for this feature set.
