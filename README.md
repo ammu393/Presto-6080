@@ -1,45 +1,6 @@
-# Assessment 4 (ReactJS)
+# PRESTO
 
 [Please see course website for full spec](https://cgi.cse.unsw.edu.au/~cs6080/NOW/assessments/assignments/ass4)
-
-## Changelog
-
-- 27/10/2024 - fix pre-commit hook and gitlab CI to ignore dependencies updates
-- 07/11/2024 - fix wrong expression of position in 2.3.6
-- 10/11/2024 - remove squashing commit for merge requests to master & fix description of presentation & 2.3.6 resize
-- 12/11/2024 - fix: clarification & soften requirement on font-family
-
-## Due date
-
-This assignment is due *Friday 15 November, 8pm*.
-
-## Compulsory setup
-
-Please run `./util/setup.sh` in your terminal before you begin. This will set up some checks in relation to the "Git Commit Requirements". If you ran this script before the MR rolled out specified in changelog, please run it again.
-
-It's important to note that you should **NOT** use any pre-built web app templates or any AI web app creators for this assignment.
-
-## 2. Your Task - Presto
-
-In March of 2024 you and your friends pitched a startup idea to produce _An alternative to [slides.com](https://slides.com) that is a lean, lightweight app that is a lot more enjoyable and interesting to use_ and that will _revolutionise the presentations industry for decades to come_. You pitched this solution in the form of a web-based application, and called this quiz application 🪄🪄🪄**Presto**🪄🪄🪄.
-
-A week later you received a tentative $50,000 investment from an [Angel Investor](https://en.wikipedia.org/wiki/Angel_investor) pending you producing a working minimum viable product of the application.
-
-Shortly after you discussed the functionality and feature set with your friends, and wrote out a RESTful specification / interface together so that you can split up the frontend and backend work between the group. You build the frontend, they build the backend. To get things moving, the backend was built EXTREMELY light in order to reduce the amount of interfacing needed.
-
-Whilst you (and optionally another one of your friends) decided to work on building the frontend. You wrote a list of requirements and functionalities your frontend should adhere to (described in \`section 2\`). You also decided to complete this application in \`React.js\`, a declarative framework for building single page applications. This front-end will interact with a Restful API that your team members are producing, based on the pre-defined interface.
-
-Because your MVP is only going to be demonstrated once, your team considers it imperative that your frontend is thoroughly tested.
-
-To satisfy modern tastes and expectations you have also decided to ensure that the UI/UX and Accessibility standards are very high.
-
-To make it easier for your friends from non-coding backgrounds to demo this application, you have decided to deploy this application on [Vercel](https://vercel.com/).
-
-This assignment is closely modelled off the popular website [slides](https://slides.com/). If you're not familiar with the site, we would recommend spending the time to try it out so that you can get a feel for how this application may function as a reference point.
-
-Anything marked 🙉🙉🙉 only needs to completed by pair-attempts and not individual-attempts.
-
-All success/error/warning messages shown to users should use appropriate UI components, you are **not** allowed to use `alert` throughout this assignment.
 
 ### 2.1. Feature Set 1. Login & presentation Creation (10%)
 
@@ -189,17 +150,15 @@ Note: You can wrap a container out of `<video />` element to allow user editting
 
 - Double clicking the code block will allow user to edit properties discussed above
 
-#### 2.3.5. 🙉🙉🙉 Making elements movable
+#### 2.3.5. Making elements movable
 
-- For all of `2.3.1`, `2.3.2`, `2.3.3`, `2.3.4`, change it so that:
   - When you double click on a block, position is no longer an option to edit the location of the it
   - When you click on a block once, each of the 4 corners should now have a small `5px` x `5px` solid box on it, whereby:
     - If the user clicks and drags the box, they can change the position of the box (maintaining aspect ratio).
     - The block cannot have any of its corners extend beyond the edges of the slide.
 
-#### 2.3.6. 🙉🙉🙉 Making elements resizable
+#### 2.3.6. Making elements resizable
 
-- For all of `2.3.1`, `2.3.2`, `2.3.3`, `2.3.4`, and `2.3.5`, change it so that:
 
   - When you double click on a block, size is no longer an option to edit the size of the block
   - When you click on a block once, each of the 4 corners should now have a small `5px` x `5px` solid box on it, whereby:
@@ -209,7 +168,6 @@ Note: You can wrap a container out of `<video />` element to allow user editting
     - The block cannot have any of its corners extend beyond the edges of the slide.
     - An example of this behaviour can be described as:
 
-      ![img](assets/example-resize.png)
 
 ### 2.4. Feature Set 4. Further Features (13%)
 
@@ -250,13 +208,13 @@ C. Font-family as a per slide level setting for the one user is on
 
 - For both editing a slideshow deck and previewing presentation, when on a particular slide, the slide number should be reflected in the URL such that if the page is refreshed, the current user will be navigated to the same page.
 
-#### 2.4.5. 🙉🙉🙉Slide transitioning
+#### 2.4.5.Slide transitioning
 
 - Add at least one form of animation when transitioning between slides in the slideshow deck. Examples of this may be:
   - Swipe left/right
   - Fade in and out or cross-fade
 
-#### 2.4.6. 🙉🙉🙉Slide Re-arranging
+#### 2.4.6.Slide Re-arranging
 
 - A button should be accessible on every slideshow deck (either immediately, or behind a control panel) that brings up the slide re-arrange screen.
 - The slide re-arrange screen should display every slide as a rectangle, where each slide has a number inside it to indicate the index of the slide among all slides.
@@ -264,68 +222,9 @@ C. Font-family as a per slide level setting for the one user is on
 - Users can click and drag a particular slide and drop it between another two slides to re-arrange it.
 - There is a close button to exit this screen.
 
-#### 2.4.7. 🙉🙉🙉Revision History
+#### 2.4.7.Revision History
 
 - A button should be accessible on every slideshow deck (either immediately, or behind a control panel) that brings up the version history page.
 - This should show a list of moments in history such that users can "restore", which restores all slides in the deck to a previous state.
 - These previous state moments should be captured by you on every modification of the slideshow deck that occurs with a minimum of 1 minute between saves.
 
-### 2.5. Linting
-
-- Linting must be run from inside the `frontend` folder by running `npm run lint`. You have to make sure linting doesn't produce **any** error and warning to gain the mark for linting section.
-
-### 2.6. Testing
-
-As part of this assignment you are required to write some tests for your components (component testing), and for your application as a whole (ui testing).
-
-For **component testing**, you must:
-
-- Write tests for different components (3 if solo, 6 if working in a pair)
-- For each of the components, they must not have more than 50% similarity (e.g. you can't test a "Card" component and a "BigCard" component, that are virtually the same)
-- Ensure your tests have excellent **coverage** (look at all different use cases and edge cases)
-- Ensure your tests have excellent **clarity** (well commented and code isn't overly complex)
-- Ensure your tests are **designed** well (logical ordering of tests, avoid any tests that aren't necessary or don't add any meaningful value)
-
-Vitest has been setup in your `frontend` folder, there is one example test file located at _`frontend/src/__test__`_, feel free to use it or use `cypress` for component testing.
-
-For **ui testing**, you must:
-
-- Write a test for the "happy path" of an admin that is described as:
-  1.  Registers successfully
-  2.  Creates a new presentation successfully
-  3.  Updates the thumbnail and name of the presentation successfully
-  4.  Add some slides in a slideshow deck successfully
-  5.  Switch between slides successfully
-  6.  Delete a presentation successfully
-  7.  Logs out of the application successfully
-  8.  Logs back into the application successfully
-- (If working in a pair) also required to write a test for another path through the program, describing the steps and the rationale behind this choice in `TESTING.md`, this path **must** contain different features than the ones described in the previous path.
-
-#### Advice for Component Testing
-
-- Find a simple primitive component you've written, and if you don't have one, write one. This could include a common button you use, or a popup, or a box, or an input. Often examples of these are just MUI or other library components you might have wrapped slightly and includes some props you've passed in
-- Simply write some unit tests that check that for a given prop input, the component behaves in a certain way (e.g. action or visual display), etc etc
-- E.G. Creating a `MyButton` that wraps a MUI `Button`.
-- E.G. A simple example is the list of answers for a question. It takes in the answers list we've defined and renders a bunch of MUI ListItems, Checkboxes, TextFields and IconButtons
-- Your app is going to be a set of pages, and those pages are made up of primitive components. But if you don't have layers of components between that it means your code is not well modularised. Another example could be if we said to you - no component should be longer than 50 lines of code. You'd probably go refactor to group common sets of primitives together into a new component.
-
-#### Advice for UI Testing
-
-- For cypress, consider adding `cy.wait(1000)` if necessary to add slight pauses in your tests if you find that the page is rendering slower than cypress is trying to test.
-- If you're having issues using Cypress on WSL2, try following [this guide](https://shouv.medium.com/how-to-run-cypress-on-wsl2-989b83795fb6).
-
-#### Other advice / help
-
-- The tutor will run an empty (reset) backend when running `npm run test` whilst marking.
-
-#### Running tests
-
-Tests must be run from inside the `frontend` folder by running `npm run test`. Then you might need to press `a` to run all tests.
-
-You are welcomed to modify the `npm run test` command by updating the `test` script inside `frontend/package.json`. For example, if you would like to run standard react testing alongside cypress UI tests you can use `react-scripts test —watchAll=false && npm run cypress open` and if you've used cypress for both component and UI test, then you can replace that line with `cypress open`.
-
-### 2.7. Other notes
-
-- The port you can use to `fetch` data from the backend is defined in `frontend/backend.config.json`
-- [This article may be useful to some students](https://stackoverflow.com/questions/66284286/react-jest-mock-usenavigate)
-- For users of typescript, [follow this guide](https://nw-syd-gitlab.cseunsw.tech/COMP6080/24T3/react-typescript)
